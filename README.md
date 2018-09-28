@@ -13,4 +13,4 @@ Contributors:
 - Omeed
 - Reem
 - Roger
-- Sheeka
+- Sheekha
