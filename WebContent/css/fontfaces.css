@@ -1,0 +1,65 @@
+/* KIEVIT OFFC FONTS */
+@font-face {
+  font-family: KievitOffc-Bold
+  url(../fonts/KievitOffc-Bold.ttf)
+}
+@font-face {
+  font-family: KievitOffc-BoldIta
+  url(../fonts/KievitOffc-BoldIta.ttf)
+}
+@font-face {
+  font-family: KievitOffc-Ita
+  url(../fonts/KievitOffc-Ita.ttf)
+}
+@font-face {
+  font-family: KievitOffc-Medi
+  url(../fonts/KievitOffc-Medi.ttf)
+}
+@font-face {
+  font-family: KievitOffc-MediIta
+  url(../fonts/KievitOffc-MediIta.ttf)
+}
+
+/* RUFINA STENCIL FONTS */
+@font-face {
+  font-family: Rufina-Stencil-Bold-Italic
+  url(../fonts/Rufina-Stencil-Bold-Italic.otf)
+}
+@font-face {
+  font-family: Rufina-Stencil-Bold
+  url(../fonts/Rufina-Stencil-Bold.otf)
+}
+@font-face {
+  font-family: Rufina-Stencil-Regular-Italic
+  url(../fonts/Rufina-Stencil-Regular-Italic.otf)
+}
+@font-face {
+  font-family: Rufina-Stencil-Regular
+  url(../fonts/Rufina-Stencil-Regular.otf)
+}
+
+/* STRATUM2 FONTS */
+@font-face {
+  font-family: Stratum2-Black
+  url(../fonts/Stratum2-Black.otf)
+}
+@font-face {
+  font-family: Stratum2-Bold
+  url(../fonts/Stratum2-Bold.otf)
+}
+@font-face {
+  font-family: Stratum2-Light
+  url(../fonts/Stratum2-Light.otf)
+}
+@font-face {
+  font-family: Stratum2-Medium
+  url(../fonts/Stratum2-Medium.otf)
+}
+@font-face {
+  font-family: Stratum2-Regular
+  url(../fonts/Stratum2-Regular.otf)
+}
+@font-face {
+  font-family: Stratum2-Thin
+  url(../fonts/Stratum2-Thin.otf)
+}
