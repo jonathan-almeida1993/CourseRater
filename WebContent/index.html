@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>M101</title>
+<!-- Bootstrap js start -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/userForm.js"></script>
+<script src="js/quetable.js"></script>
+<script src="js/jquery.barrating.js"></script>
+<!-- Bootstrap js start -->
+
+<!-- Bootstrap css start -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<!-- Bootstrap css end -->
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+<script src="js/uipopulate.js"></script>
+<script src="js/jquery.serializejson.js"></script>
+<script src="js/array-0.9.min.js"></script>
+<script src="js/response.js"></script>
+</head>
+<body>
+	<div class="loader"><img src="images/loader.gif"></div>
+	<!-- white bg start -->
+	<div class="whiteBg"></div>
+	<!-- white bg end -->
+	<!-- container start -->
+	<div class="container">
+		<div class="wrapper">
+			<!-- header start -->
+			<div class="header">
+				<div class="col-md-5 col-sm-5  col-xs-12 logo">
+					<img src="images/logo.jpg" alt="M101">
+				</div>
+				<div class="col-md-7 col-sm-7 col-xs-12 wlcmeTxtDiv">
+					<div class="wlcmeTxt" style="display: none;">
+						<span class="glyphicon glyphicon-user"></span> Welcome | <span
+							id="userInfo"></span>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<!-- header end -->
+
+			<!-- question table start -->
+			<div class="queTable">
+				<div class="col-md-12">
+					<h2>
+						<span class="glyphicon glyphicon-question-sign"></span> Questions
+					</h2>
+					<!-- table start -->
+<div class="alert-info">Your comments are also very useful to us. So please do give us your feedback in the comments box.</div>
+					<div class="reflow-table">
+					<form id="feedbackForm">
+						<table class="table table-bordered" id="questionTable">
+							<thead>
+								<tr>
+									<th class="fstColWidth"></th>
+									<th class="secndColWidth">Questions</th>
+									<th class="thirdColWidth">Rating</th>
+									<th class="fourthColWidth">Comments</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+						</form>
+					</div>
+					<div class="text-center">
+						<button type="button" class="btn btn-primary" id="feedbackFormSubmit">
+							<span class="glyphicon glyphicon-saved"></span> Submit
+						</button>
+					</div>
+					<!-- table end -->
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<!-- question table end -->
+		</div>
+	</div>
+	<!-- container end -->
+
+	<!-- modal start -->
+	<div class="modal userDivModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+					<h4 class="modal-title" id="myModalLabel">Login</h4>
+				</div>
+				<form>
+					<div class="modal-body">
+						<div class="alertDiv alert-danger"></div> 
+						<div class="form-group">
+							<label>First Name</label> <input type="text" class="form-control" id="fnameInput" maxlength="30">
+						</div>
+						<div class="form-group">
+							<label>Last Name</label> <input type="text" class="form-control" id="lnameInput" maxlength="30">
+						</div>
+						<div class="form-group">
+							<strong>If you wish to remain anonymous, please check the box</strong>
+						</div>
+						<div class="checkbox">
+							<label> <input type="checkbox" id="anonymousCheck" value="Y"> Anonymous
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+						<!-- <div class="anonymousDiv alert-warning text-left">Your survey identity will not be disclosed.</div> -->
+						<button type="button" class="btn btn-primary" id="submitName">
+							<span class="glyphicon glyphicon-saved"></span> Continue
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- modal ends -->
+
+
+
+<!-- thankyou modal starts -->
+<div class="modal thankYouModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Survey</h4>
+      </div>
+      <div class="modal-body">
+       <!-- <h4 class="alert alert-success  text-center">
+       <span class="glyphicon glyphicon-thumbs-up"></span> Your response has been successfully submitted!
+       </h4>
+       <h5>
+       Please close the browser window.
+       </h5> -->
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- thankyou modal ends -->
+
+
+
+<!-- alert modal starts -->
+<div class="modal alertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-alert"></span> Alert</h4>
+      </div>
+      <div class="modal-body">
+       
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- alert modal ends -->
+
+
+
+	<!-- blue bg start -->
+	<div class="blueBg"></div>
+	<!-- blue bg end -->
+</body>
+</html>
