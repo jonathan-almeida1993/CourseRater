@@ -2,10 +2,10 @@ body{ background:#fff; font-size: 14px; letter-spacing: 1px; font-weight: 400; c
 }
 .whiteBg {background: #fff; height: 50%; position: fixed; width: 100%; top: 0;z-index: -1;}
 .blueBg {background: #8abbe4; height: 50%; position: fixed; width: 100%; bottom: 0;z-index: -1;}
-
+.orangeBg {background: #d73f09; height: 50%; position: fixed; width: 100%; bottom: 0;z-index: -1;}
 
 /* login start */
-/* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed; 
+/* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;
   -webkit-background-size: cover;  -moz-background-size: cover;  -o-background-size: cover;  background-size: cover;
   } */
 .wlcmeTxtDiv .wlcmeTxt {padding: 5px 10px;background: #8abbe4;color: #fff; border-radius:5px; display: inline-block;
@@ -85,15 +85,15 @@ h2{margin-bottom: 20px; padding: 5px 10px; background: #8abbe4; font-size: 22px;
 @media only screen and (max-width: 800px) {
 html, body{height:auto;}
 /* Force table to not be like tables anymore */
-.reflow-table table, .reflow-table thead, .reflow-table tbody, .reflow-table th, .reflow-table td,  
+.reflow-table table, .reflow-table thead, .reflow-table tbody, .reflow-table th, .reflow-table td,
 .reflow-table tr { display: block;}
 
 /* Hide table headers (but not display: none;, for accessibility) */
 .reflow-table table thead tr {position: absolute; top: -9999px; left: -9999px; }
- 
+
 .reflow-table table tr { border: 1px solid #ccc; }
 
-/* Behave  like a "row" */ 
+/* Behave  like a "row" */
 /* Now like a table header */
 .reflow-table table td {padding-left: 10px;padding-right: 10px;}
 .reflow-table table td:before {position: static; display: block; padding-bottom: 15px; font-weight:bold; white-space: normal; width:auto;}
