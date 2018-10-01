@@ -1,6 +1,6 @@
 package com.osu.database.connection;
 
-import java.io.FileNotFoundException; 
+import java.io.FileNotFoundException;  
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class DBConnectionFactory {
 		// Get DataSource
 		Context initContext = new InitialContext();
 		Context envContext = (Context) initContext.lookup("java:/comp/env");
-		DataSource dataSource = (DataSource) envContext.lookup("jdbc/dbConForM101FeedbackNew");
+		DataSource dataSource = (DataSource) envContext.lookup("jdbc/dbConForCourseRater");
 		if ((conn == null) || conn.isClosed()) {
 			conn = dataSource.getConnection();
 		}

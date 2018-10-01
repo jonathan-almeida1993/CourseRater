@@ -1,68 +1,50 @@
 <!DOCTYPE html>
 <html>
-<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>M101</title>
-<!-- Bootstrap js start -->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<!-- Bootstrap js start -->
+	<head>
+		<meta charset="utf-8">
+		<title>CourseRater</title>
+		
+		<!-- JS Imports Start -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/login.js"></script>
+		<script src="js/datatransfer.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<!-- JS Imports End-->
+		
+		<!-- CSS Imports Start -->
+		<link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<!-- CSS Imports End -->
+	</head>
+	
+	<body>
 
-<!-- Bootstrap css start -->
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-<!-- Bootstrap css end -->
+		<div class="container" id="container" style="display:block;">
+			<form class="loginform" action="LoginController" method="POST" >
+					<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+						<div class="panel-body" >
+							<div class="panel">
+							  <h1>Login</h1>
 
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-      <script src="js/html5shiv.min.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
+							  <div class="formset">
+							    <div class="form-group">
+							      <label class="form-label">ONID</label>
+							      <input type="text" name="onid" id="onidLoginForm" required class="form-control" autocomplete="off"/>
+							    </div>
+							    <div class="form-group">
+							      <label class="form-label">Password</label>
+							      <input type="password" name="password" id="passwordLoginForm" required class="form-control" autocomplete="off"/>
+							    </div>						    
 
+								<input type="hidden" name="message" class="form-control" value="validateLogin">
+								<button type="submit" class="btn btn-primary loginbtn">Login</button>
 
-
-</head>
-<body>
-<!-- white bg start -->
-<div class="whiteBg"></div>
-<!-- white bg end -->
-<!-- container start -->
-<div class="container">
-<div class="col-md-6 col-md-offset-3">
-<div class="loginDiv">
-<div class="text-center logo"><img src="images/logo.jpg" alt="M101"></div>
-<div class="loginBg">
-<div class="col-md-12">
-<h3><span class="glyphicon glyphicon-log-in"></span> Login</h3>
-<div class="login">
-<form>
-<div class="form-group">
-    <input type="text" class="form-control" placeholder="Username">
-  </div>
-  <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password">
-  </div>
-  <div class="form-group">
-    <button type="button">Login</button>
-  </div>
-</form>
-</div>
-
-</div>
-<div class="clearfix"></div>
-</div>
-</div>
-</div>
-</div>
-<!-- container end -->
-
-<!-- blue bg start -->
-<div class="blueBg"></div>
-<!-- blue bg end -->
-</body>
+								<a href="#" class="btn btn-default btn-flat form-group" id="forgotPassword">Forgot Password ?</a>
+							  </div>
+							</div>
+					</div>
+					</div>
+				</form>
+		</div>
+	</body>
 </html>
