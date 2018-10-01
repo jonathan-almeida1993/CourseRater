@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Home - Course Rater</title>
+  <!-- Bootstrap js start -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <!-- Bootstrap js start -->
+
+  <!-- Bootstrap css start -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/fontfaces.css" rel="stylesheet">
+  <!-- Bootstrap css end -->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+
+
+
+</head>
+<body>
+  <div class="pagetop">
+    <p class="title">Course Rater</p>
+  </div>
+  <div class="navbar">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Home</a>
+      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#">Rate a Course</a>
+      </li>-->
+      <li class="nav-item">
+        <a class="nav-link" href="#">Your Reviews</a>
+      </li>
+    </ul>
+    <span>
+      <button class="btn btn-dark" href="login.html">Log Out</a>
+    </span>
+  </div>
+
+  <!-- Search Course Container -->
+  <div class="col-lg-8" style="margin: 1.75rem auto">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="section-header">Search A Course</h3>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group col-md-4 row">
+            <label for="Term">*Term</label>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Select...</option>
+                <option value="1">Fall 2018</option>
+                <option value="2">Summer 2018</option>
+                <option value="3">Spring 2018</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-9">
+              <label for="Subject">*Subject</label>
+              <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>Select...</option>
+                  <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+                  <option value="1">Computer Science (CS)</option>
+                  <option value="2">Psychology (PSY)</option>
+                  <option value="3">Mathematics (MTH)</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Course Number">*Course Number</label>
+              <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>Select...</option>
+                  <option value="1">160</option>
+                  <option value="2">161</option>
+                  <option value="3">162</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-md-8 row">
+            <label for="Professor/Instructor">*Professor/Instructor</label>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Select...</option>
+                <option value="1">Jennifer Parham-Mocello</option>
+                <option value="2">Shannon Ernst</option>
+                <option value="3">Terry Rooker</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"><a href="course_page.html">Submit</a></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Reviews Container -->
+  <div class="col-lg-8" style="margin: 1.75rem auto">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="section-header">Recent Reviews</h3>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Course</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Example Table Content -->
+            <tr>
+              <td scope="row">08/07/2018</td>
+              <td>CS 290</td>
+              <td>4/5</td>
+              <td><button type="button" class="btn btn-primary">View</button></td>
+            </tr>
+            <tr>
+              <td scope="row">06/19/2018</td>
+              <td>CS 271</td>
+              <td>3/5</td>
+              <td><button type="button" class="btn btn-primary">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
