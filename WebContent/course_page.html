@@ -50,96 +50,151 @@
     </span>
   </div>
 
+
+
   <!-- Search Course Container -->
-  <div class="col-lg-10">
-    <div class="modal-content">
-      <div class="modal-header">
+  <div class="col-lg-12">
+    <div class="modal-header row">
+      <div class="col-md-10">
+        <br>
         <h3 class="section-header">CS 160 Introduction to Computer Science</h3>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group col-md-4 row">
-            <label for="Term">*Term</label>
-            <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Select...</option>
-                <!-- Terms should be listed starting at the term furthest in the future and going backwards in time. -->
-                <option value="1">Fall 2018</option>
-                <option value="2">Summer 2018</option>
-                <option value="3">Spring 2018</option>
-            </select>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-9">
-              <label for="Subject">*Subject</label>
-              <select class="custom-select" id="inputGroupSelect01">
-                  <option selected>Select...</option>
-                  <!-- Make sure subject appears in the format below in, with its abbreviation in parentheses. The list should be sorted by subject abbreviation -->
-                  <option value="1">Computer Science (CS)</option>
-                  <option value="2">Mathematics (MTH)</option>
-                  <option value="3">Psychology (PSY)</option>
-              </select>
-            </div>
-            <div class="form-group col-md-3">
-              <label for="Course Number">*Course Number</label>
-              <select class="custom-select" id="inputGroupSelect01">
-                  <option selected>Select...</option>
-                  <option value="1">160</option>
-                  <option value="2">161</option>
-                  <option value="3">162</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group col-md-8 row">
-            <label for="Professor/Instructor">*Professor/Instructor</label>
-            <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Select...</option>
-                <option value="1">Jennifer Parham-Mocello</option>
-                <option value="2">Shannon Ernst</option>
-                <option value="3">Terry Rooker</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary"><a href="course_page.html">Submit</a></button>
+      <div class="col-md-2">
+        <br>
+        <button class="btn btn-primary">Submit a Review</button>
       </div>
     </div>
-  </div>
-
-  <!-- Recent Reviews Container -->
-  <div class="col-lg-8" style="margin: 1.75rem auto">
-    <div class="modal-content">
+      <div class="modal-body col-lg-10">
+        <div class="row">
+          <div class="col-lg-8">
+            <h5>Description</h5>
+            <p>Introduction to the computer science field and profession. Team
+              problem solving. Introduction to writing computer programs. Approaches
+              to teaching course topics vary across sections. Lec/lab. </p>
+          </div>
+          <div class="col-lg-4">
+            <h5>Rating Average:</h5> 4.5
+          </div>
+        </div>
+      </div>
       <div class="modal-header">
-        <h3 class="section-header">Recent Reviews</h3>
+          <h3 class="section-header">Reviews</h3>
       </div>
-      <div class="modal-body">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Course</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Example Table Content -->
-            <tr>
-              <td scope="row">08/07/2018</td>
-              <td>CS 290</td>
-              <td>4/5</td>
-              <td><button type="button" class="btn btn-primary">View</button></td>
-            </tr>
-            <tr>
-              <td scope="row">06/19/2018</td>
-              <td>CS 271</td>
-              <td>3/5</td>
-              <td><button type="button" class="btn btn-primary">View</button></td>
-            </tr>
-          </tbody>
-        </table>
+
+      <!-- This section is how the review will appear for each one.  -->
+      <div class="modal-body row">
+        <div class="col-md-2">
+          <label>[Student Name]</label><br>
+          <!-- Student name will go above unless they anonymize their review,
+              then it would say "Anonymous"-->
+          <label>Rating:</label> 4/5 <br>
+          <!-- Star rating should appear here -->
+          <label>Term:</label> Fall 2017 <br>
+          <!-- The term the student took the course should appear here  -->
+          <label>Date:</label> 10/01/2018
+        </div>
+          <div class="col-md-8">
+            Both 161 and 162 were tough. They will cram a lot of information in
+            your head in a very short time. However, her assignments are fun, and
+            her approach on how to take coding and computer science is very intuitive
+            and interesting rather than boring. She helps a lot and cares about the
+            student. It may be hard but you'll learn the material well.
+          </div>
       </div>
-    </div>
+      <!-- end of a single review -->
+      <span class="modal-header"></span>
+<!-- Section headers will serve as a visual divider between each review -->
+
+<!-- Start of the next review is here  -->
+      <div class="modal-body row">
+        <div class="col-md-2">
+          <label>Anonymous</label><br>
+          <!-- Student name will go above unless they anonymize their review,
+              then it would say "Anonymous"-->
+          <label>Rating:</label> 3/5 <br>
+          <!-- Star rating should appear here -->
+          <label>Term:</label> Fall 2016 <br>
+          <!-- The term the student took the course should appear here  -->
+          <label>Date:</label> 9/30/2018
+        </div>
+          <div class="col-md-8">
+            I went into this course with very little knowledge of how to code.
+            Her lectures are simply PowerPoints that really don't show you what
+            to do. I pretty much had to teach myself based off of the PowerPoints.
+            I felt very behind compared to everyone else in the class. However,
+            Jen is a very passionate professor and it really does show.
+          </div>
+      </div>
+
+
+      <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReview">
+              Submit a Review
+            </button>
+      </div>
+
+      <!-- Submit review modal -->
+      <div class="col-lg-12">
+        <div class="modal fade" id="submitReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Submitting a Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group col-md-4 row">
+                    <label for="Term">*Name</label>
+                  <!-- student name will appear filled in, there is an anonymity check box next to it.  -->
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-md-9">
+                      <label for="Subject">*Subject</label>
+                      <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Select...</option>
+                          <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+                          <option value="1">Computer Science (CS)</option>
+                          <option value="2">Psychology (PSY)</option>
+                          <option value="3">Mathematics (MTH)</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="Course Number">*Course Number</label>
+                      <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Select...</option>
+                          <option value="1">160</option>
+                          <option value="2">161</option>
+                          <option value="3">162</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-8 row">
+                    <label for="Professor/Instructor">*Professor/Instructor</label>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Select...</option>
+                        <option value="1">Jennifer Parham-Mocello</option>
+                        <option value="2">Shannon Ernst</option>
+                        <option value="3">Terry Rooker</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
   </div>
 </body>
 </html>
