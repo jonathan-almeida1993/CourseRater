@@ -1,9 +1,51 @@
-body{ background:#fff; font-size: 14px; letter-spacing: 1px; font-weight: 400; color:#6D6E71; white-space: normal;
+
+
+body{
+  background:#fff;
+  font-size: 14px;
+  font-family: Stratum2-Regular;
+  letter-spacing: 1px;
+  font-weight: 400;
+  color:#6D6E71;
+  white-space: normal;
 }
 .whiteBg {background: #fff; height: 50%; position: fixed; width: 100%; top: 0;z-index: -1;}
 .blueBg {background: #8abbe4; height: 50%; position: fixed; width: 100%; bottom: 0;z-index: -1;}
 .orangeBg {background: #d73f09; height: 50%; position: fixed; width: 100%; bottom: 0;z-index: -1;}
 
+.beaver-orange {
+  background: #d73f09;
+}
+
+.title{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.pagetop {
+  background: #d73f09;
+  color: black;
+  font-family: Stratum2-Bold;
+  font-size: 3em;
+}
+
+.navbar {
+  background: black;
+  font-family: Stratum2-Bold;
+  font-size: 120%
+}
+
+.section-header {
+  font-family: Stratum2-Medium;
+  font-size: 2em;
+  color: black;
+}
+
+.modal-dialog.wide {
+  width: 800px
+}
 /* login start */
 /* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;
   -webkit-background-size: cover;  -moz-background-size: cover;  -o-background-size: cover;  background-size: cover;
