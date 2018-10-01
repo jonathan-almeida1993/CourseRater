@@ -133,8 +133,10 @@
             </button>
       </div>
 
+
+
       <!-- Submit review modal -->
-      <div class="col-lg-12">
+      <div class="row">
         <div class="modal fade" id="submitReview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -145,56 +147,80 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form>
-                  <div class="form-group col-md-4 row">
-                    <label for="Term">*Name</label>
-                  <!-- student name will appear filled in, there is an anonymity check box next to it.  -->
-                  </div>
-                  <div class="row">
-                    <div class="form-group col-md-9">
-                      <label for="Subject">*Subject</label>
-                      <select class="custom-select" id="inputGroupSelect01">
-                          <option selected>Select...</option>
-                          <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                          <option value="1">Computer Science (CS)</option>
-                          <option value="2">Psychology (PSY)</option>
-                          <option value="3">Mathematics (MTH)</option>
-                      </select>
+                <form class="row">
+
+                    <div class="form-group col-md-6">
+                      <div class="form-group">
+                        <fieldset disabled>
+                          <label for="Term">Name</label>
+                          <!-- student name will appear filled in, there is an anonymity check box below it.  -->
+                          <input type="name" class="form-control" id="studentName" placeholder="[Student Name Appears Here]">
+                        </fieldset>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1">I'd like to submit my review anonymously.</label>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="Subject">*Rating</label>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Select out of 5</option>
+                            <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="Term">*Term Taken</label>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Select...</option>
+                            <option value="1">Fall 2018</option>
+                            <option value="2">Winter 2017</option>
+                            <option value="3">Spring 2017</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="GradeReceived">Grade Received (optional)</label>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Select...</option>
+                            <option value="1">A</option>
+                            <option value="2">B</option>
+                            <option value="3">C</option>
+                            <option value="4">D</option>
+                            <option value="5">F</option>
+                        </select>
+                      </div>
+
                     </div>
-                    <div class="form-group col-md-3">
-                      <label for="Course Number">*Course Number</label>
-                      <select class="custom-select" id="inputGroupSelect01">
-                          <option selected>Select...</option>
-                          <option value="1">160</option>
-                          <option value="2">161</option>
-                          <option value="3">162</option>
-                      </select>
+
+                    <div class="form-group col-md-6">
+                      <label for="studentReview">Your Review:</label>
+                      <textarea class="form-control"></textarea>
+                      <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
+                      <small>Your review will appear as "Anonymous". </small>
                     </div>
-                  </div>
-                  <div class="form-group col-md-8 row">
-                    <label for="Professor/Instructor">*Professor/Instructor</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Select...</option>
-                        <option value="1">Jennifer Parham-Mocello</option>
-                        <option value="2">Shannon Ernst</option>
-                        <option value="3">Terry Rooker</option>
-                    </select>
-                  </div>
+
                 </form>
-              </div>
+
+              <!-- Footer starts here  -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="float-left">
+                  <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
+                </div>
+                <div class="float-right">
+                  <button type="button" class="btn btn-primary float-right">Submit</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
   </div>
 </body>
 </html>
