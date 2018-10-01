@@ -30,22 +30,23 @@
 </head>
 <body>
   <div class="pagetop">
+    <img src="images/OSU_vertical_1C_B.png" alt="OSU Logo" style="width:10%">
     <p class="title">Course Rater</p>
   </div>
   <div class="navbar">
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link active" href="#">Home</a>
+        <a class="nav-link" href="index.html">Home</a>
       </li>
       <!--<li class="nav-item">
         <a class="nav-link" href="#">Rate a Course</a>
       </li>-->
       <li class="nav-item">
-        <a class="nav-link" href="#">Your Reviews</a>
+        <a class="nav-link" href="your_reviews.html">Your Reviews</a>
       </li>
     </ul>
     <span>
-      <button class="btn btn-dark" href="login.html">Log Out</a>
+      <a class="btn btn-dark" href="login.html">Log Out</a>
     </span>
   </div>
 
@@ -61,6 +62,7 @@
             <label for="Term">*Term</label>
             <select class="custom-select" id="inputGroupSelect01">
                 <option selected>Select...</option>
+                <!-- Terms should be listed starting at the term furthest in the future and going backwards in time. -->
                 <option value="1">Fall 2018</option>
                 <option value="2">Summer 2018</option>
                 <option value="3">Spring 2018</option>
@@ -71,10 +73,10 @@
               <label for="Subject">*Subject</label>
               <select class="custom-select" id="inputGroupSelect01">
                   <option selected>Select...</option>
-                  <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+                  <!-- Make sure subject appears in the format below in, with its abbreviation in parentheses. The list should be sorted by subject abbreviation -->
                   <option value="1">Computer Science (CS)</option>
-                  <option value="2">Psychology (PSY)</option>
-                  <option value="3">Mathematics (MTH)</option>
+                  <option value="2">Mathematics (MTH)</option>
+                  <option value="3">Psychology (PSY)</option>
               </select>
             </div>
             <div class="form-group col-md-3">
