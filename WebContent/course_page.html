@@ -29,9 +29,15 @@
 
 </head>
 <body>
-  <div class="pagetop">
-    <img src="images/OSU_vertical_1C_B.png" alt="OSU Logo" style="width:10%">
-    <p class="title">Course Rater</p>
+  <div class="pagetop" style="width:100%">
+    <div class="modal-body row">
+      <div class="col-md-4">
+        <img src="images/OSU_horizontal_1C_B.png" alt="OSU Logo" style="width:4em">
+      </div>
+      <div class="col-md-8">
+        <p class="title">Course Rater</p>
+      </div>
+    </div>
   </div>
   <div class="navbar">
     <ul class="nav nav-pills">
@@ -57,49 +63,52 @@
     <div class="modal-header row">
       <div class="col-md-10">
         <br>
-        <h3 class="section-header">CS 160 Introduction to Computer Science</h3>
+        <h3 class="section-header">CS 160 - Computer Science Orientation</h3>
+        <h4>Professor: Jennifer Parham-Mocello</h4>
       </div>
       <div class="col-md-2">
         <br>
-        <button class="btn btn-primary">Submit a Review</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReview">
+          Submit a Review
+        </button>
       </div>
     </div>
       <div class="modal-body col-lg-10">
         <div class="row">
           <div class="col-lg-8">
-            <h5>Description</h5>
+            <h4>Description</h4>
             <p>Introduction to the computer science field and profession. Team
               problem solving. Introduction to writing computer programs. Approaches
               to teaching course topics vary across sections. Lec/lab. </p>
           </div>
           <div class="col-lg-4">
-            <h5>Rating Average:</h5> 4.5
+            <h4>Rating Average:</h4> 3.5
           </div>
         </div>
       </div>
       <div class="modal-header">
-          <h3 class="section-header">Reviews</h3>
+          <h4 class="section-header">Reviews</h4>
       </div>
 
       <!-- This section is how the review will appear for each one.  -->
       <div class="modal-body row">
-        <div class="col-md-2">
-          <label>[Student Name]</label><br>
+        <div class="col-md-3">
+          <label><strong>Posted By:</strong> [Student Name]</label><br>
           <!-- Student name will go above unless they anonymize their review,
               then it would say "Anonymous"-->
-          <label>Rating:</label> 4/5 <br>
+          <label><strong>Rating:</strong></label> 4/5 <br>
           <!-- Star rating should appear here -->
-          <label>Term:</label> Fall 2017 <br>
+          <label><strong>Term:</strong></label> Fall 2017 <br>
           <!-- The term the student took the course should appear here  -->
-          <label>Date:</label> 10/01/2018
+          <label><strong>Date:</strong></label> 10/01/2018
         </div>
-          <div class="col-md-8">
-            Both 161 and 162 were tough. They will cram a lot of information in
-            your head in a very short time. However, her assignments are fun, and
-            her approach on how to take coding and computer science is very intuitive
-            and interesting rather than boring. She helps a lot and cares about the
-            student. It may be hard but you'll learn the material well.
-          </div>
+        <div class="col-md-7">
+          160 was tough. They will cram a lot of information in
+          your head in a very short time. However, her assignments are fun, and
+          her approach on how to take coding and computer science is very intuitive
+          and interesting rather than boring. She helps a lot and cares about the
+          student. It may be hard but you'll learn the material well.
+        </div>
       </div>
       <!-- end of a single review -->
       <span class="modal-header"></span>
@@ -107,31 +116,31 @@
 
 <!-- Start of the next review is here  -->
       <div class="modal-body row">
-        <div class="col-md-2">
-          <label>Anonymous</label><br>
+        <div class="col-md-3">
+          <label><strong>Posted By:</strong> Anonymous Student</label><br>
           <!-- Student name will go above unless they anonymize their review,
               then it would say "Anonymous"-->
-          <label>Rating:</label> 3/5 <br>
+          <label><strong>Rating:</strong></label> 3/5 <br>
           <!-- Star rating should appear here -->
-          <label>Term:</label> Fall 2016 <br>
+          <label><strong>Term:</strong></label> Fall 2016 <br>
           <!-- The term the student took the course should appear here  -->
-          <label>Date:</label> 9/30/2018
+          <label><strong>Date:</strong></label> 9/30/2018
         </div>
-          <div class="col-md-8">
-            I went into this course with very little knowledge of how to code.
-            Her lectures are simply PowerPoints that really don't show you what
-            to do. I pretty much had to teach myself based off of the PowerPoints.
-            I felt very behind compared to everyone else in the class. However,
-            Jen is a very passionate professor and it really does show.
-          </div>
+        <div class="col-md-7">
+          I went into this course with very little knowledge of how to code.
+          Her lectures are simply PowerPoints that really don't show you what
+          to do. I pretty much had to teach myself based off of the PowerPoints.
+          I felt very behind compared to everyone else in the class. However,
+          Jen is a very passionate professor and it really does show.
+        </div>
       </div>
 
 
-      <div class="modal-footer">
+      <!--<div class="modal-footer">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReview">
               Submit a Review
             </button>
-      </div>
+      </div>-->
 
 
 
@@ -167,11 +176,11 @@
                         <select class="custom-select" id="inputGroupSelect01">
                             <option selected>Select out of 5</option>
                             <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
                             <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
                         </select>
                       </div>
 
@@ -194,6 +203,8 @@
                             <option value="3">C</option>
                             <option value="4">D</option>
                             <option value="5">F</option>
+                            <option value="6">P</option>
+                            <option value="7">NP</option>
                         </select>
                       </div>
 
@@ -214,7 +225,7 @@
                   <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
                 </div>
                 <div class="float-right">
-                  <button type="button" class="btn btn-primary float-right">Submit</button>
+                  <a href="index.html"><button type="button" class="btn btn-primary float-right">Submit</button></a>
                 </div>
               </div>
             </div>
