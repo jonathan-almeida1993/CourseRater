@@ -6,7 +6,6 @@ body {
   font-family: Stratum2-Regular;
   letter-spacing: 1px;
   font-weight: 400;
-  color:#6D6E71;
   white-space: normal;
 }
 
@@ -86,9 +85,6 @@ body {
   margin-top: 10px;
 }
 
-.loginDiv {
-  height: filled
-}
 .logo img {
   width: 150px;
   height: auto;
@@ -109,8 +105,6 @@ body {
   border: none;
   letter-spacing: 2px;
 }
-
-
 
 /* header start */
 .header{
