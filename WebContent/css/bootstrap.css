@@ -2571,15 +2571,15 @@ fieldset:disabled a.btn {
 }
 
 .btn-dark {
-  color: #fff;
+  color: white;
   background-color: black;
   border-color: white;
 }
 
 .btn-dark:hover {
-  color: #fff;
+  color: red;
   background-color: black;
-  border-color: white;
+  border-color: red;
 }
 
 .btn-dark:focus, .btn-dark.focus {
@@ -2594,9 +2594,9 @@ fieldset:disabled a.btn {
 
 .btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
 .show > .btn-dark.dropdown-toggle {
-  color: #fff;
+  color: red;
   background-color: black;
-  border-color: black;
+  border-color: red;
 }
 
 .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus,
