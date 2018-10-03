@@ -89,6 +89,13 @@ body {
   width: 150px;
   height: auto;
 }
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
 
 .loginBg {
   background: #fff;
@@ -113,7 +120,7 @@ body {
   box-shadow: 0 8px 8px -4px #ccc;
 }
 
-.header .logo img {
+.header img {
   width: 120px;
   height: auto;
 }
