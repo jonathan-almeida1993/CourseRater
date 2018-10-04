@@ -1,10 +1,16 @@
 package com.osu.controller;
 
-import java.io.IOException; 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.osu.common.constants.CommonConstants;
 import com.osu.dao.base.impl.LoginDAOImpl;
 import com.osu.dao.base.interfaces.LoginDAO;
@@ -44,11 +50,19 @@ public class LoginController extends HttpServlet {
 			
 			
 			if(CommonConstants.STATUS_AUTH_SUCCESS.equals(userDetails.getStatus())){
-
+				HttpSession session = request.getSession();
+				//setting session to expiry in 30 mins
+				session.setMaxInactiveInterval(30*60);
+				Cookie userName = new Cookie("user", loginDetails.getOnid());
+				userName.setMaxAge(30*60);
+				response.addCookie(userName);
 				response.sendRedirect("index.html");
 			
 			}else{
-				response.sendRedirect("login.html?status="+userDetails.getStatus());
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+				PrintWriter out= response.getWriter();
+				out.println("<font color=red>Either user name or password is wrong.</font>");
+				rd.include(request, response);
 			}
 		}
 		System.out.println("LoginController:doPost Exiting...");
