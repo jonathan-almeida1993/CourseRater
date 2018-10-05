@@ -2344,6 +2344,18 @@ fieldset:disabled a.btn {
   border-color: #d73f09;
 }
 
+.btn-logout {
+  color: white;
+  background-color: black;
+  border-color: black;
+}
+
+.btn-logout:hover {
+  color: black;
+  background-color: white;
+  border-color: white;
+}
+
 .btn-primary:focus, .btn-primary.focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
 }
@@ -3880,10 +3892,13 @@ input[type="button"].btn-block {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
+  text-decoration: none !important;
 }
 
 .nav-link:hover, .nav-link:focus {
-  text-decoration: none;
+  color: black !important;
+  background-color: white !important;
+  border-color: white !important;
 }
 
 .nav-link.disabled {
