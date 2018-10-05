@@ -1,50 +1,125 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>CourseRater</title>
-		
-		<!-- JS Imports Start -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/login.js"></script>
-		<script src="js/datatransfer.js"></script>
-		<script src="js/bootstrap.js"></script>
-		<!-- JS Imports End-->
-		
-		<!-- CSS Imports Start -->
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
-		<!-- CSS Imports End -->
-	</head>
-	
-	<body>
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Log In - Course Rater</title>
+  <!-- Bootstrap js start -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <!-- Bootstrap js start -->
 
-		<div class="container" id="container" style="display:block;">
-			<form class="loginform" action="LoginController" method="POST" >
-					<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-						<div class="panel-body" >
-							<div class="panel">
-							  <h1>Login</h1>
+  <!-- Bootstrap css start -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/fontfaces.css" rel="stylesheet">
+  <!-- Bootstrap css end -->
 
-							  <div class="formset">
-							    <div class="form-group">
-							      <label class="form-label">ONID</label>
-							      <input type="text" name="onid" id="onidLoginForm" required class="form-control" autocomplete="off"/>
-							    </div>
-							    <div class="form-group">
-							      <label class="form-label">Password</label>
-							      <input type="password" name="password" id="passwordLoginForm" required class="form-control" autocomplete="off"/>
-							    </div>						    
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
 
-								<input type="hidden" name="message" class="form-control" value="validateLogin">
-								<button type="submit" class="btn btn-primary loginbtn">Login</button>
 
-								<a href="#" class="btn btn-default btn-flat form-group" id="forgotPassword">Forgot Password ?</a>
-							  </div>
-							</div>
-					</div>
-					</div>
-				</form>
-		</div>
-	</body>
+
+</head>
+<!-- <body>
+
+    <div class="row" style="min-height:100vh; vertical-align:middle">
+
+      <div class="d-inline-block text-center  col-md-6"  style="padding:5em">
+        <div class="vertical-center">
+
+          <img  src="images/OSU_horizontal_2C_O_over_B.png" alt="OSU Logo" style="zoom: 12%"></br></br>
+          <span style="font-family: Stratum2-Regular; font-size: 3vw">Course Rater</span>
+        </div>
+
+
+      </div>
+
+
+      <div class="d-inline-block col-md-6" style="background:#d73f09; padding:5em">
+
+        <div class="loginBg col-md-12 " style="padding:1em">
+          <h3><span class="glyphicon glyphicon-log-in"></span> Log In</h3>
+          <div>
+            <form>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="ONID Username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <a href="index.html"><button type="button">Log In</button></a>
+              </div>
+            </form>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+    </div>
+
+</body> -->
+
+
+
+
+
+
+
+<body>
+  <div class="row">
+    <div class="col-md-6" style="background:#fff; width:100%; height:100%;">
+      <div class="d-flex justify-content-center bd-highlight mb-3 vertical-center">
+        <div class="" style="text-align: center; width: 100%">
+          <img class="" src="images/OSU_horizontal_2C_O_over_B.png" alt="OSU Logo" style="width: 60%">
+          <br>
+          <span class="" style="font-family: Stratum2-Regular; font-size: 3vw">Course Rater</span>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="col-md-6 " style="background:#d73f09; width:100%; height:100%;">
+      <div class="d-flex justify-content-center bd-highlight mb-3 vertical-center">
+        <div class="modal-content col-md-8">
+          <div class="modal-header">
+            <h3 class="modal-title"><span class="glyphicon glyphicon-log-in"></span> Log In</h3>
+          </div>
+          <form class="">
+            <br>
+            <div class="form-group">
+              <label>ONID Username:</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Password:</label>
+              <input type="password" class="form-control">
+            </div>
+            <div class="modal-footer">
+              <div class="form-group float-right">
+                <a href="index.html"><button class="btn btn-primary float-right">Log In</button></a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</body>
+
+
+
+
 </html>
