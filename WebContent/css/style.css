@@ -190,6 +190,9 @@ h2{
 
 
 /* star rating start */
+.rating-star {
+   zoom: 25%;
+}
 .rating-g .br-widget a {
   display: block;
   float: left;
