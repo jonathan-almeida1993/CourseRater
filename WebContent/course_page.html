@@ -11,6 +11,10 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script type="text/javascript">
+  $(document).ready(function() {
+    $("#header").load("header.html");
+  });
+
   function reloadPage() {
     window.location.href = 'course_page.html';
   }
@@ -34,36 +38,7 @@
 
 </head>
 <body>
-  <div class="pagetop" style="width:100%">
-    <div class="modal-body row">
-      <div class="col-md-4">
-        <a href="index.html"><img src="images/OSU_horizontal_1C_B.png" alt="OSU Logo" style="width:4em" ></a>
-      </div>
-      <div class="col-md-4">
-        <a href="index.html" style="color:black; text-decoration:none;">
-          <p class="title text-center">Course Rater</p>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="navbar">
-    <ul class="nav nav-pills">
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">Home</a>
-      </li>
-      <!--<li class="nav-item">
-        <a class="nav-link" href="#">Rate a Course</a>
-      </li>-->
-      <li class="nav-item">
-        <a class="nav-link" href="your_reviews.html">Your Reviews</a>
-      </li>
-    </ul>
-    <span>
-      <a class="btn btn-logout" href="login.html">Log Out</a>
-    </span>
-  </div>
-
-
+  <div id="header"></div>
 
   <!-- Search Course Container -->
   <div class="col-lg-12">
@@ -107,7 +82,12 @@
         <label><strong>Posted By:</strong> [Student Name]</label><br>
         <!-- Student name will go above unless they anonymize their review,
             then it would say "Anonymous"-->
-        <label><strong>Rating:</strong></label> 4/5 <br>
+        <label><strong>Rating:</strong></label>
+        <img class="rating-star" src="images/star-8x_full.png">
+        <img class="rating-star" src="images/star-8x_full.png">
+        <img class="rating-star" src="images/star-8x_full.png">
+        <img class="rating-star" src="images/star-8x_full.png">
+        <br>
         <!-- Star rating should appear here -->
         <label><strong>Term:</strong></label> Fall 2017 <br>
         <!-- The term the student took the course should appear here  -->
@@ -131,7 +111,11 @@
         <label><strong>Posted By:</strong> Anonymous Student</label><br>
         <!-- Student name will go above unless they anonymize their review,
             then it would say "Anonymous"-->
-        <label><strong>Rating:</strong></label> 3/5 <br>
+        <label><strong>Rating:</strong></label>
+        <img class="rating-star" src="images/star-8x_full.png">
+        <img class="rating-star" src="images/star-8x_full.png">
+        <img class="rating-star" src="images/star-8x_full.png">
+        <br>
         <!-- Star rating should appear here -->
         <label><strong>Term:</strong></label> Fall 2016 <br>
         <!-- The term the student took the course should appear here  -->
