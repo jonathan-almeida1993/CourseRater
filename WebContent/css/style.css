@@ -1,11 +1,18 @@
 
 
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Bree Serif', serif;
+}
+
+
 body {
   background:#fff;
   font-size: 14px;
   letter-spacing: 1px;
   font-weight: 400;
   white-space: normal;
+  font-family: 'Slabo 13px', serif;
 }
 
 .whiteBg {
@@ -44,6 +51,7 @@ body {
   margin-right: auto;
   margin-top: auto;
   margin-bottom: auto;
+  font-family: 'Bree Serif', serif;
 }
 
 .pagetop {
@@ -52,12 +60,14 @@ body {
   font-size: 3em;
   display: inline-block;
   width: 100%;
+  font-family: 'Bree Serif', serif;
 }
 
 .pagetop-logo { width:4em; }
 .pagetop-sitename {
   color: black;
   text-decoration: none;
+  font-family: 'Bree Serif', serif;
 }
 
 .navbar {
@@ -88,7 +98,10 @@ body {
 }
 
 .login-logo { width: 50%; }
-.login-sitename { font-size: 3vw; }
+.login-sitename {
+  font-size: 3vw;
+  font-family: 'Bree Serif', serif;
+}
 
 .index-body { margin: 1.75rem auto; }
 
