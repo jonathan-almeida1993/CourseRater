@@ -61,7 +61,9 @@ public class LoginController extends HttpServlet {
 			}else{
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 				PrintWriter out= response.getWriter();
-				out.println("<font color=red>Either user name or password is wrong.</font>");
+				//out.println("<font color=red>Either user name or password is wrong.</font>");
+				out.println("<div class=\"alert alert-danger\" role=\"alert\"> " + 
+						"Invalid Username or Password. Please try again.</div>");
 				rd.include(request, response);
 			}
 		}

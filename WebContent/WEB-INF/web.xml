@@ -19,14 +19,14 @@
   
   <servlet>
     <description></description>
-    <display-name>DataController</display-name>
-    <servlet-name>DataController</servlet-name>
-    <servlet-class>com.osu.controller.DataController</servlet-class>
+    <display-name>CourseController</display-name>
+    <servlet-name>CourseController</servlet-name>
+    <servlet-class>com.osu.controller.CourseController</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>DataController</servlet-name>
-    <url-pattern>/DataController</url-pattern>
+    <servlet-name>CourseController</servlet-name>
+    <url-pattern>/CourseController</url-pattern>
   </servlet-mapping>
   
   <!-- <filter>
