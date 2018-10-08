@@ -1,5 +1,12 @@
 
+a{
+  text-decoration: none !important;
 
+}
+a:hover{
+  text-decoration: none !important;
+  color: black !important;
+}
 
 h1, h2, h3, h4, h5 {
   font-family: 'Bree Serif', serif;
@@ -52,6 +59,8 @@ body {
   margin-top: auto;
   margin-bottom: auto;
   font-family: 'Bree Serif', serif;
+  text-decoration: none;
+
 }
 
 .pagetop {
