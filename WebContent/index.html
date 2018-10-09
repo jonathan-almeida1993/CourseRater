@@ -49,7 +49,7 @@
           <div class="row">
             <div class="form-group col-md-8">
               <label for="Subject">*Subject</label>
-              <select class="custom-select" id="inputGroupSelect01">
+              <select class="custom-select" id="subjectDropdown">
                   <option selected>Select...</option>
                   <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
                   <option value="1">Computer Science (CS)</option>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-group col-md-4">
               <label for="Course Number">*Course Number</label>
-              <select class="custom-select" id="inputGroupSelect01" disabled>
+              <select class="custom-select" id="courseNumberDropdown" disabled>
                   <option selected>Select...</option>
                   <option value="1">160</option>
                   <option value="2">161</option>
@@ -70,7 +70,7 @@
           <div class="row">
             <div class="form-group col-md-6">
               <label for="Term">*Term</label>
-              <select class="custom-select" id="inputGroupSelect01" disabled>
+              <select class="custom-select" id="termDropdown" disabled>
                   <option selected>Select...</option>
                   <option value="1">Fall 2018</option>
                   <option value="2">Summer 2018</option>
@@ -79,7 +79,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="Professor/Instructor">*Professor/Instructor</label>
-              <select class="custom-select" id="inputGroupSelect01" disabled>
+              <select class="custom-select" id="instructorDropdown" disabled>
                   <option selected>Select...</option>
                   <option value="1">Jennifer Parham-Mocello</option>
                   <option value="2">Shannon Ernst</option>
@@ -106,7 +106,7 @@
         <h3 class="section-header">Your Recent Reviews</h3>
       </div>
       <div class="modal-body">
-        <table class="table">
+        <table class="table" id="recentReviewsTable">
           <thead>
             <tr>
               <th scope="col">Date</th>
@@ -118,25 +118,25 @@
           <tbody>
             <!-- Example Table Content -->
             <tr>
-              <td scope="row">08/07/2018</td>
-              <td>CS 290</td>
-              <td>
+              <td scope="row" id="recentDate1">08/07/2018</td>
+              <td id="recentCourse1">CS 290</td>
+              <td id="recentRating1" value="4">
                 <img class="rating-star" src="images/star-8x_full.png">
                 <img class="rating-star" src="images/star-8x_full.png">
                 <img class="rating-star" src="images/star-8x_full.png">
                 <img class="rating-star" src="images/star-8x_full.png">
               </td>
-              <td><a href="your_reviews.html#r1"><button type="button" class="btn btn-primary">View</button></a></td>
+              <td id="recentViewBtn1"><a href="your_reviews.html#r1"><button type="button" class="btn btn-primary">View</button></a></td>
             </tr>
             <tr>
-              <td scope="row">06/19/2018</td>
-              <td>CS 271</td>
-              <td>
+              <td scope="row" id="recentDate2">06/19/2018</td>
+              <td id="recentCourse2">CS 271</td>
+              <td id="recentRating2" value="3">
                 <img class="rating-star" src="images/star-8x_full.png">
                 <img class="rating-star" src="images/star-8x_full.png">
                 <img class="rating-star" src="images/star-8x_full.png">
               </td>
-              <td><a href="your_reviews.html#r2"><button type="button" class="btn btn-primary">View</button></a></td>
+              <td id="recentViewBtn2"><a href="your_reviews.html#r2"><button type="button" class="btn btn-primary">View</button></a></td>
             </tr>
           </tbody>
         </table>
