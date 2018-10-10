@@ -29,6 +29,18 @@
     <url-pattern>/CourseController</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>ReviewController</display-name>
+    <servlet-name>ReviewController</servlet-name>
+    <servlet-class>com.osu.controller.ReviewController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ReviewController</servlet-name>
+    <url-pattern>/ReviewController</url-pattern>
+  </servlet-mapping>
+  
   <!-- <filter>
     <filter-name>AuthenticationFilter</filter-name>
     <filter-class>com.osu.common.filters.AuthenticationFilter</filter-class>

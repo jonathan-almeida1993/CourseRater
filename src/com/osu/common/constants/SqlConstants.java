@@ -16,5 +16,9 @@ public interface SqlConstants {
 	
 	String GET_COURSE_ID = "SELECT course_id from course_master_tbl " + 
 			"where department = ? and course_number = ? and term_offered = ? and instructor = ?";
+	
+	String INSERT_REVIEW = "INSERT into review_master_tbl "+
+			"(course_id, onid, rating, review, grade_received, anonymous, created_date) "+
+			"values (?,?,?,?,?,?,?)";
 
 }

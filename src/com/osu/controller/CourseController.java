@@ -76,7 +76,7 @@ public class CourseController extends HttpServlet {
 			response.getWriter().write(jsonString);
 			
 		}
-		System.out.println("LoginController:doPost Exiting...");
+		System.out.println("CourseController:doPost Exiting...");
 	}
 }
 
