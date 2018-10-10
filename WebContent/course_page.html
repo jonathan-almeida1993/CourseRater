@@ -51,7 +51,7 @@
       </div>
       <div class="col-md-2">
         <br>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReview">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#submitReview" id="createReviewBtn">
           Submit a Review
         </button>
       </div>
@@ -64,7 +64,7 @@
             problem solving. Introduction to writing computer programs. Approaches
             to teaching course topics vary across sections. Lec/lab. </p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="averageRating">
           <h4>Rating Average:</h4>
           <img class="rating-star" src="images/star-8x_full.png">
           <img class="rating-star" src="images/star-8x_full.png">
@@ -73,6 +73,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal-header">
         <h4 class="section-header">Reviews</h4>
     </div>
@@ -80,21 +81,46 @@
     <!-- This section is how the review will appear for each one.  -->
     <div class="modal-body row">
       <div class="col-md-3">
-        <label><strong>Posted By:</strong> [Student Name]</label><br>
+        <label>
+          <strong>Posted By:</strong>
+          <span id="reviewName1">
+            [Student Name]
+          </span>
+        </label><br>
         <!-- Student name will go above unless they anonymize their review,
             then it would say "Anonymous"-->
-        <label><strong>Rating:</strong></label>
-        <img class="rating-star" src="images/star-8x_full.png">
-        <img class="rating-star" src="images/star-8x_full.png">
-        <img class="rating-star" src="images/star-8x_full.png">
-        <img class="rating-star" src="images/star-8x_full.png">
-        <br>
+        <label>
+          <strong>Rating:</strong>
+          <span id="reviewRating1" value="4">
+            <img class="rating-star" src="images/star-8x_full.png">
+            <img class="rating-star" src="images/star-8x_full.png">
+            <img class="rating-star" src="images/star-8x_full.png">
+            <img class="rating-star" src="images/star-8x_full.png">
+          </span>
+        </label><br>
         <!-- Star rating should appear here -->
-        <label><strong>Term:</strong></label> Fall 2017 <br>
+        <label>
+          <strong>Term:</strong>
+          <span id="reviewTerm1">
+            Fall 2017
+          </span>
+        </label><br>
         <!-- The term the student took the course should appear here  -->
-        <label><strong>Date:</strong></label> 10/01/2018
+        <label>
+          <strong>Date Posted:</strong>
+          <span id="reviewDate1">
+            10/01/2018
+          </span>
+        </label><br>
+        <!-- The grade the student received should appear here. If the student does not provide their grade, it should say N/A -->
+        <label>
+          <strong>Grade Received:</strong>
+          <span id="reviewGrade1">
+            A-
+          </span>
+        </label>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" id="reviewText1">
         160 was tough. They will cram a lot of information in
         your head in a very short time. However, her assignments are fun, and
         her approach on how to take coding and computer science is very intuitive
@@ -109,20 +135,45 @@
 <!-- Start of the next review is here  -->
     <div class="modal-body row">
       <div class="col-md-3">
-        <label><strong>Posted By:</strong> Anonymous Student</label><br>
+        <label>
+          <strong>Posted By:</strong>
+          <span id="reviewName2">
+            Anonymous Student
+          </span>
+        </label><br>
         <!-- Student name will go above unless they anonymize their review,
             then it would say "Anonymous"-->
-        <label><strong>Rating:</strong></label>
-        <img class="rating-star" src="images/star-8x_full.png">
-        <img class="rating-star" src="images/star-8x_full.png">
-        <img class="rating-star" src="images/star-8x_full.png">
-        <br>
+        <label>
+          <strong>Rating:</strong>
+          <span id="reviewRating2" value="3">
+            <img class="rating-star" src="images/star-8x_full.png">
+            <img class="rating-star" src="images/star-8x_full.png">
+            <img class="rating-star" src="images/star-8x_full.png">
+          </span>
+        </label><br>
         <!-- Star rating should appear here -->
-        <label><strong>Term:</strong></label> Fall 2016 <br>
+        <label>
+          <strong>Term:</strong>
+          <span id="reviewTerm2">
+            Fall 2016
+          </span>
+        </label><br>
         <!-- The term the student took the course should appear here  -->
-        <label><strong>Date:</strong></label> 9/30/2018
+        <label>
+          <strong>Date Posted:</strong>
+          <span id="reviewDate2">
+            9/30/2018
+          </span>
+        </label>
+        <!-- The grade the student received should appear here. If the student does not provide their grade, it should say N/A -->
+        <label>
+          <strong>Grade Received:</strong>
+          <span id="reviewGrade2">
+            B
+          </span>
+        </label>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7" id="reviewText2">
         I went into this course with very little knowledge of how to code.
         Her lectures are simply PowerPoints that really don't show you what
         to do. I pretty much had to teach myself based off of the PowerPoints.
@@ -146,30 +197,30 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Submitting a Review</h5>
+              <h5 class="modal-title">Submitting a Review</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <form class="row">
+              <form class="row" id="submitReviewForm">
 
                 <div class="form-group col-md-6">
                   <div class="form-group">
                     <fieldset disabled>
-                      <label for="Term">Name</label>
+                      <label for="studentName">Name</label>
                       <!-- student name will appear filled in, there is an anonymity check box below it.  -->
-                      <input type="name" class="form-control" id="studentName" placeholder="[Student Name Appears Here]">
+                      <input type="name" class="form-control" id="studentName" placeholder="[Student Name]">
                     </fieldset>
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck1">
-                      <label class="custom-control-label" for="customCheck1">I'd like to submit my review anonymously.</label>
+                      <input type="checkbox" class="custom-control-input" id="anonymousCheck">
+                      <label class="custom-control-label" for="anonymousCheck">I'd like to submit my review anonymously.</label>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="Subject">*Rating</label>
-                    <select class="custom-select" id="inputGroupSelect01">
+                    <label for="ratingDropdown">*Rating</label>
+                    <select class="custom-select" id="ratingDropdown">
                         <option selected>Select out of 5</option>
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
                         <option value="5">5</option>
@@ -181,8 +232,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="Term">*Term Taken</label>
-                    <select class="custom-select" id="inputGroupSelect01">
+                    <label for="termDropdown">*Term Taken</label>
+                    <select class="custom-select" id="termDropdown">
                         <option selected>Select...</option>
                         <option value="1">Fall 2018</option>
                         <option value="2">Winter 2017</option>
@@ -191,8 +242,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="GradeReceived">Grade Received (optional)</label>
-                    <select class="custom-select" id="inputGroupSelect01">
+                    <label for="gradeDropdown">Grade Received (optional)</label>
+                    <select class="custom-select" id="gradeDropdown">
                         <option selected>Select...</option>
                         <option value="1">A</option>
                         <option value="2">B</option>
@@ -205,10 +256,10 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="studentReview">Your Review:</label>
-                  <textarea class="form-control"></textarea>
+                  <label for="reviewText">Your Review:</label>
+                  <textarea class="form-control" id="reviewText"></textarea>
                   <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
-                  <small>Your review will appear as "Anonymous". </small>
+                  <small id="anonymousMsg">Your review will appear as "Anonymous".</small>
                 </div>
 
               </form>
@@ -223,7 +274,7 @@
                   <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
                 </div>
                 <div class="float-right">
-                  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#successModal">Submit</button>
+                  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#successModal" id="submitReviewBtn">Submit</button>
                 </div>
               </div>
             </div>
@@ -237,7 +288,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header alert-success">
-              <h5 class="modal-title" id="exampleModalLabel">Thanks!</h5>
+              <h5 class="modal-title">Thanks!</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -247,7 +298,7 @@
             </div>
             <div class="modal-footer alert-success">
               <div class="float-right">
-                <a href="course_page.html"><button type="button" class="btn btn-primary float-right" onclick="reloadPage()">OK</button></a>
+                <a href="course_page.html"><button type="button" class="btn btn-primary float-right" id="successOkBtn" onclick="reloadPage()">OK</button></a>
               </div>
             </div>
           </div>
