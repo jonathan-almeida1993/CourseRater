@@ -16,6 +16,37 @@
     $("#index-link").addClass("active");
   });
   </script>
+  <script type="text/javascript">
+
+    function validateForm() {
+      var form = document.forms["searchCourseForm"];
+      var subjectField = form["subject"].value;
+      var courseNumberField = form["courseNumber"].value;
+      var termField = form["term"].value;
+      var instructorField = form["instructor"].value;
+      if (subjectField == null || subjectField == "") {
+        $("#fillFormAlert").html("Please select a subject!");
+        $("#fillFormAlert").css("display", "block");
+        return false;
+      }
+      else if (courseNumberField == null || courseNumberField == "") {
+        $("#fillFormAlert").html("Please select a course number!");
+        $("#fillFormAlert").css("display", "block");
+        return false;
+      }
+      else if (termField == null || termField == "") {
+        $("#fillFormAlert").html("Please select a term!");
+        $("#fillFormAlert").css("display", "block");
+        return false;
+      }
+      else if (instructorField == null || instructorField == "") {
+        $("#fillFormAlert").css("display", "block");
+        return false;
+      }
+      $("#fillFormAlert").css("display", "none");
+      return true;
+    }
+  </script>
   <!-- js start -->
 
   <!-- css start -->
@@ -45,12 +76,12 @@
         <h3 class="section-header">Find a Course</h3>
       </div>
       <div class="modal-body">
-        <form id="searchCourseForm">
+        <form name="searchCourseForm" id="searchCourseForm" onsubmit="return validateForm()" action="course_page.html" method="post" enctype="multipart/form-data">
           <div class="row">
             <div class="form-group col-md-8">
               <label for="Subject">*Subject</label>
-              <select class="custom-select" id="subjectDropdown">
-                  <option selected>Select...</option>
+              <select class="custom-select" name="subject" id="subjectDropdown">
+                  <option value="">Select...</option>
                   <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
                   <option value="1">Computer Science (CS)</option>
                   <option value="2">Psychology (PSY)</option>
@@ -59,8 +90,8 @@
             </div>
             <div class="form-group col-md-4">
               <label for="Course Number">*Course Number</label>
-              <select class="custom-select" id="courseNumberDropdown" disabled>
-                  <option selected>Select...</option>
+              <select class="custom-select" name="courseNumber" id="courseNumberDropdown" disabled>
+                  <option value="">Select...</option>
                   <option value="1">160</option>
                   <option value="2">161</option>
                   <option value="3">162</option>
@@ -70,8 +101,8 @@
           <div class="row">
             <div class="form-group col-md-6">
               <label for="Term">*Term</label>
-              <select class="custom-select" id="termDropdown" disabled>
-                  <option selected>Select...</option>
+              <select class="custom-select" name="term" id="termDropdown" disabled>
+                  <option value="">Select...</option>
                   <option value="1">Fall 2018</option>
                   <option value="2">Summer 2018</option>
                   <option value="3">Spring 2018</option>
@@ -79,22 +110,24 @@
             </div>
             <div class="form-group col-md-6">
               <label for="Professor/Instructor">*Professor/Instructor</label>
-              <select class="custom-select" id="instructorDropdown" disabled>
-                  <option selected>Select...</option>
+              <select class="custom-select" name="instructor" id="instructorDropdown" disabled>
+                  <option value="">Select...</option>
                   <option value="1">Jennifer Parham-Mocello</option>
                   <option value="2">Shannon Ernst</option>
                   <option value="3">Terry Rooker</option>
               </select>
             </div>
           </div>
+          <div>
+            <small class="float-right">*Required Field&nbsp;</small><br>
+          </div>
+          <div class="alert alert-danger" role="alert" id="fillFormAlert">
+            Please fill each field before submitting!
+          </div>
+          <div class="modal-footer">
+            <input class="btn btn-primary" type="submit" id="courseSearchBtn" value="Search">
+          </div>
         </form>
-      </div>
-      <div>
-        <small class="float-right">*Required Field&nbsp;</small><br>
-      </div>
-      <div class="modal-footer">
-
-        <a href="course_page.html"><button type="button" class="btn btn-primary">Submit</button></a>
       </div>
     </div>
   </div>

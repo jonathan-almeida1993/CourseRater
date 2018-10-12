@@ -124,6 +124,10 @@ body {
   padding-bottom:1em;
 }
 
+#fillFormAlert {
+  display: none;
+}
+
 /* login start */
 /* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;
   -webkit-background-size: cover;  -moz-background-size: cover;  -o-background-size: cover;  background-size: cover;
