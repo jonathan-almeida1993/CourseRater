@@ -124,9 +124,10 @@ body {
   padding-bottom:1em;
 }
 
-#fillFormAlert {
-  display: none;
-}
+#fillFormAlert { display: none; }
+#submitPendingAlert { display: none; }
+#submitSuccessAlert { display: none; }
+#anonymousMsg { display: none; }
 
 /* login start */
 /* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;

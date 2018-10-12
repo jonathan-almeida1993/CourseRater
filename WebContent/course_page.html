@@ -14,9 +14,30 @@
   $(document).ready(function() {
     $("#header").load("header.html");
   });
+  </script>
+  <script>
+  function validateForm() {
+    var form = document.forms["submitReviewForm"];
+    var ratingField = form["rating"].value;
+    if (ratingField == null || ratingField == "") {
+      $("#fillFormAlert").html("Please give the course a rating!");
+      $("#fillFormAlert").css("display", "block");
+      return false;
+    }
+    $("#fillFormAlert").css("display", "none");
+    $("#submitPendingAlert").css("display", "block");
+  }
 
-  function reloadPage() {
-    window.location.href = 'course_page.html';
+  function toggleAnonymousMsg() {
+    var anonymousCheck = document.getElementById("anonymousCheck");
+    if (anonymousCheck.checked) {
+      anonymousCheck.checked = false;
+      $("#anonymousMsg").css("display", "none");
+    }
+    else {
+      anonymousCheck.checked = true;
+      $("#anonymousMsg").css("display", "block");
+    }
   }
   </script>
   <!-- js end -->
@@ -203,7 +224,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form class="row" id="submitReviewForm">
+              <form class="row" id="submitReviewForm" onsubmit="return validateForm()" action="course_page.html" method="post" enctype="multipart/form-data">
 
                 <div class="form-group col-md-6">
                   <div class="form-group">
@@ -219,9 +240,28 @@
                   </div>
 
                   <div class="form-group">
+                    <fieldset disabled>
+                      <label for="termDropdown">Term Taken</label>
+                      <input type="text" class="form-control" id="termTaken" placeholder="[Term Taken]">
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <label for="gradeDropdown">Grade Received</label>
+                    <select name="grade" class="custom-select" id="gradeDropdown">
+                        <option value="">Select...</option>
+                        <option value="1">A</option>
+                        <option value="2">B</option>
+                        <option value="3">C</option>
+                        <option value="4">D</option>
+                        <option value="5">F</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
                     <label for="ratingDropdown">*Rating</label>
-                    <select class="custom-select" id="ratingDropdown">
-                        <option selected>Select out of 5</option>
+                    <select name="rating" class="custom-select" id="ratingDropdown">
+                        <option value="">Select out of 5</option>
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
                         <option value="5">5</option>
                         <option value="4">4</option>
@@ -230,54 +270,32 @@
                         <option value="1">1</option>
                     </select>
                   </div>
-
                   <div class="form-group">
-                    <label for="termDropdown">*Term Taken</label>
-                    <select class="custom-select" id="termDropdown">
-                        <option selected>Select...</option>
-                        <option value="1">Fall 2018</option>
-                        <option value="2">Winter 2017</option>
-                        <option value="3">Spring 2017</option>
-                    </select>
+                    <label for="reviewText">Your Review:</label>
+                    <textarea name="reviewText" class="form-control" id="reviewText"></textarea>
+                    <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
+                    <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br><br>
+                    <small>*Required Field&nbsp;</small>
                   </div>
-
                   <div class="form-group">
-                    <label for="gradeDropdown">Grade Received (optional)</label>
-                    <select class="custom-select" id="gradeDropdown">
-                        <option selected>Select...</option>
-                        <option value="1">A</option>
-                        <option value="2">B</option>
-                        <option value="3">C</option>
-                        <option value="4">D</option>
-                        <option value="5">F</option>
-                    </select>
+                    <div class="modal-footer float-right">
+                        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary float-right" id="submitReviewBtn" value="Submit Review">
+                    </div>
                   </div>
-
                 </div>
-
-                <div class="form-group col-md-6">
-                  <label for="reviewText">Your Review:</label>
-                  <textarea class="form-control" id="reviewText"></textarea>
-                  <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
-                  <small id="anonymousMsg">Your review will appear as "Anonymous".</small>
-                </div>
-
               </form>
 
               <!-- Footer starts here  -->
-              <div>
-                <small class="float-right">*Required Fields</small><br>
+              <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
+              <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
+                Submitting review...
               </div>
-              <div class="modal-footer">
-
-                <div class="float-left">
-                  <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
-                </div>
-                <div class="float-right">
-                  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#successModal" id="submitReviewBtn">Submit</button>
-                </div>
+              <div class="alert alert-success" role="alert" id="submitSuccessAlert">
+                Your review has been submitted!
               </div>
             </div>
+
           </div>
         </div>
       </div>

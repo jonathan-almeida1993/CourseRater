@@ -40,6 +40,7 @@
         return false;
       }
       else if (instructorField == null || instructorField == "") {
+        $("#fillFormAlert").html("Please select an instructor!");
         $("#fillFormAlert").css("display", "block");
         return false;
       }
@@ -121,9 +122,7 @@
           <div>
             <small class="float-right">*Required Field&nbsp;</small><br>
           </div>
-          <div class="alert alert-danger" role="alert" id="fillFormAlert">
-            Please fill each field before submitting!
-          </div>
+          <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
           <div class="modal-footer">
             <input class="btn btn-primary" type="submit" id="courseSearchBtn" value="Search">
           </div>
