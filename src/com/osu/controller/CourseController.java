@@ -2,6 +2,7 @@ package com.osu.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -72,7 +73,8 @@ public class CourseController extends HttpServlet {
 			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);
 			dao = new CourseDAOImpl();
 			ArrayList<CoursePojo> courseIdList = dao.fetchCourseId(searchKey);
-			String jsonString = gson.toJson(courseIdList);
+			System.out.println(courseIdList.get(0).getCourseId());
+			String jsonString = gson.toJson(courseIdList.get(0));
 			response.getWriter().write(jsonString);
 			
 		}

@@ -71,47 +71,35 @@
             <div class="form-group col-md-8">
               <label for="Subject">*Subject</label>
               <select class="custom-select" id="subjectDropDown">
-                  <option selected>Select...</option>
+                  <option value="" selected>Select...</option>
                   <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                  <option value="1">Computer Science (CS)</option>
-                  <option value="2">Psychology (PSY)</option>
-                  <option value="3">Mathematics (MTH)</option>
               </select>
             </div>
             <div class="form-group col-md-4">
               <label for="Course Number">*Course Number</label>
-              <select class="custom-select" id="courseDropDown">
+              <select value="" class="custom-select" id="courseDropDown" disabled="disabled">
                   <option selected>Select...</option>
-                  <option value="1">160</option>
-                  <option value="2">161</option>
-                  <option value="3">162</option>
               </select>
             </div>
           </div>
           <div class="row">
             <div class="form-group col-md-6">
               <label for="Term">*Term</label>
-              <select class="custom-select" id="termDropDown">
-                  <option selected>Select...</option>
-                  <option value="1">Fall 2018</option>
-                  <option value="2">Summer 2018</option>
-                  <option value="3">Spring 2018</option>
+              <select class="custom-select" id="termDropDown" disabled="disabled">
+                  <option value="" selected>Select...</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="Professor/Instructor">*Professor/Instructor</label>
-              <select class="custom-select" id="instructorDropDown" >
-                  <option selected>Select...</option>
-                  <option value="1">Jennifer Parham-Mocello</option>
-                  <option value="2">Shannon Ernst</option>
-                  <option value="3">Terry Rooker</option>
+              <select class="custom-select" id="instructorDropDown"  disabled="disabled">
+                  <option value="" selected>Select...</option>
               </select>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <a href="course_page.html"><button type="button" class="btn btn-primary">Submit</button></a>
+        <a href=""><button type="button" id="searchCourseBtn" class="btn btn-primary">Submit</button></a>
       </div>
     </div>
   </div>

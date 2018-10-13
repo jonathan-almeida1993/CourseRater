@@ -24,6 +24,13 @@ $(document).ready(function(){
 		$('#courseDropDown').find('option').remove();
 		$('#courseDropDown').append('<option value="">Select Course</option>').val('');
 		
+		//enable or disable dropdowns
+		$('#courseDropDown').removeAttr('disabled');
+		$('#termDropDown').attr('disabled','disabled');
+		$('#instructorDropDown').attr('disabled','disabled');
+		$('#instructorDropDown').val('');
+		$('#termDropDown').val('');
+		
 		var jsonCourse = jQuery.parseJSON(courseList);
 		
 		$.each(jsonCourse, function(index, value) {
@@ -42,6 +49,11 @@ $(document).ready(function(){
 		
 		$('#termDropDown').find('option').remove();
 		$('#termDropDown').append('<option value="">Select Term</option>').val('');
+		
+		//enable or disable dropdowns
+		$('#termDropDown').removeAttr('disabled');
+		$('#instructorDropDown').attr('disabled','disabled');
+		$('#instructorDropDown').val('');
 		
 		var jsonTerm = jQuery.parseJSON(termList);
 		
@@ -63,11 +75,31 @@ $(document).ready(function(){
 		$('#instructorDropDown').find('option').remove();
 		$('#instructorDropDown').append('<option value="">Select Instructor</option>').val('');
 		
+		//enable or disable dropdowns
+		$('#instructorDropDown').removeAttr('disabled');
+		
 		var jsonInstructor = jQuery.parseJSON(instructorList);
 		
 		$.each(jsonInstructor, function(index, value) {
 			$('#instructorDropDown').append('<option value="'+value.instructor+'">'+value.instructor+'</option>');
 		});
+	});
+	
+	//get Course ID
+	$('#instructorDropDown').change(function(){
+		var dept = $('#subjectDropDown').val();
+		var course = $('#courseDropDown').val();
+		var term = $('#termDropDown').val();
+		var instructor = $('#instructorDropDown').val();
+		
+		var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
+		
+		var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
+		console.log("Course ID = "+courseId);
+		
+		var jsonCourseId = jQuery.parseJSON(courseId);
+		
+		$('#searchCourseBtn').parent().attr('href', 'course_page.html?courseId='+jsonCourseId.courseId);
 	});
 	
 
