@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <head>
@@ -25,12 +26,10 @@
   <script src="js/html5shiv.min.js"></script>
   <script src="js/respond.min.js"></script>
   <![endif]-->
-
-
-
 </head>
 
 <body>
+
   <div class="row">
     <div class="col-md-6 login-left">
       <div class="d-flex justify-content-center bd-highlight mb-3 vertical-center">
@@ -48,33 +47,29 @@
           <div class="modal-header">
             <h3 class="modal-title">Log In</h3>
           </div>
-          <form class="">
+          <form class="" action="LoginController" method="POST">
             <br>
             <div class="form-group">
               <label>ONID Username:</label>
-              <input type="text" class="form-control" id="onidUsername">
+              <input type="text" class="form-control" id="onidUsername" name="onid" required autocomplete="off">
             </div>
             <div class="form-group">
               <label>Password:</label>
-              <input type="password" class="form-control" id="onidPassword">
+              <input type="password" class="form-control" id="onidPassword" name="password" required autocomplete="off">
             </div>
+            <input type="hidden" name="message" class="form-control" value="validateLogin" >
+            
             <div class="modal-footer">
               <div class="form-group float-right">
-                <a href="index.html">
-                  <button type="button" class="btn btn-primary float-right" id="loginButton">Log In</button>
-                </a>
+                
+                  <button type="submit" class="btn btn-primary float-right" id="loginButton">Log In</button>
+               
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
-
-
   </div>
 </body>
-
-
-
-
 </html>

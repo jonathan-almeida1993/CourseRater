@@ -10,6 +10,9 @@
   <!-- js start -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
+  
+  <script src="js/master.js"></script>
+  <script src="js/datatransfer.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
     $("#header").load("header.html");
@@ -57,6 +60,7 @@
   <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Slabo+13px" rel="stylesheet">
   <!-- css end -->
 
+  
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -77,45 +81,37 @@
         <h3 class="section-header">Find a Course</h3>
       </div>
       <div class="modal-body">
-        <form name="searchCourseForm" id="searchCourseForm" onsubmit="return validateForm()" action="course_page.html" method="post" enctype="multipart/form-data">
+        <form name="searchCourseForm" id="searchCourseForm" onsubmit="return validateForm()">
           <div class="row">
             <div class="form-group col-md-8">
               <label for="Subject">*Subject</label>
-              <select class="custom-select" name="subject" id="subjectDropdown">
+              <select class="custom-select" name="subject" id="subjectDropDown">
                   <option value="">Select...</option>
+
                   <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                  <option value="1">Computer Science (CS)</option>
-                  <option value="2">Psychology (PSY)</option>
-                  <option value="3">Mathematics (MTH)</option>
               </select>
             </div>
             <div class="form-group col-md-4">
               <label for="Course Number">*Course Number</label>
-              <select class="custom-select" name="courseNumber" id="courseNumberDropdown" disabled>
+              <select class="custom-select" id="courseDropDown" disabled="disabled">
                   <option value="">Select...</option>
-                  <option value="1">160</option>
-                  <option value="2">161</option>
-                  <option value="3">162</option>
+
+              
               </select>
             </div>
           </div>
           <div class="row">
             <div class="form-group col-md-6">
               <label for="Term">*Term</label>
-              <select class="custom-select" name="term" id="termDropdown" disabled>
-                  <option value="">Select...</option>
-                  <option value="1">Fall 2018</option>
-                  <option value="2">Summer 2018</option>
-                  <option value="3">Spring 2018</option>
+
+              <select class="custom-select" id="termDropDown" disabled="disabled">
+                  <option value="" selected>Select...</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="Professor/Instructor">*Professor/Instructor</label>
-              <select class="custom-select" name="instructor" id="instructorDropdown" disabled>
-                  <option value="">Select...</option>
-                  <option value="1">Jennifer Parham-Mocello</option>
-                  <option value="2">Shannon Ernst</option>
-                  <option value="3">Terry Rooker</option>
+              <select class="custom-select" id="instructorDropDown"  disabled="disabled">
+                  <option value="" selected>Select...</option>
               </select>
             </div>
           </div>
@@ -124,56 +120,12 @@
           </div>
           <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
           <div class="modal-footer">
-            <input class="btn btn-primary" type="submit" id="courseSearchBtn" value="Search">
+            <button class="btn btn-primary" type="button" id="searchCourseBtn" value="">Search</button>
           </div>
         </form>
       </div>
+
     </div>
   </div>
-
-  <!-- Recent Reviews Container -->
-  <!--<div class="col-lg-8 index-body">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="section-header">Your Recent Reviews</h3>
-      </div>
-      <div class="modal-body">
-        <table class="table" id="recentReviewsTable">
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Course</th>
-              <th scope="col">Rating</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>-->
-            <!-- Example Table Content -->
-            <!--<tr>
-              <td scope="row" id="recentDate1">08/07/2018</td>
-              <td id="recentCourse1">CS 290</td>
-              <td id="recentRating1" value="4">
-                <img class="rating-star" src="images/star-8x_full.png">
-                <img class="rating-star" src="images/star-8x_full.png">
-                <img class="rating-star" src="images/star-8x_full.png">
-                <img class="rating-star" src="images/star-8x_full.png">
-              </td>
-              <td id="recentViewBtn1"><a href="your_reviews.html#review1"><button type="button" class="btn btn-primary">View</button></a></td>
-            </tr>
-            <tr>
-              <td scope="row" id="recentDate2">06/19/2018</td>
-              <td id="recentCourse2">CS 271</td>
-              <td id="recentRating2" value="3">
-                <img class="rating-star" src="images/star-8x_full.png">
-                <img class="rating-star" src="images/star-8x_full.png">
-                <img class="rating-star" src="images/star-8x_full.png">
-              </td>
-              <td id="recentViewBtn2"><a href="your_reviews.html#review2"><button type="button" class="btn btn-primary">View</button></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>-->
 </body>
 </html>

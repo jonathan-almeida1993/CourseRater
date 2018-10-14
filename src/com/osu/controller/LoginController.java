@@ -53,6 +53,7 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 				//setting session to expiry in 30 mins
 				session.setMaxInactiveInterval(30*60);
+				session.setAttribute("user", loginDetails.getOnid());
 				Cookie userName = new Cookie("user", loginDetails.getOnid());
 				userName.setMaxAge(30*60);
 				response.addCookie(userName);
@@ -61,7 +62,9 @@ public class LoginController extends HttpServlet {
 			}else{
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 				PrintWriter out= response.getWriter();
-				out.println("<font color=red>Either user name or password is wrong.</font>");
+				//out.println("<font color=red>Either user name or password is wrong.</font>");
+				out.println("<div class=\"alert alert-danger\" role=\"alert\"> " + 
+						"Invalid Username or Password. Please try again.</div>");
 				rd.include(request, response);
 			}
 		}

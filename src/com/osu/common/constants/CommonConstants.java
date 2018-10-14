@@ -4,6 +4,14 @@ public interface CommonConstants {
 
 	String OP_VALIDATE_lOGIN = "validateLogin";
 	String STATUS_JDBC_ERROR = "JDBC_Error";
+	String STATUS_JDBC_OK = "JDBC_OK";
 	String STATUS_AUTH_FAILED = "AuthenticationFailed";
 	String STATUS_AUTH_SUCCESS = "AuthenticationSuccess";
+	
+	String OP_FETCH_DEPT = "fetchDepartments";
+	String OP_FETCH_COURSENO = "fetchCourseNo";
+	String OP_FETCH_TERM = "fetchTerm";
+	String OP_FETCH_INSTRUCTOR = "fetchInstructor";
+	String OP_FETCH_COURSEID = "fetchCourseID";
+	String OP_ADD_REVIEW = "addReview";
 }
