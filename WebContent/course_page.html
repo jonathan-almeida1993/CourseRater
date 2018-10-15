@@ -80,7 +80,7 @@
         <label>
           <strong>Posted By:</strong>
           <span id="reviewName1">
-            [Student Name]
+            Omeed Habibelahian
           </span>
         </label><br>
         <!-- Student name will go above unless they anonymize their review,
@@ -170,11 +170,7 @@
         </label>
       </div>
       <div class="col-md-7" id="reviewText2">
-        I went into this course with very little knowledge of how to code.
-        Her lectures are simply PowerPoints that really don't show you what
-        to do. I pretty much had to teach myself based off of the PowerPoints.
-        I felt very behind compared to everyone else in the class. However,
-        Jen is a very passionate professor and it really does show.
+        *This student did not write a review in their submission.*
       </div>
     </div>
 
@@ -193,7 +189,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Submitting a Review</h5>
+              <h5 class="modal-title">New Review</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -234,7 +230,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="ratingDropdown">*Rating</label>
+                    <label for="ratingDropdown">Rating (required)</label>
                     <select name="rating" class="custom-select" id="ratingDropdown">
                         <option value="">Select out of 5</option>
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
@@ -250,29 +246,28 @@
                     <textarea name="review" class="form-control" id="reviewText"></textarea>
                     <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
                     <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br><br>
-                    <small>*Required Field&nbsp;</small>
                   </div>
                   <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
-                  
+
                 </div>
               </form>
-              
+
               <div class="form-group">
-                    <div class="modal-footer float-right">
-                        <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
-                    </div>
-                  </div>
+                <div class="modal-footer float-right">
+                  <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
+                </div>
+                <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
+                  Submitting review...
+                </div>
+                <div class="alert alert-success" role="alert" id="submitSuccessAlert">
+                  Your review has been submitted!
+                  <button type="button" class="btn btn-secondary" id="dismissSubmitSuccessAlert">OK</button>
+                </div>
+              </div>
 
               <!-- Footer starts here  -->
               <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
-              <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
-                Submitting review...
-              </div>
-              <div class="alert alert-success" role="alert" id="submitSuccessAlert">
-                Your review has been submitted!
-                <button type="button" class="btn btn-secondary float-right" id="dismissSubmitSuccessAlert">OK</button>
-              </div>
             </div>
 
           </div>

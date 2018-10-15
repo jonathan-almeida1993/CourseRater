@@ -2,7 +2,8 @@ $(document).ready(function(){
 
 	$("#header").load("header.html");
 	$('#submitReviewBtn').click(function(){
-		$('#submitPendingAlert').css("display", "block");
+		//$('#submitPendingAlert').css("display", "block");
+		$('#submitSuccessAlert').css("display", "block");
 		var url = new URL(window.location.href);
 		var courseIdURL = url.searchParams.get("courseId");
 		$('#submitReviewCourseId').val(courseIdURL);
@@ -18,7 +19,7 @@ $(document).ready(function(){
 		var courseIdURL = url.searchParams.get("courseId");
 		window.location.href = "course_page.html?courseId="+courseIdURL;
 	});
-	
+
 });
 
 
@@ -31,7 +32,6 @@ function validateSubmitReviewForm() {
 		return false;
 	}
 	$("#fillFormAlert").css("display", "none");
-	$("#submitPendingAlert").css("display", "block");
 	return true;
 }
 

@@ -10,48 +10,11 @@
   <!-- js start -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
-  
+
   <script src="js/master.js"></script>
   <script src="js/datatransfer.js"></script>
-  <script type="text/javascript">
-  $(document).ready(function() {
-    $("#header").load("header.html");
-    $("#index-link").addClass("active");
-  });
-  </script>
-  <script type="text/javascript">
 
-    function validateForm() {
-      var form = document.forms["searchCourseForm"];
-      var subjectField = form["subject"].value;
-      var courseNumberField = form["courseNumber"].value;
-      var termField = form["term"].value;
-      var instructorField = form["instructor"].value;
-      if (subjectField == null || subjectField == "") {
-        $("#fillFormAlert").html("Please select a subject!");
-        $("#fillFormAlert").css("display", "block");
-        return false;
-      }
-      else if (courseNumberField == null || courseNumberField == "") {
-        $("#fillFormAlert").html("Please select a course number!");
-        $("#fillFormAlert").css("display", "block");
-        return false;
-      }
-      else if (termField == null || termField == "") {
-        $("#fillFormAlert").html("Please select a term!");
-        $("#fillFormAlert").css("display", "block");
-        return false;
-      }
-      else if (instructorField == null || instructorField == "") {
-        $("#fillFormAlert").html("Please select an instructor!");
-        $("#fillFormAlert").css("display", "block");
-        return false;
-      }
-      $("#fillFormAlert").css("display", "none");
-      return true;
-    }
-  </script>
-  <!-- js start -->
+  <!-- js end -->
 
   <!-- css start -->
   <link href="css/bootstrap.css" rel="stylesheet">
@@ -60,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Slabo+13px" rel="stylesheet">
   <!-- css end -->
 
-  
+
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -81,7 +44,7 @@
         <h3 class="section-header">Find a Course</h3>
       </div>
       <div class="modal-body">
-        <form name="searchCourseForm" id="searchCourseForm" onsubmit="return validateForm()">
+        <form name="searchCourseForm" id="searchCourseForm" onsubmit="return validateSearchForm()">
           <div class="row">
             <div class="form-group col-md-8">
               <label for="Subject">*Subject</label>
@@ -96,7 +59,7 @@
               <select class="custom-select" id="courseDropDown" disabled="disabled">
                   <option value="">Select...</option>
 
-              
+
               </select>
             </div>
           </div>
