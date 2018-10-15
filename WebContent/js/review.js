@@ -2,8 +2,8 @@ $(document).ready(function(){
 
 	$("#header").load("header.html");
 	$('#submitReviewBtn').click(function(){
-		//$('#submitPendingAlert').css("display", "block");
-		$('#submitSuccessAlert').css("display", "block");
+		$('#submitPendingAlert').css("display", "block");
+		//$('#submitSuccessAlert').css("display", "block");
 		var url = new URL(window.location.href);
 		var courseIdURL = url.searchParams.get("courseId");
 		$('#submitReviewCourseId').val(courseIdURL);
