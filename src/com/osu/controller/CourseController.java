@@ -73,8 +73,16 @@ public class CourseController extends HttpServlet {
 			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);
 			dao = new CourseDAOImpl();
 			ArrayList<CoursePojo> courseIdList = dao.fetchCourseId(searchKey);
-			System.out.println(courseIdList.get(0).getCourseId());
 			String jsonString = gson.toJson(courseIdList.get(0));
+			response.getWriter().write(jsonString);
+			
+		}else if(null != message && CommonConstants.OP_FETCH_COURSE_DETAILS.equalsIgnoreCase(message)) {
+			
+			Gson gson = new Gson();
+			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);
+			dao = new CourseDAOImpl();
+			CoursePojo courseDetails = dao.fetchCourseDetails(searchKey);
+			String jsonString = gson.toJson(courseDetails);
 			response.getWriter().write(jsonString);
 			
 		}

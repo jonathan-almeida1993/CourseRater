@@ -17,4 +17,6 @@ public interface CourseDAO extends GenericDAO {
 	
 	public ArrayList<CoursePojo> fetchCourseId(CoursePojo obj);
 	
+	public CoursePojo fetchCourseDetails(CoursePojo obj);
+	
 }

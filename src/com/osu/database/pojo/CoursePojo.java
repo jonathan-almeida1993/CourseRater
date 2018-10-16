@@ -3,10 +3,12 @@ package com.osu.database.pojo;
 public class CoursePojo extends BasePojo {
 
 	int courseId;
+	String courseName;
 	String department;
 	int courseNo;
 	String termOffered;
 	String instructor;
+	String courseDesc;
 	String status;
 	
 	public int getCourseId() {
@@ -14,6 +16,12 @@ public class CoursePojo extends BasePojo {
 	}
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 	public String getDepartment() {
 		return department;
@@ -38,6 +46,13 @@ public class CoursePojo extends BasePojo {
 	}
 	public void setInstructor(String instructor) {
 		this.instructor = instructor;
+	}
+
+	public String getCourseDesc() {
+		return courseDesc;
+	}
+	public void setCourseDesc(String courseDesc) {
+		this.courseDesc = courseDesc;
 	}
 	public String getStatus() {
 		return status;

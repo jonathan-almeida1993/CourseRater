@@ -177,4 +177,36 @@ public class CourseDAOImpl implements CourseDAO {
 		}
 		return courseIdList;
 	}
+	
+	public CoursePojo fetchCourseDetails(CoursePojo obj) {
+
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		CoursePojo courseDetails = null;
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.GET_COURSE_DETAILS);
+			preparedStatement.setInt(1, obj.getCourseId());
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				courseDetails = new CoursePojo();
+				courseDetails.setCourseId(resultSet.getInt("course_id"));
+				courseDetails.setCourseName(resultSet.getString("course_name"));
+				courseDetails.setDepartment(resultSet.getString("department"));
+				courseDetails.setCourseNo(resultSet.getInt("course_number"));
+				courseDetails.setTermOffered(resultSet.getString("term_offered"));
+				courseDetails.setInstructor(resultSet.getString("instructor"));
+				courseDetails.setCourseDesc(resultSet.getString("course_desc"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return courseDetails;
+	}
 }

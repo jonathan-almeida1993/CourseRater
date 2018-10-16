@@ -1,11 +1,20 @@
 $(document).ready(function(){
 
+	var url = new URL(window.location.href);
+	var courseIdURL = url.searchParams.get("courseId");
+	
 	$("#header").load("header.html");
+	var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
+	var courseDetailsJSON = jQuery.parseJSON(courseDetails);
+	$('#courseNameHeader').text(courseDetailsJSON.courseNo+ "-" +courseDetailsJSON.courseName);
+	$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
+	$('#termTaken').val(courseDetailsJSON.termOffered);
+	$('#courseDesc').text(courseDetailsJSON.courseDesc);
+	
 	$('#submitReviewBtn').click(function(){
 		$('#submitPendingAlert').css("display", "block");
 		//$('#submitSuccessAlert').css("display", "block");
-		var url = new URL(window.location.href);
-		var courseIdURL = url.searchParams.get("courseId");
+
 		$('#submitReviewCourseId').val(courseIdURL);
 		var reviewJson = $('#submitReviewForm').serializeJSON();
 		var status = sendDataSync(JSON.stringify(reviewJson),"addReview","ReviewController");
