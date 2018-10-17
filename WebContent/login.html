@@ -11,7 +11,8 @@
   <!-- js start -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
-  <!-- js start -->
+  <script src="js/master.js"></script>
+  <!-- js end -->
 
   <!-- css start -->
   <link href="css/bootstrap.css" rel="stylesheet">
@@ -47,26 +48,40 @@
           <div class="modal-header">
             <h3 class="modal-title">Log In</h3>
           </div>
-          <form class="" action="LoginController" method="POST">
+          <form class="" onsubmit="return validateLoginForm()" method="POST">
             <br>
             <div class="form-group">
               <label>ONID Username:</label>
-              <input type="text" class="form-control" id="onidUsername" name="onid" required autocomplete="off">
+              <input type="text" class="form-control" id="onidUsername" name="onid" autocomplete="off">
             </div>
+            <div class="alert alert-danger" role="alert" id="badUsernameAlert"></div>
             <div class="form-group">
               <label>Password:</label>
-              <input type="password" class="form-control" id="onidPassword" name="password" required autocomplete="off">
+              <input type="password" class="form-control" id="onidPassword" name="password" autocomplete="off">
             </div>
+            <div class="alert alert-danger" role="alert" id="badPasswordAlert"></div>
             <input type="hidden" name="message" class="form-control" value="validateLogin" >
-            
+
             <div class="modal-footer">
               <div class="form-group float-right">
-                
-                  <button type="submit" class="btn btn-primary float-right" id="loginButton">Log In</button>
-               
+
+                  <button type="button" class="btn btn-primary float-right" id="loginButton">Log In</button>
+
               </div>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body alert-secondary">
+            <h6>You have been successfully logged out of your account.</h6>
+          </div>
         </div>
       </div>
     </div>

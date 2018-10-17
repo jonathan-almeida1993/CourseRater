@@ -6,6 +6,9 @@
 <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Slabo+13px" rel="stylesheet">
 <!-- css end -->
 
+<!-- js start -->
+<script src="js/header.js"></script>
+
 <div class="pagetop">
   <div class="modal-body row">
     <div class="col-md-4">
@@ -31,29 +34,6 @@
     </li>-->
   </ul>
   <span>
-    <a class="btn btn-logout" data-toggle="modal" data-target="#logoutModal" id="logoutBtn">Log Out</a>
+    <a class="btn btn-logout" id="logoutBtn" onclick="logout()">Log Out</a>
   </span>
-</div>
-
-<div class="row">
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header alert-secondary">
-          <h5 class="modal-title">Thanks for Visiting!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body alert-secondary">
-          <h6>You have been successfully logged out of your account.</h6>
-        </div>
-        <div class="modal-footer alert-secondary">
-          <div class="float-right">
-            <a href="login.html"><button type="button" class="btn btn-primary float-right" id="logoutSuccessOkBtn">OK</button></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>

@@ -124,6 +124,8 @@ body {
   padding-bottom:1em;
 }
 
+#badUsernameAlert { display: none; }
+#badPasswordAlert { display: none; }
 #fillFormAlert { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }

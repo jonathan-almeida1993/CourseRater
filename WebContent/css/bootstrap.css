@@ -5461,7 +5461,6 @@ button.close {
 }
 
 .modal-header .close {
-  display: none;
   padding: 1rem;
   margin: -1rem -1rem -1rem auto;
 }

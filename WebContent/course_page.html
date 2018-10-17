@@ -11,7 +11,7 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/jquery.serializejson.js"></script>
-  <script src="js/review.js"></script>
+  <script src="js/master.js"></script>
 <!--   <script src="js/master.js"></script> -->
   <script src="js/datatransfer.js"></script>
 
@@ -187,7 +187,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">New Review</h5>
+              <h5 class="modal-title">Submit a Review</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -202,20 +202,20 @@
                       <!-- student name will appear filled in, there is an anonymity check box below it.  -->
                       <input type="name" class="form-control" id="studentName" placeholder="[Student Name]" name="studentName">
                     </fieldset>
-                    <div class="custom-control custom-checkbox">
+                    <!--<div class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" id="anonymousCheck" onclick="toggleAnonymousMsg()" name="anonymous" value=true>
                       <label class="custom-control-label" for="anonymousCheck">I'd like to submit my review anonymously.</label>
-                    </div>
+                    </div>-->
                   </div>
 
                   <div class="form-group">
                     <fieldset disabled>
-                      <label for="termDropdown">Term Taken</label>
+                      <label for="termDropdown">Term Taken:</label>
                       <input type="text" class="form-control" id="termTaken" placeholder="[Term Taken]">
                     </fieldset>
                   </div>
                   <div class="form-group">
-                    <label for="gradeDropdown">Grade Received</label>
+                    <label for="gradeDropdown">Grade Received:</label>
                     <select name="gradeReceived" class="custom-select" id="gradeDropdown">
                         <option value="">Select...</option>
                         <option value="A">A</option>
@@ -228,9 +228,9 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="ratingDropdown">Rating (required)</label>
+                    <label for="ratingDropdown">Rating:</label>
                     <select name="rating" class="custom-select" id="ratingDropdown">
-                        <option value="">Select out of 5</option>
+                        <option value="">Select rating (1-5)</option>
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
                         <option value="5">5</option>
                         <option value="4">4</option>
@@ -243,7 +243,8 @@
                     <label for="reviewText">Your Review:</label>
                     <textarea name="review" class="form-control" id="reviewText"></textarea>
                     <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
-                    <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br><br>
+                    <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br>
+                    <small>* Required Field</small>
                   </div>
                   <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
 
