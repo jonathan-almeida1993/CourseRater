@@ -118,11 +118,16 @@ body {
   margin: 1.75rem auto;
   display: inline-block;
 }
+
 .review-action {
   zoom:25%;
   padding-right:1em;
   padding-bottom:1em;
 }
+
+/*.review-div {
+  display: none;
+}*/
 
 #badUsernameAlert { display: none; }
 #badPasswordAlert { display: none; }
