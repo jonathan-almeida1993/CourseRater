@@ -149,12 +149,8 @@
 
                 </div>
               </form>
-
               <div class="form-group">
-                <div class="modal-footer float-right">
-                  <button type="button" class="btn btn-secondary float-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
-                </div>
+                <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
                 <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
                   Submitting review...
                 </div>
@@ -163,9 +159,15 @@
                   <button type="button" class="btn btn-secondary" id="dismissSubmitSuccessAlert">OK</button>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="modal-footer float-right">
+                  <button type="button" class="btn btn-secondary float-left" id="closeReviewFormBtn">Close</button>
+                  <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
+                </div>
+
+              </div>
 
               <!-- Footer starts here  -->
-              <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
             </div>
 
           </div>
@@ -174,21 +176,17 @@
     </div>
 
     <div class="row">
-      <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="confirmCloseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
-            <div class="modal-header alert-success">
-              <h5 class="modal-title">Thanks!</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
             </div>
-            <div class="modal-body alert-success">
-              <h6>Your review has been successfully submitted!</h6>
+            <div class="modal-body alert-secondary">
+              <h6>You have an unfinished review. Are you sure you want to close the form?</h6>
             </div>
-            <div class="modal-footer alert-success">
+            <div class="modal-footer alert-secondary">
               <div class="float-right">
-                <a href="course_page.html"><button type="button" class="btn btn-primary float-right" id="successOkBtn">OK</button></a>
+                <button type="button" class="btn btn-secondary float-left" id="noCloseBtn">No</button>
+                <button type="button" class="btn btn-primary float-right" id="yesCloseBtn">Yes</button>
               </div>
             </div>
           </div>
