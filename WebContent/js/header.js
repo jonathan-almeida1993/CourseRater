@@ -1,14 +1,11 @@
 $(document).ready(function() {
-	alert("HERE");
+	/* Load the main page header */
+	$('#header').load("header.html");
 
-	$("#header").load("header.html");
-});
-
-function logout() {
+	/* When the login page loads AFTER logging out, display the logout success alert. */
 	if (typeof(Storage) !== "undefined") {
-		sessionStorage.isLoggedIn = false;
-		sessionStorage.pageFrom = window.location.pathname;
-    //alert(sessionStorage.pageFrom);
-    window.location.href="login.html";
+		if (sessionStorage.isLoggedIn == 0 && sessionStorage.pageFrom != "login.html") {
+			$('#logoutModal').modal('show');
+		}
 	}
-}
+});
