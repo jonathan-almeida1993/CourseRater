@@ -11,6 +11,5 @@ Contributors:
 - Claudia
 - Jonathan
 - Omeed
-- Reem
 - Roger
 - Sheekha
