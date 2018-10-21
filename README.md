@@ -8,9 +8,8 @@ AGILE practice.
 
 Contributors:
 
-- Claudia
-- Jonathan
-- Omeed
-- Reem
-- Roger
-- Sheekha
+- Claudia Hilderbrand
+- Jonathan Almeida
+- Omeed Habibelahian
+- Yipeng (Roger) Song
+- Sheekha Jariwala
