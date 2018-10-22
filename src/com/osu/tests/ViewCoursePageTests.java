@@ -3,25 +3,43 @@ package com.osu.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.osu.tests.objects.DashboardPage;
 import com.osu.tests.objects.ViewCoursePage;
 import com.osu.tests.support.SeleniumUtils;
 
 public class ViewCoursePageTests extends SeleniumUtils{
 	
+	public void navigateToSubmitReview(){
+		login();
+
+		select(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+		select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("325");
+		select(Locator.XPATH, DashboardPage.termEnabledDropdown, "'Term' dropdown").selectByValue("Spring 2018");
+		select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Juli Schutford");
+
+		try {
+			Thread.sleep(500);
+			click(Locator.XPATH, DashboardPage.searchBtn, "'Search' button", true);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.")
 	public void viewCourseTest1() {
-		login();
+		navigateToSubmitReview();
 		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
 		
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "Subject header is not displayed as expected.");
-		//Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.profName, "Professor name", true), "Professor name is not displayed as expected.");
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.profName, "Professor name", true), "Professor name is not displayed as expected.");
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.descriptionLabel, "Description", true), "Subject description is not displayed as expected.");
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.reviewsLabel, "Reviews", true), "Reviews label is not displayed as expected.");
 	}
 	
 	@Test(description = "Verify that all mandatory elements for each review section is displayed as expected. ")
 	public void viewCourseTest2() {
-		login();
+		navigateToSubmitReview();
 		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
 		
 		String baseXpath = "//div[@class='modal-header']//following-sibling::div[@class='modal-body row']";
