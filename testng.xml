@@ -1,0 +1,46 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Sprint1Suite" verbose="1">
+	<test name="UnitTests1">
+		<!-- <groups> <run> <include name="unit"></include> <include name="database"></include> 
+			</run> </groups> -->
+			
+		<!-- <packages>
+			<package name="com.osu.tests"></package>
+		</packages>
+		 -->
+		<classes>
+			<class name="com.osu.tests.LoginPageTests"></class>
+		</classes>
+
+	</test>
+
+	<test name="UnitTests2">
+		<!-- <groups> <run> <include name="unit"></include> <include name="database"></include> 
+			</run> </groups> -->
+			
+		<!-- <packages>
+			<package name="com.osu.tests"></package>
+		</packages> -->
+		
+		<classes>
+			<class name="com.osu.tests.DashboardPageTests"></class>
+		</classes>
+
+	</test>
+	
+	<test name="UnitTests3">
+		<!-- <groups> <run> <include name="unit"></include> <include name="database"></include> 
+			</run> </groups> -->
+			
+		<!-- <packages>
+			<package name="com.osu.tests"></package>
+		</packages> -->
+		
+		<classes>	
+			<class name="com.osu.tests.SubmitAReviewTests"></class>
+		</classes>
+
+	</test>
+	
+</suite>
