@@ -17,14 +17,14 @@ $(document).ready(function(){
 
 	//append department list to the subject drop down
 
-	/*$('#subjectDropDown').find('option').remove();
+	$('#subjectDropDown').find('option').remove();
 	$('#subjectDropDown').append('<option value="">Select Department</option>').val('');
 
 	var jsonDept = jQuery.parseJSON(departmentList);
 
 	$.each(jsonDept, function(index, value) {
 		$('#subjectDropDown').append('<option value="'+value.department+'">'+value.department+'</option>');
-	});*/
+	});
 
 	/* When the user changes the subject in the Course Search form */
 	$('#subjectDropDown').change(function(){
@@ -136,6 +136,7 @@ $(document).ready(function(){
 
 	var exampleRev1 = new Object();
 	exampleRev1.name = "Omeed Habibelahian";
+	exampleRev1.anonymous = 0;
 	exampleRev1.rating = 4;
 	exampleRev1.term = "Fall 2017";
 	exampleRev1.datePosted = "10/01/2018";
@@ -144,11 +145,13 @@ $(document).ready(function(){
 
 	var exampleRev2 = new Object();
 	exampleRev2.name = "Anonymous Student";
+	exampleRev2.anonymous = 1;
 	exampleRev2.rating = 3;
 	exampleRev2.term = "Fall 2016";
 	exampleRev2.datePosted = "09/30/2018";
 	exampleRev2.grade = "B";
-	exampleRev2.reviewText = "*This student did not write a review in their submission.*";
+	exampleRev2.reviewText = "";
+	//exampleRev2.reviewText = "*This student did not write a review in their submission.*";
 
 	var reviews = [];		// array that will hold all the reviews for the class
 	reviews.push(exampleRev1, exampleRev2);
@@ -160,6 +163,12 @@ $(document).ready(function(){
 		starHTML = "";
 		for (j = 0; j < numStars; j++) {
 			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+		}
+		if (reviews[i].anonymous) {
+			reviews[i].name = "Anonymous Student";
+		}
+		if (reviews[i].reviewText == "") {
+			reviews[i].reviewText = "*This student did not write a review in their submission.*";
 		}
 
 		$('#reviews').append(
