@@ -134,6 +134,7 @@ body {
 #fillFormAlert { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }
+#confirmCloseReviewFormAlert { display: none; }
 #anonymousMsg { display: none; }
 
 /* login start */
