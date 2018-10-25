@@ -149,6 +149,7 @@ $(document).ready(function(){
 	/* IF THE USER IS ON A COURSE'S PAGE */
 	/*************************************/
 	else if (currentPage.includes("course_page.html")) {
+
 		var exampleRev1 = new Object();
 		exampleRev1.name = "Omeed Habibelahian";
 		exampleRev1.anonymous = 0;
@@ -170,8 +171,35 @@ $(document).ready(function(){
 		var reviews = [];		// array that will hold all the reviews for the class
 		reviews.push(exampleRev1, exampleRev2);
 		var numStars = 0;
-		var starHTML = "";
+		var averageRating = 0;
+		var avgStarSpanHTML = "";
+		var ratingSum = 0;
+		for (i = 0; i < reviews.length; i++) {
+			ratingSum += reviews[i].rating;
+		}
+		averageRating = ratingSum/reviews.length;
+		var numStars = averageRating;
+		while (numStars > 0) {
+			if (numStars >= 1) {
+				avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+			}
+			else if (numStars >= 0.625 && numStars < 1) {
+				avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_three-quarter.png\">";
+			}
+			else if (numStars >= 0.375 && numStars < 0.625) {
+				avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_half.png\">";
+			}
+			else if (numStars < 0.375) {
+				avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_quarter.png\">";
+			}
+			numStars--;
+		}
+		$('#averageRatingStars').html(avgStarSpanHTML);
+		$('#averageRatingValue').html(averageRating + "/5");
+
 		var reviewDiv = "";
+		var starHTML = "";
+		numStars = 0;
 		for (i = 0; i < reviews.length; i++) {
 			numStars = reviews[i].rating;
 			starHTML = "";
@@ -191,7 +219,7 @@ $(document).ready(function(){
 			      "<label>" +
 			        "<strong>Posted By: </strong>" +
 			        "<span>" +
-			          reviews[i]['name'] +
+			          reviews[i].name +
 			        "</span>" +
 			      "</label><br>" +
 			      "<label>" +
@@ -203,24 +231,24 @@ $(document).ready(function(){
 			      "<label>" +
 			        "<strong>Term: </strong>" +
 			        "<span>" +
-			          reviews[i]['term'] +
+			          reviews[i].term +
 			        "</span>" +
 			      "</label><br>" +
 			      "<label>" +
 			        "<strong>Date Posted: </strong>" +
 			        "<span>" +
-			          reviews[i]['datePosted'] +
+			          reviews[i].datePosted +
 			        "</span>" +
 			      "</label><br>" +
 			      "<label>" +
 			        "<strong>Grade Received: </strong>" +
 			        "<span>" +
-			          reviews[i]['grade'] +
+			          reviews[i].grade +
 			        "</span>" +
 			      "</label>" +
 			    "</div>" +
 			    "<div class=\"col-md-7\">" +
-			      reviews[i]['reviewText'] +
+			      reviews[i].reviewText +
 			    "</div>" +
 			  "</div>" +
 			  "<span + class=\"modal-header\"></span>"
@@ -277,7 +305,7 @@ $(document).ready(function(){
 					      "<label>" +
 					        "<strong>Posted By: </strong>" +
 					        "<span>" +
-					          reviews[i]['name'] +
+					          reviews[i].name +
 					        "</span>" +
 					      "</label><br>" +
 					      "<label>" +
@@ -289,24 +317,24 @@ $(document).ready(function(){
 					      "<label>" +
 					        "<strong>Term: </strong>" +
 					        "<span>" +
-					          reviews[i]['term'] +
+					          reviews[i].term +
 					        "</span>" +
 					      "</label><br>" +
 					      "<label>" +
 					        "<strong>Date Posted: </strong>" +
 					        "<span>" +
-					          reviews[i]['datePosted'] +
+					          reviews[i].datePosted +
 					        "</span>" +
 					      "</label><br>" +
 					      "<label>" +
 					        "<strong>Grade Received: </strong>" +
 					        "<span>" +
-					          reviews[i]['grade'] +
+					          reviews[i].grade +
 					        "</span>" +
 					      "</label>" +
 					    "</div>" +
 					    "<div class=\"col-md-7\">" +
-					      reviews[i]['reviewText'] +
+					      reviews[i].reviewText +
 					    "</div>" +
 					  "</div>" +
 					  "<span + class=\"modal-header\"></span>"
