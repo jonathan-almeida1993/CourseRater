@@ -1,16 +1,17 @@
 $(document).ready(function(){
 
-	/*var url = new URL(window.location.href);
-	var courseIdURL = url.searchParams.get("courseId");*/
-
-	$('#header').load("header.html");
-
-	/*var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
+	var url = new URL(window.location.href);
+	var courseIdURL = url.searchParams.get("courseId");
+	
+	$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
+	
+	$("#header").load("header.html");
+	var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
 	var courseDetailsJSON = jQuery.parseJSON(courseDetails);
 	$('#courseNameHeader').text(courseDetailsJSON.courseNo+ "-" +courseDetailsJSON.courseName);
 	$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
 	$('#termTaken').val(courseDetailsJSON.termOffered);
-	$('#courseDesc').text(courseDetailsJSON.courseDesc);*/
+	$('#courseDesc').text(courseDetailsJSON.courseDesc);
 
 	/* Temporary dummy reviews. In the future, actual reviews will be retrieved in place of these. */
 	var exampleRev1 = new Object();
@@ -19,11 +20,11 @@ $(document).ready(function(){
 	exampleRev1.term = "Fall 2017";
 	exampleRev1.datePosted = "10/01/2018";
 	exampleRev1.gradeReceived = "A";
-	exampleRev1.reviewText = "160 was tough. They will cram a lot of information in
-	your head in a very short time. However, her assignments are fun, and
-	her approach on how to take coding and computer science is very intuitive
-	and interesting rather than boring. She helps a lot and cares about the
-	student. It may be hard but you\'ll learn the material well.";
+	exampleRev1.reviewText = "160 was tough. They will cram a lot of information in "+
+	"your head in a very short time. However, her assignments are fun, and "+
+	"her approach on how to take coding and computer science is very intuitive "+
+	"and interesting rather than boring. She helps a lot and cares about the "+
+	"student. It may be hard but you\'ll learn the material well.";
 	var jsonExampleRev1 = JSON.stringify(exampleRev1);
 
 	var exampleRev2 = new Object();
