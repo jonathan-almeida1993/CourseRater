@@ -7,8 +7,6 @@ $(document).ready(function() {
 	var urlPieces = window.location.pathname.split("/");
 	var currentPage = urlPieces[urlPieces.length - 1];
 	console.log("current page: " + currentPage);
-
-	$('#logoutBtn').click(logout());
 });
 
 /* Action on clicking the logout button */
@@ -16,7 +14,8 @@ function logout() {
 	if (typeof(Storage) !== "undefined") {
 		sessionStorage.isLoggedIn = 0;
 		var urlPieces = window.location.pathname.split("/");
-		sessionStorage.pageFrom = urlPieces[pathname.length-1];
+		var currentPage = urlPieces[urlPieces.length - 1];
+		sessionStorage.pageFrom = currentPage;
     //alert(sessionStorage.pageFrom);
     window.location.href="login.html";
 	}
