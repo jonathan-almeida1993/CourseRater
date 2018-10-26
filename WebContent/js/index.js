@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   //get department list
   var departmentList = sendDataSync("","fetchDepartments","CourseController");
   console.log("Department List = "+departmentList);
