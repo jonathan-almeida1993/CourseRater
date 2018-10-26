@@ -348,12 +348,17 @@ $(document).ready(function(){
 		/* Action when clicking the Submit Review button */
 		$('#submitReviewBtn').click(function() {
 			if ($('#ratingDropdown').val() == "" || $('#ratingDropdown').val() == null) {
+				$("#confirmCloseReviewFormAlert").hide();
+				$("#submitSuccessAlert").hide();
+				$('#submitPendingAlert').hide();
 				$("#fillFormAlert").html("Please give the course a rating!");
-				$("#fillFormAlert").css("display", "block");
+				$("#fillFormAlert").show();
 			}
 			else {
-				$("#fillFormAlert").css("display", "none");
-				$('#submitPendingAlert').css("display", "block");
+				$("#fillFormAlert").hide();
+				$("#confirmCloseReviewFormAlert").hide();
+				$("#submitSuccessAlert").hide();
+				$('#submitPendingAlert').show();
 				var today = new Date();
 				var dd = today.getDate();
 				var mm = today.getMonth() + 1;
@@ -431,14 +436,12 @@ $(document).ready(function(){
 					);
 				}
 
-				//$('#submitSuccessAlert').css("display", "block");
-
 				$('#submitReviewCourseId').val(courseIdURL);
 				var reviewJson = $('#submitReviewForm').serializeJSON();
 				var status = sendDataSync(JSON.stringify(reviewJson),"addReview","ReviewController");
 				if (status == "JDBC_OK") {
-					//$('#submitPendingAlert').css("display", "none");
-					//$('#submitSuccessAlert').css("display", "block");
+					$('#submitPendingAlert').hide();
+					$('#submitSuccessAlert').show();
 					window.location.href="course_page.html";
 				}
 			}
@@ -452,11 +455,15 @@ $(document).ready(function(){
 
 		$('#confirmCloseReviewBtn').click(function() {
 			console.log("Close Review button pressed!");
+			$('#fillFormAlert').hide();
+			$('#submitPendingAlert').hide();
+			$('#submitSuccessAlert').hide();
 			if ($('#gradeDropdown').val() != "" || $('#ratingDropdown').val() != "" ||
 					$('#reviewText').text() != "") {
-				$('#confirmCloseReviewFormAlert').show();
+						$('#confirmCloseReviewFormAlert').show();
 			}
 			else {
+				$('#confirmCloseReviewFormAlert').hide();
 				$('#submitReviewModal').modal('hide');
 			}
 		});

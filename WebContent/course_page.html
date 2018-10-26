@@ -95,6 +95,14 @@
                 <button type="button" class="btn btn-secondary float-right" id="yesCloseReviewFormBtn">Yes</button>
               </div>
             </div>
+            <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
+            <div class="alert alert-info" role="alert" id="submitPendingAlert">
+              Submitting review...
+            </div>
+            <div class="alert alert-success" role="alert" id="submitSuccessAlert">
+              Your review has been submitted!
+              <button type="button" class="btn btn-secondary float-right" id="dismissSubmitSuccessAlert">OK</button>
+            </div>
             <div class="modal-body">
               <form class="row" id="submitReviewForm" onsubmit="return validateSubmitReviewForm()">
 
@@ -152,16 +160,6 @@
                   <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
                 </div>
               </form>
-              <div class="form-group">
-                <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
-                <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
-                  Submitting review...
-                </div>
-                <div class="alert alert-success" role="alert" id="submitSuccessAlert">
-                  Your review has been submitted!
-                  <button type="button" class="btn btn-secondary" id="dismissSubmitSuccessAlert">OK</button>
-                </div>
-              </div>
               <div class="form-group">
                 <div class="modal-footer float-right">
                   <button type="button" class="btn btn-secondary float-left" id="confirmCloseReviewBtn">Close</button>
