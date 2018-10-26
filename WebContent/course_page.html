@@ -104,7 +104,7 @@
               <button type="button" class="btn btn-secondary float-right" id="dismissSubmitSuccessAlert">OK</button>
             </div>
             <div class="modal-body">
-              <form class="row" id="submitReviewForm" onsubmit="return validateSubmitReviewForm()">
+              <form class="row" id="submitReviewForm">
 
                 <div class="form-group col-md-6">
                   <div class="form-group">
@@ -139,16 +139,23 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="ratingDropdown">*Rating:</label>
-                    <select name="rating" class="custom-select" id="ratingDropdown">
-                        <option value="">Select rating (1-5)</option>
+                    <label for="ratingCheckbox">*Rating:</label>
+                    <!--<select name="rating" class="custom-select" id="ratingDropdown">
+                        <option value="">Select rating (1-5)</option>-->
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                        <option value="5">5</option>
+                        <!--<option value="5">5</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
                         <option value="1">1</option>
-                    </select>
+                    </select>-->
+                    <span name="rating" id="ratingCheckbox" value="">
+                      <img class="rating-star-check" src="images/star-8x_full.png" id="ratingStarChk1">
+                      <img class="rating-star-check" src="images/star-8x_full.png" id="ratingStarChk2">
+                      <img class="rating-star-check" src="images/star-8x_full.png" id="ratingStarChk3">
+                      <img class="rating-star-check" src="images/star-8x_full.png" id="ratingStarChk4">
+                      <img class="rating-star-check" src="images/star-8x_full.png" id="ratingStarChk5">
+                    </span>
                   </div>
                   <div class="form-group">
                     <label for="reviewText">Your Review:</label>

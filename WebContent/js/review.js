@@ -119,20 +119,60 @@ $(document).ready(function(){
 		);
 	}
 
+	$('#ratingStarChk1').click(function() {
+		$('#ratingStarChk1').css("opacity", "1");
+		$('#ratingStarChk2').css("opacity", "0.2");
+		$('#ratingStarChk3').css("opacity", "0.2");
+		$('#ratingStarChk4').css("opacity", "0.2");
+		$('#ratingStarChk5').css("opacity", "0.2");
+		$('#ratingCheckbox').val("1");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+	});
+
+	$('#ratingStarChk2').click(function() {
+		$('#ratingStarChk1').css("opacity", "1");
+		$('#ratingStarChk2').css("opacity", "1");
+		$('#ratingStarChk3').css("opacity", "0.2");
+		$('#ratingStarChk4').css("opacity", "0.2");
+		$('#ratingStarChk5').css("opacity", "0.2");
+		$('#ratingCheckbox').val("2");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+	});
+
+	$('#ratingStarChk3').click(function() {
+		$('#ratingStarChk1').css("opacity", "1");
+		$('#ratingStarChk2').css("opacity", "1");
+		$('#ratingStarChk3').css("opacity", "1");
+		$('#ratingStarChk4').css("opacity", "0.2");
+		$('#ratingStarChk5').css("opacity", "0.2");
+		$('#ratingCheckbox').val("3");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+	});
+
+	$('#ratingStarChk4').click(function() {
+		$('#ratingStarChk1').css("opacity", "1");
+		$('#ratingStarChk2').css("opacity", "1");
+		$('#ratingStarChk3').css("opacity", "1");
+		$('#ratingStarChk4').css("opacity", "1");
+		$('#ratingStarChk5').css("opacity", "0.2");
+		$('#ratingCheckbox').val("4");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+	});
+
+	$('#ratingStarChk5').click(function() {
+		$('#ratingStarChk1').css("opacity", "1");
+		$('#ratingStarChk2').css("opacity", "1");
+		$('#ratingStarChk3').css("opacity", "1");
+		$('#ratingStarChk4').css("opacity", "1");
+		$('#ratingStarChk5').css("opacity", "1");
+		$('#ratingCheckbox').val("5");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+
+	});
+
 	/* Action when clicking the Submit Review button */
 	$('#submitReviewBtn').click(function() {
-		if ($('#ratingDropdown').val() == "" || $('#ratingDropdown').val() == null) {
-			$("#confirmCloseReviewFormAlert").hide();
-			$("#submitSuccessAlert").hide();
-			$('#submitPendingAlert').hide();
-			$("#fillFormAlert").html("Please give the course a rating!");
-			$("#fillFormAlert").show();
-		}
-		else {
-			$("#fillFormAlert").hide();
-			$("#confirmCloseReviewFormAlert").hide();
-			$("#submitSuccessAlert").hide();
-			$('#submitPendingAlert').show();
+		if (validateSubmitReviewForm()) {
 			var today = new Date();
 			var dd = today.getDate();
 			var mm = today.getMonth() + 1;
@@ -212,6 +252,7 @@ $(document).ready(function(){
 
 			$('#submitReviewCourseId').val(courseIdURL);
 			var reviewJson = $('#submitReviewForm').serializeJSON();
+			//console.log(reviewJson);
 			var status = sendDataSync(JSON.stringify(reviewJson),"addReview","ReviewController");
 			if (status == "JDBC_OK") {
 				$('#submitPendingAlert').hide();
@@ -260,15 +301,21 @@ $(document).ready(function(){
 
 /* Submit Review Form Validation */
 function validateSubmitReviewForm() {
-	//var form = document.forms["submitReviewForm"];
-	var ratingField = ('#ratingDropdown').val();
-	if (ratingField == null || ratingField == "") {
+	if ($('#ratingCheckbox').val() == "" || $('#ratingCheckbox').val() == null) {
+		$("#confirmCloseReviewFormAlert").hide();
+		$("#submitSuccessAlert").hide();
+		$('#submitPendingAlert').hide();
 		$("#fillFormAlert").html("Please give the course a rating!");
-		$("#fillFormAlert").css("display", "block");
+		$("#fillFormAlert").show();
 		return false;
 	}
-	$("#fillFormAlert").css("display", "none");
-	return true;
+	else {
+		$("#fillFormAlert").hide();
+		$("#confirmCloseReviewFormAlert").hide();
+		$("#submitSuccessAlert").hide();
+		$('#submitPendingAlert').show();
+		return true;
+	}
 }
 
 /* Action on clicking the anonymous checkbox */

@@ -1,21 +1,21 @@
 $(document).ready(function() {
   //get department list
-  /*var departmentList = sendDataSync("","fetchDepartments","CourseController");
-  console.log("Department List = "+departmentList);*/
+  var departmentList = sendDataSync("","fetchDepartments","CourseController");
+  console.log("Department List = "+departmentList);
 
   //append department list to the subject drop down
 
-  /*$('#subjectDropDown').find('option').remove();
+  $('#subjectDropDown').find('option').remove();
   $('#subjectDropDown').append('<option value="">Select Department</option>').val('');
 
   var jsonDept = jQuery.parseJSON(departmentList);
 
   $.each(jsonDept, function(index, value) {
     $('#subjectDropDown').append('<option value="'+value.department+'">'+value.department+'</option>');
-  });*/
+  });
 
   /* When the user changes the subject in the Course Search form */
-  /*$('#subjectDropDown').change(function(){
+  $('#subjectDropDown').change(function(){
     var dept = $('#subjectDropDown').val();
     var jsonData = '{"department":"'+dept+'"}';
     var courseList = sendDataSync(jsonData,"fetchCourseNo","CourseController");
@@ -40,10 +40,10 @@ $(document).ready(function() {
     $.each(jsonCourse, function(index, value) {
       $('#courseDropDown').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
     });
-  });*/
+  });
 
   /* When the user changes the course number in the Course Search form */
-  /*$('#courseDropDown').change(function(){
+  $('#courseDropDown').change(function(){
     var dept = $('#subjectDropDown').val();
     var course = $('#courseDropDown').val();
     var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
@@ -68,10 +68,10 @@ $(document).ready(function() {
     $.each(jsonTerm, function(index, value) {
       $('#termDropDown').append('<option value="'+value.termOffered+'">'+value.termOffered+'</option>');
     });
-  });*/
+  });
 
   /* When the user changes the term taken in the Course Search form */
-  /*$('#termDropDown').change(function(){
+  $('#termDropDown').change(function(){
     var dept = $('#subjectDropDown').val();
     var course = $('#courseDropDown').val();
     var term = $('#termDropDown').val();
@@ -95,10 +95,10 @@ $(document).ready(function() {
     $.each(jsonInstructor, function(index, value) {
       $('#instructorDropDown').append('<option value="'+value.instructor+'">'+value.instructor+'</option>');
     });
-  });*/
+  });
 
   /* When the user changes instructor in the Course Search form */
-  /*$('#instructorDropDown').change(function(){
+  $('#instructorDropDown').change(function(){
     var dept = $('#subjectDropDown').val();
     var course = $('#courseDropDown').val();
     var term = $('#termDropDown').val();
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
     var jsonCourseId = jQuery.parseJSON(courseId);
     $('#searchCourseBtn').val(jsonCourseId.courseId);
-  });*/
+  });
 
   /* Action when clicking the Search Course button on the landing page */
   $('#searchCourseBtn').click(function() {
