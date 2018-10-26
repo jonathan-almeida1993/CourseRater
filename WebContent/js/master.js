@@ -249,6 +249,18 @@ $(document).ready(function(){
 	/* IF THE USER IS ON A COURSE'S PAGE */
 	/*************************************/
 	else if (currentPage.includes("course_page.html")) {
+		var url = new URL(window.location.href);
+		var courseIdURL = url.searchParams.get("courseId");
+
+		$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
+
+		$("#header").load("header.html");
+		var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
+		var courseDetailsJSON = jQuery.parseJSON(courseDetails);
+		$('#courseNameHeader').text(courseDetailsJSON.courseNo+ "-" +courseDetailsJSON.courseName);
+		$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
+		$('#termTaken').val(courseDetailsJSON.termOffered);
+		$('#courseDesc').text(courseDetailsJSON.courseDesc);
 
 		var exampleRev1 = new Object();
 		exampleRev1.name = "Omeed Habibelahian";
