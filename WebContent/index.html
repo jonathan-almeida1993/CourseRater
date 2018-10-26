@@ -99,7 +99,7 @@
       </div>
 
       <div class="modal-body">
-        <table class="table">
+        <table class="table" id="recentReviewTable">
           <thead>
             <tr>
               <th scope="col">Date</th>
@@ -109,8 +109,8 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody id="recentRevieTableBody">
+            <!--<tr>
               <th scope="row">08/07/18</th>
               <td>
                 <span id="reviewRating2" value="3">
@@ -178,7 +178,7 @@
                   Edit
                 </span>
               </td>
-            </tr>
+            </tr>-->
           </tbody>
         </table>
       </div>
@@ -186,9 +186,7 @@
         <div class="col">
         </div>
 
-        <button class="btn btn-primary col">
-          See 3 More Reviews...
-        </button>
+        <button class="btn btn-primary col" id="seeMoreReviewsBtn"></button>
 
         <div class="col">
         </div>
