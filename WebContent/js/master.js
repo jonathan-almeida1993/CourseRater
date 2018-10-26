@@ -2,15 +2,7 @@ $(document).ready(function(){
 
 	/* Load the main page header */
 	$('#header').load("header.html");
-	$('#confirmCloseModal').modal({ show: false });
-
-	/* When the login page loads AFTER logging out, display the logout success alert. */
-	if (typeof(Storage) !== "undefined") {
-    if (sessionStorage.isLoggedIn == 0 && sessionStorage.pageFrom != "login.html") {
-      $('#logoutModal').modal('show');
-    }
-  }
-
+	//$('#confirmCloseModal').modal({ show: false });
 
 	// Get the name of the page the user is currently on
 	var urlPieces = window.location.pathname.split("/");
@@ -138,8 +130,8 @@ $(document).ready(function(){
 
 		/* Action when clicking the Search Course button on the landing page */
 		$('#searchCourseBtn').click(function() {
-			var res = validateSearchForm();
-			if(res){
+			//var res = validateSearchForm();
+			if(validateSearchForm()){
 				window.location.href = 'course_page.html?courseId='+$('#searchCourseBtn').val();
 			}
 		});
@@ -232,6 +224,24 @@ $(document).ready(function(){
 				}
 			}
 			manageSeeMoreReviewsBtn(reviews, numReviewsShown);
+		});
+	}
+
+	/************************************/
+	/* IF THE USER IS ON THE LOGIN PAGE */
+	/************************************/
+	else if (currentPage == "login.html") {
+		/* When the login page loads AFTER logging out, display the logout success alert. */
+		if (typeof(Storage) !== "undefined") {
+	    if (sessionStorage.isLoggedIn == 0 && sessionStorage.pageFrom != "login.html") {
+	      $('#logoutModal').modal('show');
+	    }
+	  }
+
+		$('#loginBtn').click(function() {
+			if (validateLoginForm()) {
+				//JAVA CODE TO LOGIN
+			}
 		});
 	}
 
@@ -554,16 +564,28 @@ function logout() {
 
 /* Login Form Validation */
 function validateLoginForm() {
+	$('#badUsernameAlert').css("display", "none");
+	$('#badPasswordAlert').css("display", "none");
   var onidUsername = $('#onidUsername').val();
   var onidPassword = $('#onidPassword').val();
+	var formReady = true;
   if (onidUsername.length == 0) {
     $('#badUsernameAlert').html("Required field!");
-    $('#badUsernameAlert').css("display", "none");
+    $('#badUsernameAlert').css("display", "block");
+		//$('#badUsernamePopover').popover();
+		$('#onidUsername').css("box-shadow", "0 0 10px red");
+		$('#onidPassword').css("box-shadow", "0 0 0 black");
+		formReady = false;
   }
-  if (onidPassword.length == 0) {
+  else if (onidPassword.length == 0) {
     $('#badPasswordAlert').html("Required field!");
-    $('#badPasswordAlert').css("display", "none");
+    $('#badPasswordAlert').css("display", "block");
+		//$('#badPasswordPopover').popover();
+		$('#onidPassword').css("box-shadow", "0 0 10px red");
+		$('#onidUsername').css("box-shadow", "0 0 0 black");
+		formReady = false;
   }
+	return formReady;
 }
 
 function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
