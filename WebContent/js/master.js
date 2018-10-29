@@ -602,10 +602,10 @@ function validateLoginForm() {
 
 function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
 	if (reviews.length - numReviewsShown >= 3) {
-		$('#seeMoreReviewsBtn').html("See 3 More");
+		$('#seeMoreReviewsBtn').html("See 3 More Reviews");
 	}
 	else if (reviews.length - numReviewsShown > 0 && reviews.length - numReviewsShown < 3) {
-		$('#seeMoreReviewsBtn').html("See All");
+		$('#seeMoreReviewsBtn').html("See All Reviews");
 	}
 	else if (reviews.length - numReviewsShown == 0) {
 		$('#seeMoreReviewsBtn').css("display", "none");
