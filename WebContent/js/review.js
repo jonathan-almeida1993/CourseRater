@@ -3,12 +3,15 @@ $(document).ready(function(){
 	var url = new URL(window.location.href);
 	var courseIdURL = url.searchParams.get("courseId");
 
-	$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
+	//$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
 
 	$("#header").load("header.html");
 	var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
+	console.log("Course details: " + courseDetails);
 	var courseDetailsJSON = jQuery.parseJSON(courseDetails);
-	$('#courseNameHeader').text(courseDetailsJSON.courseNo+ "-" +courseDetailsJSON.courseName);
+	var subjectCode = courseDetailsJSON.department.split("(")[1].slice(0,-1);
+	console.log("Subject code: " + subjectCode);
+	$('#courseNameHeader').text(subjectCode + " " + courseDetailsJSON.courseNo+ " - " +courseDetailsJSON.courseName + " (" + courseDetailsJSON.termOffered + ")");
 	$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
 	$('#termTaken').val(courseDetailsJSON.termOffered);
 	$('#courseDesc').text(courseDetailsJSON.courseDesc);
@@ -118,55 +121,75 @@ $(document).ready(function(){
 			"<span + class=\"modal-header\"></span>"
 		);
 	}
+	
+	$('#ratingStarChk1').hover(function() {
+		$('#ratingStarValue').text("1/5");
+		colorHoveredStarRadioGroup(1);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk2').hover(function() {
+		$('#ratingStarValue').text("2/5");
+		colorHoveredStarRadioGroup(2);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk3').hover(function() {
+		$('#ratingStarValue').text("3/5");
+		colorHoveredStarRadioGroup(3);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk4').hover(function() {
+		$('#ratingStarValue').text("4/5");
+		colorHoveredStarRadioGroup(4);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk5').hover(function() {
+		$('#ratingStarValue').text("5/5");
+		colorHoveredStarRadioGroup(5);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
 
 	$('#ratingStarChk1').click(function() {
-		$('#ratingStarChk1').css("opacity", "1");
-		$('#ratingStarChk2').css("opacity", "0.2");
-		$('#ratingStarChk3').css("opacity", "0.2");
-		$('#ratingStarChk4').css("opacity", "0.2");
-		$('#ratingStarChk5').css("opacity", "0.2");
 		$('#ratingCheckbox').val("1");
 		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(1);
 	});
 
 	$('#ratingStarChk2').click(function() {
-		$('#ratingStarChk1').css("opacity", "1");
-		$('#ratingStarChk2').css("opacity", "1");
-		$('#ratingStarChk3').css("opacity", "0.2");
-		$('#ratingStarChk4').css("opacity", "0.2");
-		$('#ratingStarChk5').css("opacity", "0.2");
 		$('#ratingCheckbox').val("2");
 		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(2);
 	});
 
 	$('#ratingStarChk3').click(function() {
-		$('#ratingStarChk1').css("opacity", "1");
-		$('#ratingStarChk2').css("opacity", "1");
-		$('#ratingStarChk3').css("opacity", "1");
-		$('#ratingStarChk4').css("opacity", "0.2");
-		$('#ratingStarChk5').css("opacity", "0.2");
 		$('#ratingCheckbox').val("3");
 		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(3);
 	});
 
 	$('#ratingStarChk4').click(function() {
-		$('#ratingStarChk1').css("opacity", "1");
-		$('#ratingStarChk2').css("opacity", "1");
-		$('#ratingStarChk3').css("opacity", "1");
-		$('#ratingStarChk4').css("opacity", "1");
-		$('#ratingStarChk5').css("opacity", "0.2");
 		$('#ratingCheckbox').val("4");
 		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(4);
 	});
 
 	$('#ratingStarChk5').click(function() {
-		$('#ratingStarChk1').css("opacity", "1");
-		$('#ratingStarChk2').css("opacity", "1");
-		$('#ratingStarChk3').css("opacity", "1");
-		$('#ratingStarChk4').css("opacity", "1");
-		$('#ratingStarChk5').css("opacity", "1");
 		$('#ratingCheckbox').val("5");
 		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(5);
 
 	});
 
@@ -328,4 +351,34 @@ function toggleAnonymousMsg() {
       anonymousCheck.checked = true;
       $("#anonymousMsg").css("display", "block");
     }
+}
+
+function colorHoveredStarRadioGroup(numHovered) {
+	for (i = 1; i <= numHovered; i++) {
+		var starID = "#ratingStarChk" + i.toString();
+		$(starID).css("opacity", "0.4");
+	}
+	for (i = numHovered + 1; i <= 5; i++) {
+		var starID = "#ratingStarChk" + i.toString();
+		$(starID).css("opacity", "0.2");
+	}
+}
+
+function colorClickedStarRadioGroup(numChecked) {
+	if (numChecked > 0) {
+		for (i = 1; i <= numChecked; i++) {
+			var starID = "#ratingStarChk" + i.toString();
+			$(starID).css("opacity", "1");
+		}
+		for (i = numChecked + 1; i <= 5; i++) {
+			var starID = "#ratingStarChk" + i.toString();
+			$(starID).css("opacity", "0.2");
+		}
+	}
+	else {
+		for (i = 0; i <= 5; i++) {
+			var starID = "#ratingStarChk" + i.toString();
+			$(starID).css("opacity", "0.2");
+		}
+	}
 }

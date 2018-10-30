@@ -118,6 +118,7 @@ $(document).ready(function() {
   /* Action when clicking the Search Course button on the landing page */
   $('#searchCourseBtn').click(function() {
     //var res = validateSearchForm();
+    console.log("Search button pressed!");
     if(validateSearchForm()){
       window.location.href = 'course_page.html?courseId='+$('#searchCourseBtn').val();
     }
@@ -224,4 +225,35 @@ function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
 	else if (reviews.length - numReviewsShown == 0) {
 		$('#seeMoreReviewsBtn').css("display", "none");
 	}
+}
+
+/* Course Search Form Validation */
+function validateSearchForm() {
+  //var form = document.forms["searchCourseForm"];
+  var subjectField = $('#subjectDropDown').val();
+  var courseNumberField = $('#courseDropDown').val();
+  var termField = $('#termDropDown').val();
+  var instructorField = $('#instructorDropDown').val();
+  if (subjectField == null || subjectField == "") {
+    $("#fillFormAlert").html("Please select a subject!");
+    $("#fillFormAlert").css("display", "block");
+    return false;
+  }
+  else if (courseNumberField == null || courseNumberField == "") {
+    $("#fillFormAlert").html("Please select a course number!");
+    $("#fillFormAlert").css("display", "block");
+    return false;
+  }
+  else if (termField == null || termField == "") {
+    $("#fillFormAlert").html("Please select a term!");
+    $("#fillFormAlert").css("display", "block");
+    return false;
+  }
+  else if (instructorField == null || instructorField == "") {
+    $("#fillFormAlert").html("Please select an instructor!");
+    $("#fillFormAlert").css("display", "block");
+    return false;
+  }
+  $("#fillFormAlert").css("display", "none");
+  return true;
 }
