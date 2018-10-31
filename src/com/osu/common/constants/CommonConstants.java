@@ -15,4 +15,6 @@ public interface CommonConstants {
 	String OP_FETCH_COURSEID = "fetchCourseID";
 	String OP_FETCH_COURSE_DETAILS = "fetchCourseDetails";
 	String OP_ADD_REVIEW = "addReview";
+	String OP_GET_MY_REVIEWS = "getMyReviews";
+	String OP_GET_COURSE_REVIEWS = "getCourseReviews";
 }

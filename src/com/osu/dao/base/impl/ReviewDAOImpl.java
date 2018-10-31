@@ -66,4 +66,71 @@ public class ReviewDAOImpl implements ReviewDAO {
 		}
 		return status;
 	}
+	
+	public ArrayList<ReviewPojo> fetchMyReviews(String onid){
+		
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		ArrayList<ReviewPojo> reviewList = new ArrayList<ReviewPojo>();
+		
+		//course_id , onid, rating, review, grade_received, anonymous
+		try {
+			conn = getConnection();
+			preparedStatement = conn.prepareStatement(SqlConstants.GET_MY_REVIEWS);
+			preparedStatement.setString(1, onid);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				ReviewPojo singleReview = new ReviewPojo();
+				singleReview.setCourseId(resultSet.getInt("course_id"));
+				singleReview.setOnid(resultSet.getString("onid"));
+				singleReview.setRating(resultSet.getInt("rating"));
+				singleReview.setReview(resultSet.getString("review"));
+				singleReview.setGradeReceived(resultSet.getString("grade_received"));
+				singleReview.setAnonymous(resultSet.getBoolean("anonynous"));
+				reviewList.add(singleReview);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, conn);
+		}
+		
+		return reviewList;
+	} 
+	
+	public ArrayList<ReviewPojo> fetchCourseReviews(int courseId){
+		
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		ArrayList<ReviewPojo> reviewList = new ArrayList<ReviewPojo>();
+		
+		//course_id , onid, rating, review, grade_received, anonymous
+		try {
+			conn = getConnection();
+			preparedStatement = conn.prepareStatement(SqlConstants.GET_COURSE_REVIEWS);
+			preparedStatement.setInt(1, courseId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				ReviewPojo singleReview = new ReviewPojo();
+				singleReview.setCourseId(resultSet.getInt("course_id"));
+				singleReview.setOnid(resultSet.getString("onid"));
+				singleReview.setRating(resultSet.getInt("rating"));
+				singleReview.setReview(resultSet.getString("review"));
+				singleReview.setGradeReceived(resultSet.getString("grade_received"));
+				singleReview.setAnonymous(resultSet.getBoolean("anonynous"));
+				reviewList.add(singleReview);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, conn);
+		}
+		
+		return reviewList;
+	}
+
 }
