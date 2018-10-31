@@ -3,7 +3,8 @@ $(document).ready(function(){
 	var url = new URL(window.location.href);
 	var courseIdURL = url.searchParams.get("courseId");
 
-	//$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
+	console.log(document.cookie);
+	$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
 
 	$("#header").load("header.html");
 	var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
@@ -23,8 +24,8 @@ $(document).ready(function(){
 	exampleRev1.rating = 4;
 	exampleRev1.term = "Fall 2017";
 	exampleRev1.datePosted = "10/01/2018";
-	exampleRev1.grade = "A";
-	exampleRev1.reviewText = "160 was tough. They will cram a lot of information in your head in a very short time. However, her assignments are fun, and her approach on how to take coding and computer science is very intuitive and interesting rather than boring. She helps a lot and cares about the student. It may be hard but you'll learn the material well.";
+	exampleRev1.gradeReceived = "A";
+	exampleRev1.review = "160 was tough. They will cram a lot of information in your head in a very short time. However, her assignments are fun, and her approach on how to take coding and computer science is very intuitive and interesting rather than boring. She helps a lot and cares about the student. It may be hard but you'll learn the material well.";
 
 	var exampleRev2 = new Object();
 	exampleRev2.name = "Anonymous Student";
@@ -32,37 +33,12 @@ $(document).ready(function(){
 	exampleRev2.rating = 3;
 	exampleRev2.term = "Fall 2016";
 	exampleRev2.datePosted = "09/30/2018";
-	exampleRev2.grade = "B";
-	exampleRev2.reviewText = "";
+	exampleRev2.gradeReceived = "B";
+	exampleRev2.review = "";
 
 	var reviews = [];		// array that will hold all the reviews for the class
 	reviews.push(exampleRev1, exampleRev2);
-	var numStars = 0;
-	var averageRating = 0;
-	var avgStarSpanHTML = "";
-	var ratingSum = 0;
-	for (i = 0; i < reviews.length; i++) {
-		ratingSum += reviews[i].rating;
-	}
-	averageRating = ratingSum/reviews.length;
-	var numStars = averageRating;
-	while (numStars > 0) {
-		if (numStars >= 1) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-		}
-		else if (numStars >= 0.625 && numStars < 1) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_three-quarter.png\">";
-		}
-		else if (numStars >= 0.375 && numStars < 0.625) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_half.png\">";
-		}
-		else if (numStars < 0.375) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_quarter.png\">";
-		}
-		numStars--;
-	}
-	$('#averageRatingStars').html(avgStarSpanHTML);
-	$('#averageRatingValue').html(averageRating + "/5");
+	updateAverageRating(reviews);
 
 	var reviewDiv = "";
 	var starHTML = "";
@@ -76,8 +52,8 @@ $(document).ready(function(){
 		if (reviews[i].anonymous) {
 			reviews[i].name = "Anonymous Student";
 		}
-		if (reviews[i].reviewText == "") {
-			reviews[i].reviewText = "*This student did not write a review in their submission.*";
+		if (reviews[i].review == "") {
+			reviews[i].review = "*This student did not write a review in their submission.*";
 		}
 
 		$('#reviews').append(
@@ -110,18 +86,18 @@ $(document).ready(function(){
 					"<label>" +
 						"<strong>Grade Received: </strong>" +
 						"<span>" +
-							reviews[i].grade +
+							reviews[i].gradeReceived +
 						"</span>" +
 					"</label>" +
 				"</div>" +
 				"<div class=\"col-md-7\">" +
-					reviews[i].reviewText +
+					reviews[i].review +
 				"</div>" +
 			"</div>" +
 			"<span + class=\"modal-header\"></span>"
 		);
 	}
-	
+
 	$('#ratingStarChk1').hover(function() {
 		$('#ratingStarValue').text("1/5");
 		colorHoveredStarRadioGroup(1);
@@ -129,7 +105,7 @@ $(document).ready(function(){
 		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
 		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
 	});
-	
+
 	$('#ratingStarChk2').hover(function() {
 		$('#ratingStarValue').text("2/5");
 		colorHoveredStarRadioGroup(2);
@@ -137,7 +113,7 @@ $(document).ready(function(){
 		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
 		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
 	});
-	
+
 	$('#ratingStarChk3').hover(function() {
 		$('#ratingStarValue').text("3/5");
 		colorHoveredStarRadioGroup(3);
@@ -145,7 +121,7 @@ $(document).ready(function(){
 		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
 		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
 	});
-	
+
 	$('#ratingStarChk4').hover(function() {
 		$('#ratingStarValue').text("4/5");
 		colorHoveredStarRadioGroup(4);
@@ -153,7 +129,7 @@ $(document).ready(function(){
 		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
 		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
 	});
-	
+
 	$('#ratingStarChk5').hover(function() {
 		$('#ratingStarValue').text("5/5");
 		colorHoveredStarRadioGroup(5);
@@ -197,6 +173,7 @@ $(document).ready(function(){
 	$('#submitReviewBtn').click(function() {
 		if (validateSubmitReviewForm()) {
 			var today = new Date();
+			console.log(today);
 			var dd = today.getDate();
 			var mm = today.getMonth() + 1;
 			var yyyy = today.getFullYear();
@@ -205,91 +182,109 @@ $(document).ready(function(){
 			today = mm + '/' + dd + '/' + yyyy;
 
 			var newReview = new Object();
-			newReview.name = $('#studentName').text();
-			newReview.rating = $('#ratingDropdown').val();
+			newReview.courseId = courseIdURL;
+			newReview.name = $('#studentName').val();
+			console.log($('#anonymousCheck').checked);
+			var anonymousCheck = document.getElementById("anonymousCheck");
+			
+			newReview.anonymous = anonymousCheck.checked;
+			newReview.rating = $('#ratingCheckbox').val();
 			newReview.term = $('#termTaken').val();
 			newReview.datePosted = today;
 			if ($('#gradeDropdown').val() == "") {
-				newReview.grade = "N/A";
+				newReview.gradeReceived = "N";
 			}
-			else newReview.grade = $('#gradeDropdown').val();
+			else newReview.gradeReceived = $('#gradeDropdown').val();
 			if ($('#reviewText').text().length == 0) {
-				newReview.reviewText = "*This student did not write a review in their submission.*"
+				newReview.review = "*This student did not write a review in their submission.*"
 			}
-			else newReview.reviewText = $('reviewText').text();
+			else newReview.review = $('reviewText').text();
+			
+			reviews.push(newReview);
+			updateAverageRating(reviews);
 
-			reviews = [];
-			reviews.push(newReview, exampleRev1, exampleRev2);
+			numStars = newReview.rating;
+			starHTML = "";
+			for (i = 0; i < numStars; i++) {
+				starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+			}
 
-			var numStars = 0;
-			var starHTML = "";
-			$('#reviews').html("");
-			for (i = 0; i < reviews.length; i++) {
-				numStars = reviews[i].rating;
-				starHTML = "";
-				for (j = 0; j < numStars; j++) {
-					starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-				}
-
-				$('#reviews').append(
-					"<div class=\"modal-body row\">" +
-						"<div class=\"col-md-3\">" +
-							"<label>" +
-								"<strong>Posted By: </strong>" +
-								"<span>" +
-									reviews[i].name +
-								"</span>" +
-							"</label><br>" +
-							"<label>" +
-								"<strong>Rating: </strong>" +
-								"<span>" +
-									starHTML +
-								"</span>" +
-							"</label><br>" +
-							"<label>" +
-								"<strong>Term: </strong>" +
-								"<span>" +
-									reviews[i].term +
-								"</span>" +
-							"</label><br>" +
-							"<label>" +
-								"<strong>Date Posted: </strong>" +
-								"<span>" +
-									reviews[i].datePosted +
-								"</span>" +
-							"</label><br>" +
-							"<label>" +
-								"<strong>Grade Received: </strong>" +
-								"<span>" +
-									reviews[i].grade +
-								"</span>" +
-							"</label>" +
-						"</div>" +
-						"<div class=\"col-md-7\">" +
-							reviews[i].reviewText +
-						"</div>" +
+			$('#newReview').html(
+				"<div class=\"modal-body row\">" +
+					"<div class=\"col-md-3\">" +
+						"<label>" +
+							"<strong>Posted By: </strong>" +
+							"<span>" +
+								(newReview.anonymous ? "Anonymous Student" : newReview.name) +
+							"</span>" +
+						"</label><br>" +
+						"<label>" +
+							"<strong>Rating: </strong>" +
+							"<span>" +
+								starHTML +
+							"</span>" +
+						"</label><br>" +
+						"<label>" +
+							"<strong>Term: </strong>" +
+							"<span>" +
+								newReview.term +
+							"</span>" +
+						"</label><br>" +
+						"<label>" +
+							"<strong>Date Posted: </strong>" +
+							"<span>" +
+								newReview.datePosted +
+							"</span>" +
+						"</label><br>" +
+						"<label>" +
+							"<strong>Grade Received: </strong>" +
+							"<span>" +
+								(newReview.gradeReceived == "N" ? "N/A" : newReview.gradeReceived) +
+							"</span>" +
+						"</label>" +
 					"</div>" +
-					"<span + class=\"modal-header\"></span>"
-				);
-			}
+					"<div class=\"col-md-7\">" +
+						newReview.review +
+					"</div>" +
+				"</div>" +
+				"<span + class=\"modal-header\"></span>"
+			);
+			//$('#newReview').css({"border": "3px solid #b1dfbb", "border-radius": "7px"});
+			$({alpha:0}).animate({alpha:1}, {
+				duration: 1000,
+				step: function() {
+					$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
+					console.log("border getting brighter");
+				}
+			});
+			
+			setTimeout(function() {
+				$({alpha:1}).animate({alpha:0}, {
+					duration: 1000,
+					step: function() {
+						$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
+						console.log("border getting lighter");
+					}
+				});
+			}, 5000);
 
 			$('#submitReviewCourseId').val(courseIdURL);
-			var reviewJson = $('#submitReviewForm').serializeJSON();
-			//console.log(reviewJson);
-			var status = sendDataSync(JSON.stringify(reviewJson),"addReview","ReviewController");
+			//var reviewJson = newReview.serializeJSON();
+			//console.log("form: " + $('#submitReviewForm'));
+			console.log(JSON.stringify(newReview));
+			var status = sendDataSync(JSON.stringify(newReview),"addReview","ReviewController");
 			if (status == "JDBC_OK") {
 				$('#submitPendingAlert').hide();
-				$('#submitSuccessAlert').show();
-				window.location.href="course_page.html";
+				$('#submitReviewModal').modal("hide");
 			}
 		}
 	});
 
-	$('#dismissSubmitSuccessAlert').click(function () {
+	/*$('#dismissSubmitSuccessAlert').click(function () {
 		var url = new URL(window.location.href);
 		var courseIdURL = url.searchParams.get("courseId");
 		window.location.href = "course_page.html?courseId="+courseIdURL;
-	});
+	});*/
 
 	$('#confirmCloseReviewBtn').click(function() {
 		console.log("Close Review button pressed!");
@@ -351,6 +346,7 @@ function toggleAnonymousMsg() {
       anonymousCheck.checked = true;
       $("#anonymousMsg").css("display", "block");
     }
+    console.log(anonymousCheck.checked);
 }
 
 function colorHoveredStarRadioGroup(numHovered) {
@@ -381,4 +377,35 @@ function colorClickedStarRadioGroup(numChecked) {
 			$(starID).css("opacity", "0.2");
 		}
 	}
+}
+
+function updateAverageRating(reviews) {
+	var averageRating = 0;
+	var ratingSum = 0;
+	console.log(reviews.length);
+	for (i = 0; i < reviews.length; i++) {
+		ratingSum += parseInt(reviews[i].rating);
+	}
+	console.log(ratingSum);
+	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,4));
+	console.log(averageRating);
+	var numStars = averageRating;
+	var avgStarSpanHTML = "";
+	while (numStars > 0) {
+		if (numStars >= 1) {
+			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+		}
+		else if (numStars >= 0.625 && numStars < 1) {
+			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_three-quarter.png\">";
+		}
+		else if (numStars >= 0.375 && numStars < 0.625) {
+			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_half.png\">";
+		}
+		else if (numStars < 0.375) {
+			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_quarter.png\">";
+		}
+		numStars--;
+	}
+	$('#averageRatingStars').html(avgStarSpanHTML);
+	$('#averageRatingValue').html(averageRating + "/5");
 }

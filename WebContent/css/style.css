@@ -133,9 +133,10 @@ body {
   opacity: 0.2;
 }
 
-/*.review-div {
-  display: none;
-}*/
+#newReview {
+	border: 3px solid rgba(177, 223, 187, 0);
+	border-radius: 7px;
+}
 
 #badUsernameAlert { display: none; }
 #badPasswordAlert { display: none; }
