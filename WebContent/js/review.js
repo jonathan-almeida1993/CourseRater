@@ -291,7 +291,22 @@ $(document).ready(function(){
 		$('#fillFormAlert').hide();
 		$('#submitPendingAlert').hide();
 		$('#submitSuccessAlert').hide();
-		if ($('#gradeDropdown').val() != "" || $('#ratingDropdown').val() != "" ||
+		if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
+				$('#reviewText').text() != "") {
+					$('#confirmCloseReviewFormAlert').show();
+		}
+		else {
+			$('#confirmCloseReviewFormAlert').hide();
+			$('#submitReviewModal').modal('hide');
+		}
+	});
+	
+	$('#closeReviewFormX').click(function() {
+		console.log("Close Review button pressed!");
+		$('#fillFormAlert').hide();
+		$('#submitPendingAlert').hide();
+		$('#submitSuccessAlert').hide();
+		if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
 				$('#reviewText').text() != "") {
 					$('#confirmCloseReviewFormAlert').show();
 		}
