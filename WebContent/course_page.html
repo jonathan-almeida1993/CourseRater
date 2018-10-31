@@ -11,8 +11,8 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/jquery.serializejson.js"></script>
-  <script src="js/master.js"></script>
-<!--   <script src="js/master.js"></script> -->
+  <script src="js/review.js"></script>
+  <script src="js/header.js"></script>
   <script src="js/datatransfer.js"></script>
 
   <!-- js end -->
@@ -75,6 +75,7 @@
 
 <!-- Start of the next review is here  -->
 
+	<div id="newReview"></div>
     <div id="reviews"></div>
 
     <!-- Submit review modal -->
@@ -95,13 +96,21 @@
                 <button type="button" class="btn btn-secondary float-right" id="yesCloseReviewFormBtn">Yes</button>
               </div>
             </div>
+            <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
+            <div class="alert alert-info" role="alert" id="submitPendingAlert">
+              Submitting review...
+            </div>
+            <div class="alert alert-success" role="alert" id="submitSuccessAlert">
+              Your review has been submitted!
+              <button type="button" class="btn btn-secondary float-right" id="dismissSubmitSuccessAlert">OK</button>
+            </div>
             <div class="modal-body">
-              <form class="row" id="submitReviewForm" onsubmit="return validateSubmitReviewForm()">
+              <form class="row" id="submitReviewForm">
 
                 <div class="form-group col-md-6">
                   <div class="form-group">
                     <fieldset disabled>
-                      <label for="studentName">Name</label>
+                      <label for="studentName">Name:</label>
                       <!-- student name will appear filled in, there is an anonymity check box below it.  -->
                       <input type="name" class="form-control" id="studentName" placeholder="[Student Name]" name="studentName">
                     </fieldset>
@@ -131,16 +140,24 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="ratingDropdown">*Rating:</label>
-                    <select name="rating" class="custom-select" id="ratingDropdown">
-                        <option value="">Select rating (1-5)</option>
+                    <label for="ratingCheckbox">*Rating:</label>
+                    <!--<select name="rating" class="custom-select" id="ratingDropdown">
+                        <option value="">Select rating (1-5)</option>-->
                         <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                        <option value="5">5</option>
+                        <!--<option value="5">5</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
                         <option value="1">1</option>
-                    </select>
+                    </select>-->
+                    <span name="rating" id="ratingCheckbox" value="">
+                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk1"></a>
+                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk2"></a>
+                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk3"></a>
+                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk4"></a>
+                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk5"></a>
+                      <strong><span id="ratingStarValue"></span></strong>
+                    </span>
                   </div>
                   <div class="form-group">
                     <label for="reviewText">Your Review:</label>
@@ -152,16 +169,6 @@
                   <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
                 </div>
               </form>
-              <div class="form-group">
-                <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
-                <div class="alert alert-secondary" role="alert" id="submitPendingAlert">
-                  Submitting review...
-                </div>
-                <div class="alert alert-success" role="alert" id="submitSuccessAlert">
-                  Your review has been submitted!
-                  <button type="button" class="btn btn-secondary" id="dismissSubmitSuccessAlert">OK</button>
-                </div>
-              </div>
               <div class="form-group">
                 <div class="modal-footer float-right">
                   <button type="button" class="btn btn-secondary float-left" id="confirmCloseReviewBtn">Close</button>

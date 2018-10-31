@@ -125,9 +125,18 @@ body {
   padding-bottom:1em;
 }
 
-/*.review-div {
-  display: none;
-}*/
+.rating-star {
+   zoom: 25%;
+}
+.rating-star-check {
+  zoom: 35%;
+  opacity: 0.2;
+}
+
+#newReview {
+	border: 3px solid rgba(177, 223, 187, 0);
+	border-radius: 7px;
+}
 
 #badUsernameAlert { display: none; }
 #badPasswordAlert { display: none; }
@@ -255,9 +264,6 @@ h2{
 
 
 /* star rating start */
-.rating-star {
-   zoom: 25%;
-}
 .rating-g .br-widget a {
   display: block;
   float: left;

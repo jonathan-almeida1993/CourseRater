@@ -3,3 +3,6 @@
 .settings
 .DS_STORE
 build/
+/bin/
+./WebContent/META-INF/context.xml
+./WebContent/WEB-INF/lib/javax.servlet.jar
