@@ -138,9 +138,14 @@ body {
 	border-radius: 7px;
 }
 
+#searchCourseDivCP {
+	background: #d3d3d3;
+}
+
 #badUsernameAlert { display: none; }
 #badPasswordAlert { display: none; }
 #fillFormAlert { display: none; }
+#fillFormAlertCP { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }
 #confirmCloseReviewFormAlert { display: none; }

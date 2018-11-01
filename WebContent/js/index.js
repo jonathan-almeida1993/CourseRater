@@ -54,15 +54,17 @@ $(document).ready(function() {
 
     $('#termDropDown').find('option').remove();
     $('#termDropDown').append('<option value="">Select Term</option>').val('');
+    $('#instructorDropDown').find('option').remove();
+    $('#instructorDropDown').append('<option value="">Select Professor/Instructor</option>').val('');
 
     //enable or disable dropdowns
     if(course == ''){
       $('#termDropDown').attr('disabled','disabled');
+      $('#instructorDropDown').attr('disabled','disabled');
     }else{
       $('#termDropDown').removeAttr('disabled');
+      $('#instructorDropDown').removeAttr('disabled');
     }
-    $('#instructorDropDown').attr('disabled','disabled');
-    $('#instructorDropDown').val('');
 
     var jsonTerm = jQuery.parseJSON(termList);
 
@@ -82,14 +84,14 @@ $(document).ready(function() {
     console.log("Instructor List = "+instructorList);
 
     $('#instructorDropDown').find('option').remove();
-    $('#instructorDropDown').append('<option value="">Select Instructor</option>').val('');
+    $('#instructorDropDown').append('<option value="">Select Professor/Instructor</option>').val('');
 
     //enable or disable dropdowns
-    if(term == ''){
+    /*if(term == ''){
       $('#instructorDropDown').attr('disabled','disabled');
     }else{
       $('#instructorDropDown').removeAttr('disabled');
-    }
+    }*/
 
     var jsonInstructor = jQuery.parseJSON(instructorList);
 

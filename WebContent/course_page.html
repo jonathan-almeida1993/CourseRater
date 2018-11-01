@@ -20,7 +20,7 @@
   <!-- css start -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Slabo+13px" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Slabo+13px" rel="stylesheet">
   <!-- css end -->
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,10 +37,54 @@
   <div id="header"></div>
 
   <!-- Search Course Container -->
+  <div class="col-lg-12" id="searchCourseDivCP">
+    <form name="searchCourseFormCP" id="searchCourseFormCP">
+      <br>
+      <div class="row">
+        <div class="form-group col-md-3">
+          <label for="subjectDropDownCP">*Subject</label>
+          <select class="custom-select" name="subject" id="subjectDropDownCP">
+            <option value="">Select Department</option>
+
+            <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="courseDropDownCP">*Course Number</label>
+          <select class="custom-select" id="courseDropDownCP">
+            <option value="">Select Course Number</option>
+
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="TermDropdownCP">Term</label>
+          <select class="custom-select" id="termDropDownCP">
+            <option value="" selected>Select Term</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="instructorDropDownCP">Professor/Instructor</label>
+          <select class="custom-select" id="instructorDropDownCP">
+            <option value="" selected>Select Professor/Instructor</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="searchCourseBtnCP"><small>*Required Field&nbsp;</small></label>
+          <button class="btn btn-primary" type="button" id="searchCourseBtnCP" value="">Search</button>
+        </div>
+      </div>
+      <div class="row">
+
+      </div>
+      <div class="alert alert-danger" role="alert" id="fillFormAlertCP"></div>
+      <br>
+    </form>
+  </div>
+
+  <!-- Course Page Main Container -->
   <div class="col-lg-12">
     <div class="modal-header row">
       <div class="col-md-10">
-        <br>
         <h3 class="section-header" id="courseNameHeader">[Course Name]</h3>
         <h4 id="courseInstructorHeader">[Course Instructor]</h4>
       </div>
@@ -66,16 +110,16 @@
     </div>
 
     <div class="modal-header">
-        <h4 class="section-header">Reviews</h4>
+      <h4 class="section-header">Reviews</h4>
     </div>
 
     <!-- This section is how the review will appear for each one.  -->
 
-<!-- Section headers will serve as a visual divider between each review -->
+    <!-- Section headers will serve as a visual divider between each review -->
 
-<!-- Start of the next review is here  -->
+    <!-- Start of the next review is here  -->
 
-	<div id="newReview"></div>
+    <div id="newReview"></div>
     <div id="reviews"></div>
 
     <!-- Submit review modal -->
@@ -129,12 +173,12 @@
                   <div class="form-group">
                     <label for="gradeDropdown">Grade Received:</label>
                     <select name="gradeReceived" class="custom-select" id="gradeDropdown">
-                        <option value="">Select...</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="F">F</option>
+                      <option value="">Select...</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="F">F</option>
                     </select>
                   </div>
                 </div>
@@ -142,38 +186,37 @@
                   <div class="form-group">
                     <label for="ratingCheckbox">*Rating:</label>
                     <!--<select name="rating" class="custom-select" id="ratingDropdown">
-                        <option value="">Select rating (1-5)</option>-->
-                        <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
-                        <!--<option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                    </select>-->
-                    <span name="rating" id="ratingCheckbox" value="">
-                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk1"></a>
-                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk2"></a>
-                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk3"></a>
-                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk4"></a>
-                      <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk5"></a>
-                      <strong><span id="ratingStarValue"></span></strong>
-                    </span>
-                  </div>
-                  <div class="form-group">
-                    <label for="reviewText">Your Review:</label>
-                    <textarea name="review" class="form-control" id="reviewText"></textarea>
-                    <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
-                    <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br>
-                    <small>* Required Field</small>
-                  </div>
-                  <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
+                    <option value="">Select rating (1-5)</option>-->
+                    <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
+                    <!--<option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                  </select>-->
+                  <span name="rating" id="ratingCheckbox" value="">
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk1"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk2"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk3"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk4"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChk5"></a>
+                    <strong><span id="ratingStarValue"></span></strong>
+                  </span>
                 </div>
-              </form>
-              <div class="form-group">
-                <div class="modal-footer float-right">
-                  <button type="button" class="btn btn-secondary float-left" id="confirmCloseReviewBtn">Close</button>
-                  <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
+                <div class="form-group">
+                  <label for="reviewText">Your Review:</label>
+                  <textarea name="review" class="form-control" id="reviewText"></textarea>
+                  <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
+                  <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br>
+                  <small>* Required Field</small>
                 </div>
+                <input type="hidden" name="courseId" id="submitReviewCourseId"></input>
+              </div>
+            </form>
+            <div class="form-group">
+              <div class="modal-footer float-right">
+                <button type="button" class="btn btn-secondary float-left" id="confirmCloseReviewBtn">Close</button>
+                <button type="button" class="btn btn-primary float-right" id="submitReviewBtn">Submit Review</button>
               </div>
             </div>
           </div>
@@ -181,5 +224,6 @@
       </div>
     </div>
   </div>
+</div>
 </body>
 </html>
