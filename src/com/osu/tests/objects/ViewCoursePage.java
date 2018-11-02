@@ -1,6 +1,20 @@
 package com.osu.tests.objects;
 
 public class ViewCoursePage {
+
+	public static final String subjectLabel = "//label[text()='*Subject']";
+	public static final String subjectDropdown = "//select[@id='subjectDropDownCP']";
+	public static final String courseNumberLabel = "//label[text()='*Course Number']";
+	public static final String courseEnabledDropdown = "//select[@id='courseDropDownCP']";
+	public static final String courseDisabledDropdown = "//select[@id='courseDropDownCP' and @disabled]";
+	public static final String termLabel = "//label[text()='Term']";
+	public static final String termEnabledDropdown = "//select[@id='termDropDownCP']";
+	public static final String termDisabledDropdown = "//select[@id='termDropDownCP' and @disabled]";
+	public static final String professorLabel = "//label[text()='Professor/Instructor']";
+	public static final String professorEnabledDropdown = "//select[@id='instructorDropDownCP']";
+	public static final String professorDisabledDropdown = "//select[@id='instructorDropDownCP' and @disabled]";
+	public static final String requiredFieldLabel = "//small[contains(.,'*Required Field')]";
+	public static final String searchBtn = "//button[text()='Search']";
 	
 	public static final String subjectHeader = "//h3[@class='section-header']";
 	public static final String profName = "//h4[@id='courseInstructorHeader']";

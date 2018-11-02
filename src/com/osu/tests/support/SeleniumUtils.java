@@ -144,6 +144,7 @@ public class SeleniumUtils extends BaseTest{
 
 	public static Select select(Locator locator, String locatorValue, String element) {
 		Select sel = new Select(getElement(locator, locatorValue));
+		sel.selectByValue(element);
 		return sel;
 	} 
 
