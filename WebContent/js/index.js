@@ -246,7 +246,7 @@ function validateSearchForm() {
     $("#fillFormAlert").css("display", "block");
     return false;
   }
-  else if (termField == null || termField == "") {
+  /*else if (termField == null || termField == "") {
     $("#fillFormAlert").html("Please select a term!");
     $("#fillFormAlert").css("display", "block");
     return false;
@@ -255,7 +255,7 @@ function validateSearchForm() {
     $("#fillFormAlert").html("Please select an instructor!");
     $("#fillFormAlert").css("display", "block");
     return false;
-  }
+  }*/
   $("#fillFormAlert").css("display", "none");
   return true;
 }
