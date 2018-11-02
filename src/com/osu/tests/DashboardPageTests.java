@@ -107,7 +107,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
 			click(Locator.XPATH, DashboardPage.searchBtn, "Search button", true);
 			Assert.assertTrue(getElement(Locator.XPATH, DashboardPage.fillFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is enabled");
 			Assert.assertTrue(getElement(Locator.XPATH, DashboardPage.fillFormAlert).getText().equals("Please select a course number!"), "The alert tells the user to select a course number.");
@@ -121,40 +121,40 @@ public class DashboardPageTests extends SeleniumUtils{
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
 			click(Locator.XPATH, DashboardPage.searchBtn, "Search button", true);
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "The subject header for the Course Page is visible");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.subjectHeader).getText().contains("CS 160"), "The course header contains the correct course information");
 		}
 	}
 
-	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course")
+	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course")
 	public void dashboardPageTest10() {
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
 			click(Locator.XPATH, DashboardPage.searchBtn, "Search button", true);
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "The subject header for the Course Page is visible");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.subjectHeader).getText().contains("CS 160"), "The course header contains the correct course information");
 		}
 	}
 
-	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course")
+	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course")
 	public void dashboardPageTest11() {
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Fall 2018");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
 			click(Locator.XPATH, DashboardPage.searchBtn, "Search button", true);
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "The subject header for the Course Page is visible");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.subjectHeader).getText().contains("CS 160"), "The course header contains the correct course information");
@@ -168,28 +168,46 @@ public class DashboardPageTests extends SeleniumUtils{
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Fall 2018");
-			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
 			click(Locator.XPATH, DashboardPage.searchBtn, "Search button", true);
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "The subject header for the Course Page is visible");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.subjectHeader).getText().contains("CS 160"), "The course header contains the correct course information");
 		}
 	}
 
-	@Test(description = "Verify that if the term field is reset, the other fields don't change")
+	@Test(description = "Verify that if the instructor field is reset, the other fields don't change")
 	public void dashboardPageTest13() {
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Fall 2018");
-			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Jennifer Parham-Mocello");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Professor dropdown").selectByValue("");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown", true), "The subject dropdown is still available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown", true), "The course dropdown is still enabled.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown", true), "The term dropdown is still enabled.");
+		}
+	}
+
+	@Test(description = "Verify that if the term field is reset, the other fields don't change")
+	public void dashboardPageTest14() {
+		login();
+
+		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
+			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown", true), "The subject dropdown is still available.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown", true), "The course dropdown is still enabled.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown", true), "The instructor dropdown is still enabled.");
@@ -197,17 +215,17 @@ public class DashboardPageTests extends SeleniumUtils{
 	}
 
 	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled")
-	public void dashboardPageTest14() {
+	public void dashboardPageTest15() {
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Fall 2018");
-			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Jennifer Parham-Mocello");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown", true), "The subject dropdown is still available.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown", false), "The term dropdown is no longer enabled.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown", false), "The instructor dropdown is no longer enabled.");
@@ -217,17 +235,17 @@ public class DashboardPageTests extends SeleniumUtils{
 	}
 
 	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled")
-	public void dashboardPageTest15() {
+	public void dashboardPageTest16() {
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is visible on the page");
 			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.searchBtn, "Search button", true), "The Search button is clickable");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "Computer Science (CS)");
-			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "160");
-			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Fall 2018");
-			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Jennifer Parham-Mocello");
-			select(Locator.XPATH, DashboardPage.subjectDropdown, "");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("Computer Science (CS)");
+			select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown").selectByValue("160");
+			select(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			select(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown").selectByValue("");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.subjectDropdown, "Subject dropdown", true), "The subject dropdown is still available.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.courseEnabledDropdown, "Course dropdown", false), "The course dropdown is no longer enabled.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.termEnabledDropdown, "Term dropdown", false), "The term dropdown is no longer enabled.");
