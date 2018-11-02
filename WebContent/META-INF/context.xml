@@ -6,7 +6,7 @@
 	<Resource name="jdbc/dbConForCourseRater" auth="Container" type="javax.sql.DataSource"
 		username="root" password="pass,123"
 		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/course_rater"
+		url="jdbc:mysql://localhost:3306/course_rater?serverTimezone=UTC"
 		initialSize="3" maxActive="-1" maxIdle="3" maxWait="100000" poolPreparedStatements="true"
 		maxOpenPreparedStatements="10" />
 	<!-- for live server ends -->
