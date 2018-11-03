@@ -3,19 +3,48 @@ $(document).ready(function(){
 	var url = new URL(window.location.href);
 	var courseIdURL = url.searchParams.get("courseId");
 	console.log("courseIdURL: " + courseIdURL);
-
+	var courseIds = courseIdURL.split('C');
+	courseIds.splice(0,1);
+	console.log("course IDs: [" + courseIds + "]");
 
 	console.log(document.cookie);
 	$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
 
 	$("#header").load("header.html");
-	var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
+	var idInstructors = [];
+	var idTerms = [];
+	var courseDetailsJSON = [];
+	$.each(courseIds, function(index, value) {
+		var courseDetails = sendDataSync("{'courseId':'"+value+"'}","fetchCourseDetails","CourseController");
+		console.log("Course details: " + courseDetails);
+		courseDetailsJSON = jQuery.parseJSON(courseDetails);
+		if (!idInstructors.includes(courseDetailsJSON.instructor)) {
+			idInstructors.push(courseDetailsJSON.instructor);
+		}
+		if (!idTerms.includes(courseDetailsJSON.termOffered)) {
+			idTerms.push(courseDetailsJSON.termOffered);
+		}
+		/*var subjectCode = courseDetailsJSON.department.split("(")[1].slice(0,-1);
+		console.log("Subject code: " + subjectCode);*/
+		
+	});
+	/*var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
 	console.log("Course details: " + courseDetails);
-	var courseDetailsJSON = jQuery.parseJSON(courseDetails);
+	var courseDetailsJSON = jQuery.parseJSON(courseDetails);*/
 	var subjectCode = courseDetailsJSON.department.split("(")[1].slice(0,-1);
 	console.log("Subject code: " + subjectCode);
-	$('#courseNameHeader').text(subjectCode + " " + courseDetailsJSON.courseNo+ " - " +courseDetailsJSON.courseName + " (" + courseDetailsJSON.termOffered + ")");
-	$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
+	if (idTerms.length > 1) {
+		$('#courseNameHeader').text(subjectCode + " " + courseDetailsJSON.courseNo+ " - " +courseDetailsJSON.courseName + " (All Terms)");
+	}
+	else {
+		$('#courseNameHeader').text(subjectCode + " " + courseDetailsJSON.courseNo+ " - " +courseDetailsJSON.courseName + " (" + courseDetailsJSON.termOffered + ")");
+	}
+	if (idInstructors.length > 1) {
+		$('#courseInstructorHeader').text("All Professors/Instructors");
+	}
+	else {
+		$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
+	}
 	$('#termTaken').val(courseDetailsJSON.termOffered);
 	$('#courseDesc').text(courseDetailsJSON.courseDesc);
 
