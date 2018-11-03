@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	var url = new URL(window.location.href);
 	var courseIdURL = url.searchParams.get("courseId");
-
+	console.log("courseIdURL: " + courseIdURL);
 
 
 	console.log(document.cookie);
@@ -48,338 +48,247 @@ $(document).ready(function(){
 	$('#courseDropDownCP').val(courseDetailsJSON.courseNo);
 
 	var course = $('#courseDropDownCP').val();
-	jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
-	var termList = sendDataSync(jsonData,"fetchTerm","CourseController");
-	console.log("Term List = "+termList);
-	$('#termDropDownCP').find('option').remove();
-	$('#termDropDownCP').append('<option value="">Select Term</option>').val('');
-	var jsonTerm = jQuery.parseJSON(termList);
-	$.each(jsonTerm, function(index, value) {
-		$('#termDropDownCP').append('<option value="'+value.termOffered+'">'+value.termOffered+'</option>');
-	});
-	$('#termDropDownCP').val(courseDetailsJSON.termOffered);
+	var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
-	var term = $('#termDropDownCP').val();
-	var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'"}';
-	var instructorList = sendDataSync(jsonData,"fetchInstructor","CourseController");
-	console.log("Instructor List = "+instructorList);
-	$('#instructorDropDownCP').find('option').remove();
-	$('#instructorDropDownCP').append('<option value="">Select Professor/Instructor</option>').val('');
-	var jsonInstructor = jQuery.parseJSON(instructorList);
-	$.each(jsonInstructor, function(index, value) {
-		$('#instructorDropDownCP').append('<option value="'+value.instructor+'">'+value.instructor+'</option>');
-	});
-	$('#instructorDropDownCP').val(courseDetailsJSON.instructor);
+    var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
+    console.log("Term List = "+termInstrList);
+
+    $('#termDropDownCP').find('option').remove();
+    $('#termDropDownCP').append('<option value="">All Terms</option>').val('');
+    $('#instructorDropDownCP').find('option').remove();
+    $('#instructorDropDownCP').append('<option value="">All Professors/Instructors</option>').val('');
+    jsonTermInstr = jQuery.parseJSON(termInstrList);
+    console.log("jsonTermInstr: " + jsonTermInstr);
+    
+    var terms = [];
+    for (i = 0; i < jsonTermInstr.length; i++) {
+    	if (!terms.includes(jsonTermInstr[i].termOffered)) {
+    		terms.push(jsonTermInstr[i].termOffered);
+    	}
+    }	
+    
+    var instructors = [];
+    for (i = 0; i < jsonTermInstr.length; i++) {
+    	if (!instructors.includes(jsonTermInstr[i].instructor)) {
+    		instructors.push(jsonTermInstr[i].instructor);
+    	}
+    } 
+
+    $.each(terms, function(index, value) {
+      $('#termDropDownCP').append('<option value="'+value+'">'+value+'</option>');
+    });
+    
+    $.each(instructors, function(index, value) {
+      $('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
+    });
+    
+    $('#termDropDownCP').val(courseDetailsJSON.termOffered);
+    $('#instructorDropDownCP').val(courseDetailsJSON.instructor);
 
 	/* When the user changes the subject in the Course Search form */
-	$('#subjectDropDownCP').change(function(){
-		var dept = $('#subjectDropDownCP').val();
-		var jsonData = '{"department":"'+dept+'"}';
-		var courseList = sendDataSync(jsonData,"fetchCourseNo","CourseController");
-		console.log("Course List = "+courseList);
+	  $('#subjectDropDownCP').change(function(){
+	    var dept = $('#subjectDropDownCP').val();
+	    var jsonData = '{"department":"'+dept+'"}';
+	    var courseList = sendDataSync(jsonData,"fetchCourseNo","CourseController");
+	    console.log("Course List = "+courseList);
 
-		$('#courseDropDownCP').find('option').remove();
-		$('#courseDropDownCP').append('<option value="">Select Course Number</option>').val('');
+	    $('#courseDropDownCP').find('option').remove();
+	    $('#courseDropDownCP').append('<option value="">Select Course Number</option>').val('');
 
-		//enable or disable dropdowns
-		if(dept == ''){
-			$('#courseDropDownCP').attr('disabled','disabled');
-		}else{
-			$('#courseDropDownCP').removeAttr('disabled');
-		}
-		$('#termDropDownCP').attr('disabled','disabled');
-		$('#instructorDropDownCP').attr('disabled','disabled');
-		$('#instructorDropDownCP').val('');
-		$('#termDropDownCP').val('');
+	    //enable or disable dropdowns
+	    if(dept == ''){
+	      $('#courseDropDownCP').attr('disabled','disabled');
+	    }else{
+	      $('#courseDropDownCP').removeAttr('disabled');
+	    }
+	    $('#termDropDownCP').attr('disabled','disabled');
+	    $('#instructorDropDownCP').attr('disabled','disabled');
+	    $('#instructorDropDownCP').val('');
+	    $('#termDropDownCP').val('');
 
-		var jsonCourse = jQuery.parseJSON(courseList);
+	    var jsonCourse = jQuery.parseJSON(courseList);
 
-		$.each(jsonCourse, function(index, value) {
-			$('#courseDropDownCP').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
-		});
-	});
+	    $.each(jsonCourse, function(index, value) {
+	      $('#courseDropDownCP').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
+	    });
+	  });
 
-	/* When the user changes the course number in the Course Search form */
-	$('#courseDropDownCP').change(function(){
-		var dept = $('#subjectDropDownCP').val();
-		var course = $('#courseDropDownCP').val();
-		var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
+	  /* When the user changes the course number in the Course Search form */
+	  $('#courseDropDown').change(function(){
+	    var dept = $('#subjectDropDownCP').val();
+	    var course = $('#courseDropDownCP').val();
+	    var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
-		var termList = sendDataSync(jsonData,"fetchTerm","CourseController");
-		console.log("Term List = "+termList);
+	    var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
+	    console.log("Term List = "+termInstrList);
 
-		$('#termDropDownCP').find('option').remove();
-		$('#termDropDownCP').append('<option value="">Select Term</option>').val('');
+	    $('#termDropDownCP').find('option').remove();
+	    $('#termDropDownCP').append('<option value="">All Terms</option>').val('');
+	    $('#instructorDropDownCP').find('option').remove();
+	    $('#instructorDropDownCP').append('<option value="">All Professors/Instructors</option>').val('');
 
-		//enable or disable dropdowns
-		if(course == ''){
-			$('#termDropDownCP').attr('disabled','disabled');
-			$('#instructorDropDownCP').attr('disabled','disabled');
-		}else{
-			$('#termDropDownCP').removeAttr('disabled');
-			$('#instructorDropDownCP').removeAttr('disabled');
-		}
-		$('#instructorDropDownCP').val('');
+	    //enable or disable dropdowns
+	    if(course == ''){
+	      $('#termDropDownCP').attr('disabled','disabled');
+	      $('#instructorDropDownCP').attr('disabled','disabled');
+	    }else{
+	      $('#termDropDownCP').removeAttr('disabled');
+	      $('#instructorDropDownCP').removeAttr('disabled');
+	    }
 
-		var jsonTerm = jQuery.parseJSON(termList);
+	    jsonTermInstr = jQuery.parseJSON(termInstrList);
+	    console.log("jsonTermInstr: " + jsonTermInstr);
+	    
+	    var terms = [];
+	    for (i = 0; i < jsonTermInstr.length; i++) {
+	    	if (!terms.includes(jsonTermInstr[i].termOffered)) {
+	    		terms.push(jsonTermInstr[i].termOffered);
+	    	}
+	    }	
+	    
+	    var instructors = [];
+	    for (i = 0; i < jsonTermInstr.length; i++) {
+	    	if (!instructors.includes(jsonTermInstr[i].instructor)) {
+	    		instructors.push(jsonTermInstr[i].instructor);
+	    	}
+	    } 
 
-		$.each(jsonTerm, function(index, value) {
-			$('#termDropDownCP').append('<option value="'+value.termOffered+'">'+value.termOffered+'</option>');
-		});
-	});
+	    $.each(terms, function(index, value) {
+	      $('#termDropDownCP').append('<option value="'+value+'">'+value+'</option>');
+	    });
+	    
+	    $.each(instructors, function(index, value) {
+	      $('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
+	    });
+	  });
 
-	/* When the user changes the term taken in the Course Search form */
-	$('#termDropDownCP').change(function(){
-		var dept = $('#subjectDropDownCP').val();
-		var course = $('#courseDropDownCP').val();
-		var term = $('#termDropDownCP').val();
-		var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'"}';
+	  /* When the user changes the term taken in the Course Search form */
+	  $('#termDropDownCP').change(function(){
+		var savedInstructor = $('#instructorDropDownCP').val();
+		var instructors = [];
+	    if ($('#termDropDownCP').val() == "") {
+	        for (i = 0; i < jsonTermInstr.length; i++) {
+	        	if (!instructors.includes(jsonTermInstr[i].instructor)) {
+	        		instructors.push(jsonTermInstr[i].instructor);
+	        	}
+	        }
+	    }
+	    else {
+	        for (i = 0; i < jsonTermInstr.length; i++) {
+	        	console.log("term offered: " + jsonTermInstr[i].termOffered);
+	        	if (!instructors.includes(jsonTermInstr[i].instructor) && jsonTermInstr[i].termOffered == $('#termDropDownCP').val()) {
+	        		instructors.push(jsonTermInstr[i].instructor);
+	                console.log("instructors: " + instructors);
+	        	}
+	        }
+	    }
+	    $('#instructorDropDownCP').find('option').remove();
+	    $('#instructorDropDownCP').append('<option value="">All Professors/Instructors</option>').val('');
+	    $.each(instructors, function(index, value) {
+	        $('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
+	    });
+	    if ($('#instructorDropDownCP option[value="' + savedInstructor + '"]').length > 0) {
+	        $('#instructorDropDownCP').val(savedInstructor);
+	    }
+	  });
 
-		var instructorList = sendDataSync(jsonData,"fetchInstructor","CourseController");
-		console.log("Instructor List = "+instructorList);
+	  /* When the user changes instructor in the Course Search form */
+	  $('#instructorDropDownCP').change(function(){
+		  var savedTerm = $('#termDropDownCP').val();
+	  	  var terms = [];
+		  if ($('#instructorDropDownCP').val() == "") {
+		        for (i = 0; i < jsonTermInstr.length; i++) {
+		        	if (!terms.includes(jsonTermInstr[i].termOffered)) {
+		        		terms.push(jsonTermInstr[i].termOffered);
+		        	}
+		        }
+		  }
+		  else {
+		        for (i = 0; i < jsonTermInstr.length; i++) {
+		        	console.log("instructor: " + jsonTermInstr[i].instructor);
+		        	if (!terms.includes(jsonTermInstr[i].termOffered) && jsonTermInstr[i].instructor == $('#instructorDropDownCP').val()) {
+		        		terms.push(jsonTermInstr[i].termOffered);
+		                console.log("terms: " + terms);
+		        	}
+		        }
+		  }
+		  $('#termDropDownCP').find('option').remove();
+	      $('#termDropDownCP').append('<option value="">All Terms</option>').val('');
+	      $.each(terms, function(index, value) {
+	          $('#termDropDownCP').append('<option value="' + value + '">' + value +'</option>');
+	      });
+		  if ($('#termDropDownCP option[value="' + savedTerm + '"]').length > 0) {
+			  $('#termDropDownCP').val(savedTerm);
+		  }
+	  });
 
-		$('#instructorDropDownCP').find('option').remove();
-		$('#instructorDropDownCP').append('<option value="">Select Professor/Instructor</option>').val('');
+	  /* Action when clicking the Search Course button on the landing page */
+	  $('#searchCourseBtnCP').click(function() {
+	    //var res = validateSearchForm();
+	    console.log("Search button pressed!");
+	    if(validateSearchForm()){
+	    	var dept = $('#subjectDropDownCP').val();
+	        var course = $('#courseDropDownCP').val();
+	        var term = $('#termDropDownCP').val() == "" ? "ALL" : $('#termDropDownCP').val();
+	        var instructor = $('#instructorDropDownCP').val() == "" ? "ALL" : $('#instructorDropDownCP').val();
 
-		//enable or disable dropdowns
-		/*if(term == ''){
-		$('#instructorDropDownCP').attr('disabled','disabled');
-	}else{
-	$('#instructorDropDownCP').removeAttr('disabled');
-}*/
+	        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}'; 
+	        console.log("json data: " + jsonData);
+	        
+	        // get Course ID
+	        var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
+	        var jsonCourseId = jQuery.parseJSON(courseId);
+	        $('#searchCourseBtnCP').val(jsonCourseId.courseId);
+	        window.location.href = 'course_page.html?courseId='+$('#searchCourseBtnCP').val();
+	    }
+	  });
 
-var jsonInstructor = jQuery.parseJSON(instructorList);
-
-$.each(jsonInstructor, function(index, value) {
-	$('#instructorDropDownCP').append('<option value="'+value.instructor+'">'+value.instructor+'</option>');
-});
-});
-
-/* When the user changes instructor in the Course Search form */
-$('#instructorDropDownCP').change(function(){
-	var dept = $('#subjectDropDownCP').val();
-	var course = $('#courseDropDownCP').val();
-	var term = $('#termDropDownCP').val();
-	var instructor = $('#instructorDropDownCP').val();
-
-	var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
-
-	//get Course ID
-	var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
-	//alert("Course ID = "+courseId);
-
-	var jsonCourseId = jQuery.parseJSON(courseId);
-	$('#searchCourseBtnCP').val(jsonCourseId.courseId);
-});
-
-/* Action when clicking the Search Course button on the landing page */
-$('#searchCourseBtnCP').click(function() {
-	//var res = validateSearchForm();
-	console.log("Search button pressed!");
-	if(validateSearchForm()){
-		window.location.href = 'course_page.html?courseId='+$('#searchCourseBtnCP').val();
-	}
-});
-
-/* Temporary dummy reviews. In the future, actual reviews will be retrieved in place of these. */
-var exampleRev1 = new Object();
-exampleRev1.name = "Omeed Habibelahian";
-exampleRev1.anonymous = 0;
-exampleRev1.rating = 4;
-exampleRev1.term = "Fall 2017";
-exampleRev1.datePosted = "10/01/2018";
-exampleRev1.gradeReceived = "A";
-exampleRev1.review = "160 was tough. They will cram a lot of information in your head in a very short time. However, her assignments are fun, and her approach on how to take coding and computer science is very intuitive and interesting rather than boring. She helps a lot and cares about the student. It may be hard but you'll learn the material well.";
-
-var exampleRev2 = new Object();
-exampleRev2.name = "Anonymous Student";
-exampleRev2.anonymous = 1;
-exampleRev2.rating = 3;
-exampleRev2.term = "Fall 2016";
-exampleRev2.datePosted = "09/30/2018";
-exampleRev2.gradeReceived = "B";
-exampleRev2.review = "";
-
-var reviews = [];		// array that will hold all the reviews for the class
-reviews.push(exampleRev1, exampleRev2);
-updateAverageRating(reviews);
-
-var reviewDiv = "";
-var starHTML = "";
-numStars = 0;
-for (i = 0; i < reviews.length; i++) {
-	numStars = reviews[i].rating;
-	starHTML = "";
-	for (j = 0; j < numStars; j++) {
-		starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-	}
-	if (reviews[i].anonymous) {
-		reviews[i].name = "Anonymous Student";
-	}
-	if (reviews[i].review == "") {
-		reviews[i].review = "*This student did not write a review in their submission.*";
-	}
-
-	$('#reviews').append(
-		"<div class=\"modal-body row\">" +
-		"<div class=\"col-md-3\">" +
-		"<label>" +
-		"<strong>Posted By: </strong>" +
-		"<span>" +
-		reviews[i].name +
-		"</span>" +
-		"</label><br>" +
-		"<label>" +
-		"<strong>Rating: </strong>" +
-		"<span>" +
-		starHTML +
-		"</span>" +
-		"</label><br>" +
-		"<label>" +
-		"<strong>Term: </strong>" +
-		"<span>" +
-		reviews[i].term +
-		"</span>" +
-		"</label><br>" +
-		"<label>" +
-		"<strong>Date Posted: </strong>" +
-		"<span>" +
-		reviews[i].datePosted +
-		"</span>" +
-		"</label><br>" +
-		"<label>" +
-		"<strong>Grade Received: </strong>" +
-		"<span>" +
-		reviews[i].gradeReceived +
-		"</span>" +
-		"</label>" +
-		"</div>" +
-		"<div class=\"col-md-7\">" +
-		reviews[i].review +
-		"</div>" +
-		"</div>" +
-		"<span + class=\"modal-header\"></span>"
-	);
-}
-
-$('#ratingStarChk1').hover(function() {
-	$('#ratingStarValue').text("1/5");
-	colorHoveredStarRadioGroup(1);
-}, function() {
-	$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
-	colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
-});
-
-$('#ratingStarChk2').hover(function() {
-	$('#ratingStarValue').text("2/5");
-	colorHoveredStarRadioGroup(2);
-}, function() {
-	$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
-	colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
-});
-
-$('#ratingStarChk3').hover(function() {
-	$('#ratingStarValue').text("3/5");
-	colorHoveredStarRadioGroup(3);
-}, function() {
-	$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
-	colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
-});
-
-$('#ratingStarChk4').hover(function() {
-	$('#ratingStarValue').text("4/5");
-	colorHoveredStarRadioGroup(4);
-}, function() {
-	$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
-	colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
-});
-
-$('#ratingStarChk5').hover(function() {
-	$('#ratingStarValue').text("5/5");
-	colorHoveredStarRadioGroup(5);
-}, function() {
-	$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
-	colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
-});
-
-$('#ratingStarChk1').click(function() {
-	$('#ratingCheckbox').val("1");
-	console.log("Rating: " + $('#ratingCheckbox').val());
-	colorClickedStarRadioGroup(1);
-});
-
-$('#ratingStarChk2').click(function() {
-	$('#ratingCheckbox').val("2");
-	console.log("Rating: " + $('#ratingCheckbox').val());
-	colorClickedStarRadioGroup(2);
-});
-
-$('#ratingStarChk3').click(function() {
-	$('#ratingCheckbox').val("3");
-	console.log("Rating: " + $('#ratingCheckbox').val());
-	colorClickedStarRadioGroup(3);
-});
-
-$('#ratingStarChk4').click(function() {
-	$('#ratingCheckbox').val("4");
-	console.log("Rating: " + $('#ratingCheckbox').val());
-	colorClickedStarRadioGroup(4);
-});
-
-$('#ratingStarChk5').click(function() {
-	$('#ratingCheckbox').val("5");
-	console.log("Rating: " + $('#ratingCheckbox').val());
-	colorClickedStarRadioGroup(5);
-
-});
-
-/* Action when clicking the Submit Review button */
-$('#submitReviewBtn').click(function() {
-	if (validateSubmitReviewForm()) {
-		var today = new Date();
-		console.log(today);
-		var dd = today.getDate();
-		var mm = today.getMonth() + 1;
-		var yyyy = today.getFullYear();
-		if (dd < 10) dd = '0' + dd;
-		if (mm < 10) mm = '0' + mm;
-		today = mm + '/' + dd + '/' + yyyy;
-
-		var newReview = new Object();
-		newReview.courseId = courseIdURL;
-		newReview.name = $('#studentName').val();
-		console.log($('#anonymousCheck').checked);
-		var anonymousCheck = document.getElementById("anonymousCheck");
-
-		newReview.anonymous = anonymousCheck.checked;
-		newReview.rating = $('#ratingCheckbox').val();
-		newReview.term = $('#termTaken').val();
-		newReview.datePosted = today;
-		if ($('#gradeDropdown').val() == "") {
-			newReview.gradeReceived = "N";
-		}
-		else newReview.gradeReceived = $('#gradeDropdown').val();
-		if ($('#reviewText').text().length == 0) {
-			newReview.review = "*This student did not write a review in their submission.*"
-		}
-		else newReview.review = $('reviewText').text();
-
-		reviews.push(newReview);
-		updateAverageRating(reviews);
-
-		numStars = newReview.rating;
+	/* Temporary dummy reviews. In the future, actual reviews will be retrieved in place of these. */
+	var exampleRev1 = new Object();
+	exampleRev1.name = "Omeed Habibelahian";
+	exampleRev1.anonymous = 0;
+	exampleRev1.rating = 4;
+	exampleRev1.term = "Fall 2017";
+	exampleRev1.datePosted = "10/01/2018";
+	exampleRev1.gradeReceived = "A";
+	exampleRev1.review = "160 was tough. They will cram a lot of information in your head in a very short time. However, her assignments are fun, and her approach on how to take coding and computer science is very intuitive and interesting rather than boring. She helps a lot and cares about the student. It may be hard but you'll learn the material well.";
+	
+	var exampleRev2 = new Object();
+	exampleRev2.name = "Anonymous Student";
+	exampleRev2.anonymous = 1;
+	exampleRev2.rating = 3;
+	exampleRev2.term = "Fall 2016";
+	exampleRev2.datePosted = "09/30/2018";
+	exampleRev2.gradeReceived = "B";
+	exampleRev2.review = "";
+	
+	var reviews = [];		// array that will hold all the reviews for the class
+	reviews.push(exampleRev1, exampleRev2);
+	updateAverageRating(reviews);
+	
+	var reviewDiv = "";
+	var starHTML = "";
+	numStars = 0;
+	for (i = 0; i < reviews.length; i++) {
+		numStars = reviews[i].rating;
 		starHTML = "";
-		for (i = 0; i < numStars; i++) {
+		for (j = 0; j < numStars; j++) {
 			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
 		}
-
-		$('#newReview').html(
+		if (reviews[i].anonymous) {
+			reviews[i].name = "Anonymous Student";
+		}
+		if (reviews[i].review == "") {
+			reviews[i].review = "*This student did not write a review in their submission.*";
+		}
+	
+		$('#reviews').append(
 			"<div class=\"modal-body row\">" +
 			"<div class=\"col-md-3\">" +
 			"<label>" +
 			"<strong>Posted By: </strong>" +
 			"<span>" +
-			(newReview.anonymous ? "Anonymous Student" : newReview.name) +
+			reviews[i].name +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
@@ -391,93 +300,246 @@ $('#submitReviewBtn').click(function() {
 			"<label>" +
 			"<strong>Term: </strong>" +
 			"<span>" +
-			newReview.term +
+			reviews[i].term +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
 			"<strong>Date Posted: </strong>" +
 			"<span>" +
-			newReview.datePosted +
+			reviews[i].datePosted +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
 			"<strong>Grade Received: </strong>" +
 			"<span>" +
-			(newReview.gradeReceived == "N" ? "N/A" : newReview.gradeReceived) +
+			reviews[i].gradeReceived +
 			"</span>" +
 			"</label>" +
 			"</div>" +
 			"<div class=\"col-md-7\">" +
-			newReview.review +
+			reviews[i].review +
 			"</div>" +
 			"</div>" +
 			"<span + class=\"modal-header\"></span>"
 		);
-		//$('#newReview').css({"border": "3px solid #b1dfbb", "border-radius": "7px"});
-		$({alpha:0}).animate({alpha:1}, {
-			duration: 1000,
-			step: function() {
-				$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
-				console.log("border getting brighter");
+	}
+	
+	$('#ratingStarChk1').hover(function() {
+		$('#ratingStarValue').text("1/5");
+		colorHoveredStarRadioGroup(1);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk2').hover(function() {
+		$('#ratingStarValue').text("2/5");
+		colorHoveredStarRadioGroup(2);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk3').hover(function() {
+		$('#ratingStarValue').text("3/5");
+		colorHoveredStarRadioGroup(3);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk4').hover(function() {
+		$('#ratingStarValue').text("4/5");
+		colorHoveredStarRadioGroup(4);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk5').hover(function() {
+		$('#ratingStarValue').text("5/5");
+		colorHoveredStarRadioGroup(5);
+	}, function() {
+		$('#ratingStarValue').text((parseInt($('#ratingCheckbox').val()) > 0) ? $('#ratingCheckbox').val() + "/5" : "");
+		colorClickedStarRadioGroup(parseInt($('#ratingCheckbox').val()));
+	});
+	
+	$('#ratingStarChk1').click(function() {
+		$('#ratingCheckbox').val("1");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(1);
+	});
+	
+	$('#ratingStarChk2').click(function() {
+		$('#ratingCheckbox').val("2");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(2);
+	});
+	
+	$('#ratingStarChk3').click(function() {
+		$('#ratingCheckbox').val("3");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(3);
+	});
+	
+	$('#ratingStarChk4').click(function() {
+		$('#ratingCheckbox').val("4");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(4);
+	});
+	
+	$('#ratingStarChk5').click(function() {
+		$('#ratingCheckbox').val("5");
+		console.log("Rating: " + $('#ratingCheckbox').val());
+		colorClickedStarRadioGroup(5);
+	
+	});
+	
+	/* Action when clicking the Submit Review button */
+	$('#submitReviewBtn').click(function() {
+		if (validateSubmitReviewForm()) {
+			var today = new Date();
+			console.log(today);
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1;
+			var yyyy = today.getFullYear();
+			if (dd < 10) dd = '0' + dd;
+			if (mm < 10) mm = '0' + mm;
+			today = mm + '/' + dd + '/' + yyyy;
+	
+			var newReview = new Object();
+			newReview.courseId = courseIdURL;
+			newReview.name = $('#studentName').val();
+			console.log($('#anonymousCheck').checked);
+			var anonymousCheck = document.getElementById("anonymousCheck");
+	
+			newReview.anonymous = anonymousCheck.checked;
+			newReview.rating = $('#ratingCheckbox').val();
+			newReview.term = $('#termTaken').val();
+			newReview.datePosted = today;
+			if ($('#gradeDropdown').val() == "") {
+				newReview.gradeReceived = "N";
 			}
-		});
-
-		setTimeout(function() {
-			$({alpha:1}).animate({alpha:0}, {
+			else newReview.gradeReceived = $('#gradeDropdown').val();
+			if ($('#reviewText').text().length == 0) {
+				newReview.review = "*This student did not write a review in their submission.*"
+			}
+			else newReview.review = $('reviewText').text();
+	
+			reviews.push(newReview);
+			updateAverageRating(reviews);
+	
+			numStars = newReview.rating;
+			starHTML = "";
+			for (i = 0; i < numStars; i++) {
+				starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+			}
+	
+			$('#newReview').html(
+				"<div class=\"modal-body row\">" +
+				"<div class=\"col-md-3\">" +
+				"<label>" +
+				"<strong>Posted By: </strong>" +
+				"<span>" +
+				(newReview.anonymous ? "Anonymous Student" : newReview.name) +
+				"</span>" +
+				"</label><br>" +
+				"<label>" +
+				"<strong>Rating: </strong>" +
+				"<span>" +
+				starHTML +
+				"</span>" +
+				"</label><br>" +
+				"<label>" +
+				"<strong>Term: </strong>" +
+				"<span>" +
+				newReview.term +
+				"</span>" +
+				"</label><br>" +
+				"<label>" +
+				"<strong>Date Posted: </strong>" +
+				"<span>" +
+				newReview.datePosted +
+				"</span>" +
+				"</label><br>" +
+				"<label>" +
+				"<strong>Grade Received: </strong>" +
+				"<span>" +
+				(newReview.gradeReceived == "N" ? "N/A" : newReview.gradeReceived) +
+				"</span>" +
+				"</label>" +
+				"</div>" +
+				"<div class=\"col-md-7\">" +
+				newReview.review +
+				"</div>" +
+				"</div>" +
+				"<span + class=\"modal-header\"></span>"
+			);
+			//$('#newReview').css({"border": "3px solid #b1dfbb", "border-radius": "7px"});
+			$({alpha:0}).animate({alpha:1}, {
 				duration: 1000,
 				step: function() {
 					$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
-					console.log("border getting lighter");
+					console.log("border getting brighter");
 				}
 			});
-		}, 5000);
-
-		$('#submitReviewCourseId').val(courseIdURL);
-		//var reviewJson = newReview.serializeJSON();
-		//console.log("form: " + $('#submitReviewForm'));
-		console.log(JSON.stringify(newReview));
-		var status = sendDataSync(JSON.stringify(newReview),"addReview","ReviewController");
-		if (status == "JDBC_OK") {
-			$('#submitPendingAlert').hide();
-			$('#submitReviewModal').modal("hide");
+	
+			setTimeout(function() {
+				$({alpha:1}).animate({alpha:0}, {
+					duration: 1000,
+					step: function() {
+						$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
+						console.log("border getting lighter");
+					}
+				});
+			}, 5000);
+	
+			$('#submitReviewCourseId').val(courseIdURL);
+			//var reviewJson = newReview.serializeJSON();
+			//console.log("form: " + $('#submitReviewForm'));
+			console.log(JSON.stringify(newReview));
+			var status = sendDataSync(JSON.stringify(newReview),"addReview","ReviewController");
+			if (status == "JDBC_OK") {
+				$('#submitPendingAlert').hide();
+				$('#submitReviewModal').modal("hide");
+			}
 		}
-	}
-});
-
-/*$('#dismissSubmitSuccessAlert').click(function () {
-var url = new URL(window.location.href);
-var courseIdURL = url.searchParams.get("courseId");
-window.location.href = "course_page.html?courseId="+courseIdURL;
-});*/
-
-$('#confirmCloseReviewBtn').click(function() {
-	console.log("Close Review button pressed!");
-	$('#fillFormAlertCP').hide();
-	$('#submitPendingAlert').hide();
-	$('#submitSuccessAlert').hide();
-	if ($('#gradeDropdown').val() != "" || $('#ratingDropdown').val() != "" ||
-	$('#reviewText').text() != "") {
-		$('#confirmCloseReviewFormAlert').show();
-	}
-	else {
+	});
+	
+	/*$('#dismissSubmitSuccessAlert').click(function () {
+	var url = new URL(window.location.href);
+	var courseIdURL = url.searchParams.get("courseId");
+	window.location.href = "course_page.html?courseId="+courseIdURL;
+	});*/
+	
+	$('#confirmCloseReviewBtn').click(function() {
+		console.log("Close Review button pressed!");
+		$('#fillFormAlertCP').hide();
+		$('#submitPendingAlert').hide();
+		$('#submitSuccessAlert').hide();
+		if ($('#gradeDropdown').val() != "" || $('#ratingDropdown').val() != "" ||
+		$('#reviewText').text() != "") {
+			$('#confirmCloseReviewFormAlert').show();
+		}
+		else {
+			$('#confirmCloseReviewFormAlert').hide();
+			$('#submitReviewModal').modal('hide');
+		}
+	});
+	
+	$('#noCloseReviewFormBtn').click(function() {
+		console.log("Close Review Confirmation: No button pressed!");
 		$('#confirmCloseReviewFormAlert').hide();
+	});
+	
+	$('#yesCloseReviewFormBtn').click(function() {
+		console.log("Close Review Confirmation: Yes button pressed!");
+		$('#confirmCloseReviewFormAlert').hide();
+		/*$('#gradeDropdown').val("");
+		$('#ratingDropdown').val("");
+		$('#reviewText').text("");*/
 		$('#submitReviewModal').modal('hide');
-	}
-});
-
-$('#noCloseReviewFormBtn').click(function() {
-	console.log("Close Review Confirmation: No button pressed!");
-	$('#confirmCloseReviewFormAlert').hide();
-});
-
-$('#yesCloseReviewFormBtn').click(function() {
-	console.log("Close Review Confirmation: Yes button pressed!");
-	$('#confirmCloseReviewFormAlert').hide();
-	/*$('#gradeDropdown').val("");
-	$('#ratingDropdown').val("");
-	$('#reviewText').text("");*/
-	$('#submitReviewModal').modal('hide');
-});
+	});
 
 });
 

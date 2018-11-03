@@ -7,12 +7,16 @@ public interface SqlConstants {
 	
 	String GET_DEPARTMENTS = "SELECT DISTINCT department from course_master_tbl";
 	
-	String GET_COURSES = "SELECT DISTINCT course_number from course_master_tbl where department = ?";
+	String GET_COURSES = "SELECT DISTINCT course_number, course_name from course_master_tbl where department = ?";
 
-	String GET_TERM = "SELECT term_offered from course_master_tbl where department = ? and course_number = ?";
+	String GET_TERM_AND_INSTRUCTOR = "SELECT course_id, term_offered, instructor from course_master_tbl where department = ? and course_number = ?";
+	
+	/*String GET_TERM_PLUS_INSTRUCTOR = "SELECT term_offered from course_master_tbl where department = ? and course_number = ? and instructor = ?";
 	
 	String GET_INSTRUCTOR = "SELECT instructor from course_master_tbl "+
 							"where department = ? and course_number = ? and term_offered = ?";
+	
+	String GET_INSTRUCTOR_NO_TERM = "SELECT instructor from course_master_tbl where department = ? and course_number = ?";*/
 	
 	String GET_COURSE_ID = "SELECT course_id from course_master_tbl " + 
 			"where department = ? and course_number = ? and term_offered = ? and instructor = ?";
