@@ -31,9 +31,9 @@ public class LoginPage {
 
 	public static final String osuLogo = "//img[@class='login-logo' and @alt='OSU Logo']";
 	public static final String courseRaterHeader = "//span[text()='Course Rater']";
-	public static final String logoutConfirmationText = "//h6[.='You have been successfully logged out of your account.']";
+	public static final String logoutConfirmationText = "//div[@id='logoutModal']//*[contains(.,'You have been successfully logged out.')]";
 	public static final String username = "//input[@id='onidUsername']";
 	public static final String password = "//input[@id='onidPassword']";
-	public static final String loginBtn = "//button[@id='loginButton']";
+	public static final String loginBtn = "//button[@id='loginBtn']";
 
 }
