@@ -22,6 +22,11 @@ body {
   font-family: 'Slabo 13px', serif;
 }
 
+a.link{
+	color:#d73f09;
+	text-decoration: underline;
+}
+
 .whiteBg {
   background: #fff;
   height: 100%;
@@ -234,6 +239,16 @@ h2{
   border-radius:5px;
 }
 /* alert end */
+
+
+/* accordion */
+.modal-footer.accordion-toggle:after{
+    content: url("../images/menu-up.png");    
+}
+.modal-footer.accordion-toggle.collapsed:after{
+	align-content: center;
+	content: url("../images/menu-down.png");
+}
 
 /* alert start */
 .anonymousDiv {
