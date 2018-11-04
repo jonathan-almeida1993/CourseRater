@@ -113,7 +113,7 @@ public class SeleniumUtils extends BaseTest{
 
 		test.log(LogStatus.INFO, value+" is value of "+attributeValue+" from "+element+" element. ");
 
-		return attributeValue;
+		return value;
 	}
 
 	public static String getText(Locator locator, String locatorValue, String element) {

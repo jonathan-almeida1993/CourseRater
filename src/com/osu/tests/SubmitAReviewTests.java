@@ -48,7 +48,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.nameLabel, "'Name' label", true), "'Name' label isn't displayed as expected.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "'Name' textbox", true), "'Name' textbox isn't displayed as expected.");
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
-
+			
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenLabel, "'Term taken' label", true), "'Term taken' label isn't displayed as expected.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "'Term taken' dropdown", true), "'Term taken' dropdown isn't displayed as expected.");
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
@@ -57,7 +57,9 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "'Grade Received' dropdown", true), "'Grade Received' dropdown isn't displayed as expected.");
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.ratingLabel, "'Rating' label", true), "'Rating' label isn't displayed as expected.");
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.ratingDropdown, "'Rating' dropdown", true), "'Rating' dropdown isn't displayed as expected.");
+			//Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.ratingDropdown, "'Rating' dropdown", true), "'Rating' dropdown isn't displayed as expected.");
+			
+			Assert.assertEquals(getElements(Locator.XPATH, SubmitAReviewPage.ratingDropdown).size(), 5, "Number of stars displayed for giving rating aren't 5.");
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.yourReviewLabel, "'Your Review' label", true), "'Your Review' label isn't displayed as expected.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "'Your Review' textbox", true), "'Your Review' textbox isn't displayed as expected.");
