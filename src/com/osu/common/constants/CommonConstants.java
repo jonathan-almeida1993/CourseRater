@@ -3,6 +3,7 @@ package com.osu.common.constants;
 public interface CommonConstants {
 
 	String OP_VALIDATE_lOGIN = "validateLogin";
+	String OP_LOGOUT = "logout";
 	String STATUS_JDBC_ERROR = "JDBC_Error";
 	String STATUS_JDBC_OK = "JDBC_OK";
 	String STATUS_AUTH_FAILED = "AuthenticationFailed";

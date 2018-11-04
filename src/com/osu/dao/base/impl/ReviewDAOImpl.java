@@ -83,12 +83,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
 				ReviewPojo singleReview = new ReviewPojo();
+				singleReview.setReviewId(resultSet.getInt("review_id"));
 				singleReview.setCourseId(resultSet.getInt("course_id"));
 				singleReview.setOnid(resultSet.getString("onid"));
 				singleReview.setRating(resultSet.getInt("rating"));
 				singleReview.setReview(resultSet.getString("review"));
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
-				singleReview.setAnonymous(resultSet.getBoolean("anonynous"));
+				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
 				reviewList.add(singleReview);
 			}
 		}catch(Exception e) {
@@ -116,12 +117,13 @@ public class ReviewDAOImpl implements ReviewDAO {
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
 				ReviewPojo singleReview = new ReviewPojo();
+				singleReview.setReviewId(resultSet.getInt("review_id"));
 				singleReview.setCourseId(resultSet.getInt("course_id"));
 				singleReview.setOnid(resultSet.getString("onid"));
 				singleReview.setRating(resultSet.getInt("rating"));
 				singleReview.setReview(resultSet.getString("review"));
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
-				singleReview.setAnonymous(resultSet.getBoolean("anonynous"));
+				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
 				reviewList.add(singleReview);
 			}
 		}catch(Exception e) {
