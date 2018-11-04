@@ -39,7 +39,7 @@ public class BaseTest {
 		
 		System.out.println("-------------------------\nIn BeforeTest Running test: "+testName+" \nDescription: "+testDescription);
 		
-		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"\\lib\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+(System.getProperty("os.name").contains("Windows") ? "\\lib\\chromedriver.exe" : "/lib/chromedriver"));
 
 	}
 	

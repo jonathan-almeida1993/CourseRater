@@ -71,6 +71,7 @@ public class CourseDAOImpl implements CourseDAO {
 				CoursePojo singleCourse = new CoursePojo();
 				singleCourse.setDepartment(obj.getDepartment());
 				singleCourse.setCourseNo(resultSet.getInt("course_number"));
+				singleCourse.setCourseName(resultSet.getString("course_name"));
 				courseList.add(singleCourse);
 			}
 			
@@ -82,7 +83,7 @@ public class CourseDAOImpl implements CourseDAO {
 		return courseList;
 	}
 	
-	public ArrayList<CoursePojo> fetchTerm(CoursePojo obj) {
+	public ArrayList<CoursePojo> fetchTermAndInstructors(CoursePojo obj) {
 
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
@@ -91,17 +92,27 @@ public class CourseDAOImpl implements CourseDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_TERM);
-			preparedStatement.setString(1, obj.getDepartment());
-			preparedStatement.setInt(2, obj.getCourseNo());
+			//if (obj.getInstructor().equals("")) {
+				preparedStatement = connect.prepareStatement(SqlConstants.GET_TERM_AND_INSTRUCTOR);
+				preparedStatement.setString(1, obj.getDepartment());
+				preparedStatement.setInt(2, obj.getCourseNo());
+			/*}
+			else {
+				preparedStatement = connect.prepareStatement(SqlConstants.GET_TERM_PLUS_INSTRUCTOR);
+				preparedStatement.setString(1, obj.getDepartment());
+				preparedStatement.setInt(2, obj.getCourseNo());
+				preparedStatement.setString(3,  obj.getInstructor());
+			}*/
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
-				CoursePojo singleTerm = new CoursePojo();
-				singleTerm.setDepartment(obj.getDepartment());
-				singleTerm.setCourseNo(obj.getCourseNo());
-				singleTerm.setTermOffered(resultSet.getString("term_offered"));
-				termList.add(singleTerm);
+				CoursePojo singleTermInstr = new CoursePojo();
+				singleTermInstr.setCourseId(resultSet.getInt("course_id"));
+				singleTermInstr.setDepartment(obj.getDepartment());
+				singleTermInstr.setCourseNo(obj.getCourseNo());
+				singleTermInstr.setTermOffered(resultSet.getString("term_offered"));
+				singleTermInstr.setInstructor(resultSet.getString("instructor"));
+				termList.add(singleTermInstr);
 			}
 			
 		} catch (Exception e) {
@@ -112,7 +123,7 @@ public class CourseDAOImpl implements CourseDAO {
 		return termList;
 	}
 	
-	public ArrayList<CoursePojo> fetchInstructors(CoursePojo obj) {
+	/*public ArrayList<CoursePojo> fetchInstructors(CoursePojo obj) {
 
 		Connection connect = null;
 		PreparedStatement preparedStatement = null;
@@ -121,10 +132,17 @@ public class CourseDAOImpl implements CourseDAO {
 		
 		try {
 			connect = getConnection();
-			preparedStatement = connect.prepareStatement(SqlConstants.GET_INSTRUCTOR);
-			preparedStatement.setString(1, obj.getDepartment());
-			preparedStatement.setInt(2, obj.getCourseNo());
-			preparedStatement.setString(3, obj.getTermOffered());
+			if (obj.getTermOffered().equals("")) {
+				preparedStatement = connect.prepareStatement(SqlConstants.GET_INSTRUCTOR_NO_TERM);
+				preparedStatement.setString(1, obj.getDepartment());
+				preparedStatement.setInt(2,  obj.getCourseNo());
+			}
+			else {
+				preparedStatement = connect.prepareStatement(SqlConstants.GET_INSTRUCTOR);
+				preparedStatement.setString(1, obj.getDepartment());
+				preparedStatement.setInt(2, obj.getCourseNo());
+				preparedStatement.setString(3, obj.getTermOffered());
+			}
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
@@ -142,7 +160,7 @@ public class CourseDAOImpl implements CourseDAO {
 			DBConnectionFactory.close(resultSet, preparedStatement, connect);
 		}
 		return instructorList;
-	}
+	}*/
 	
 	public ArrayList<CoursePojo> fetchCourseId(CoursePojo obj) {
 

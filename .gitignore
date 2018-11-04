@@ -1,8 +1,11 @@
 .classpath
 .project
 .settings
+.idea
 .DS_STORE
+.DS_Store
+CourseRater.iml
 build/
 /bin/
-./WebContent/META-INF/context.xml
-./WebContent/WEB-INF/lib/javax.servlet.jar
+WebContent/WEB-INF/lib/javax.servlet.jar
+WebContent/META-INF/context.xml

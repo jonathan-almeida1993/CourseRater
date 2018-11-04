@@ -10,6 +10,8 @@ $(document).ready(function() {
   $('#subjectDropDown').append('<option value="">Select Department</option>').val('');
 
   var jsonDept = jQuery.parseJSON(departmentList);
+  var jsonTermInstr = '';
+  var courseIds = [];
 
   $.each(jsonDept, function(index, value) {
     $('#subjectDropDown').append('<option value="'+value.department+'">'+value.department+'</option>');
@@ -23,7 +25,7 @@ $(document).ready(function() {
     console.log("Course List = "+courseList);
 
     $('#courseDropDown').find('option').remove();
-    $('#courseDropDown').append('<option value="">Select Course</option>').val('');
+    $('#courseDropDown').append('<option value="">Select Course Number</option>').val('');
 
     //enable or disable dropdowns
     if(dept == ''){
@@ -49,70 +51,123 @@ $(document).ready(function() {
     var course = $('#courseDropDown').val();
     var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
-    var termList = sendDataSync(jsonData,"fetchTerm","CourseController");
-    console.log("Term List = "+termList);
+    var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
+    console.log("Term List = "+termInstrList);
 
     $('#termDropDown').find('option').remove();
-    $('#termDropDown').append('<option value="">Select Term</option>').val('');
+    $('#termDropDown').append('<option value="">All Terms</option>').val('');
+    $('#instructorDropDown').find('option').remove();
+    $('#instructorDropDown').append('<option value="">All Professors/Instructors</option>').val('');
 
     //enable or disable dropdowns
     if(course == ''){
       $('#termDropDown').attr('disabled','disabled');
+      $('#instructorDropDown').attr('disabled','disabled');
     }else{
       $('#termDropDown').removeAttr('disabled');
+      $('#instructorDropDown').removeAttr('disabled');
     }
-    $('#instructorDropDown').attr('disabled','disabled');
-    $('#instructorDropDown').val('');
 
-    var jsonTerm = jQuery.parseJSON(termList);
-
-    $.each(jsonTerm, function(index, value) {
-      $('#termDropDown').append('<option value="'+value.termOffered+'">'+value.termOffered+'</option>');
+    jsonTermInstr = jQuery.parseJSON(termInstrList);
+    console.log("jsonTermInstr: " + jsonTermInstr);
+    
+    var terms = [];
+    var instructors = [];
+    courseIds = [];
+    for (i = 0; i < jsonTermInstr.length; i++) {
+    	if (!terms.includes(jsonTermInstr[i].termOffered)) {
+    		terms.push(jsonTermInstr[i].termOffered);
+    	}
+    	if (!instructors.includes(jsonTermInstr[i].instructor)) {
+    		instructors.push(jsonTermInstr[i].instructor);
+    	}
+    	courseIds.push(jsonTermInstr[i].courseId);
+    }
+    
+    $.each(terms, function(index, value) {
+      $('#termDropDown').append('<option value="'+value+'">'+value+'</option>');
+    });
+    
+    $.each(instructors, function(index, value) {
+      $('#instructorDropDown').append('<option value="' + value + '">' + value +'</option>');
     });
   });
 
   /* When the user changes the term taken in the Course Search form */
   $('#termDropDown').change(function(){
-    var dept = $('#subjectDropDown').val();
-    var course = $('#courseDropDown').val();
-    var term = $('#termDropDown').val();
-    var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'"}';
-
-    var instructorList = sendDataSync(jsonData,"fetchInstructor","CourseController");
-    console.log("Instructor List = "+instructorList);
-
-    $('#instructorDropDown').find('option').remove();
-    $('#instructorDropDown').append('<option value="">Select Instructor</option>').val('');
-
-    //enable or disable dropdowns
-    if(term == ''){
-      $('#instructorDropDown').attr('disabled','disabled');
-    }else{
-      $('#instructorDropDown').removeAttr('disabled');
+	var savedInstructor = $('#instructorDropDown').val();
+	var instructors = [];
+	courseIds = [];
+    if ($('#termDropDown').val() == "") {
+        for (i = 0; i < jsonTermInstr.length; i++) {
+        	if (!instructors.includes(jsonTermInstr[i].instructor)) {
+        		instructors.push(jsonTermInstr[i].instructor);
+        	}
+        	if (jsonTermInstr[i].instructor == savedInstructor || savedInstructor == "") {
+            	courseIds.push(jsonTermInstr[i].courseId);
+        	}
+        }
     }
-
-    var jsonInstructor = jQuery.parseJSON(instructorList);
-
-    $.each(jsonInstructor, function(index, value) {
-      $('#instructorDropDown').append('<option value="'+value.instructor+'">'+value.instructor+'</option>');
+    else {
+        for (i = 0; i < jsonTermInstr.length; i++) {
+        	console.log("term offered: " + jsonTermInstr[i].termOffered);
+        	if (!instructors.includes(jsonTermInstr[i].instructor) && jsonTermInstr[i].termOffered == $('#termDropDown').val()) {
+        		instructors.push(jsonTermInstr[i].instructor);
+        	}
+        	if (jsonTermInstr[i].termOffered == $('#termDropDown').val() && (jsonTermInstr[i].instructor == savedInstructor || savedInstructor == "")) {
+        		courseIds.push(jsonTermInstr[i].courseId);
+        	}
+        }
+    }
+    console.log("instructors: " + instructors);
+    console.log("course ids: " + courseIds);
+    $('#instructorDropDown').find('option').remove();
+    $('#instructorDropDown').append('<option value="">All Professors/Instructors</option>').val('');
+    $.each(instructors, function(index, value) {
+        $('#instructorDropDown').append('<option value="' + value + '">' + value +'</option>');
     });
+    if ($('#instructorDropDown option[value="' + savedInstructor + '"]').length > 0) {
+        $('#instructorDropDown').val(savedInstructor);
+    }
   });
 
   /* When the user changes instructor in the Course Search form */
   $('#instructorDropDown').change(function(){
-    var dept = $('#subjectDropDown').val();
-    var course = $('#courseDropDown').val();
-    var term = $('#termDropDown').val();
-    var instructor = $('#instructorDropDown').val();
-
-    var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
-
-    //get Course ID
-    var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
-    //alert("Course ID = "+courseId);
-
-    var jsonCourseId = jQuery.parseJSON(courseId);
-    $('#searchCourseBtn').val(jsonCourseId.courseId);
+	  var savedTerm = $('#termDropDown').val();
+  	  var terms = [];
+  	  courseIds = [];
+	  if ($('#instructorDropDown').val() == "") {
+	        for (i = 0; i < jsonTermInstr.length; i++) {
+	        	if (!terms.includes(jsonTermInstr[i].termOffered)) {
+	        		terms.push(jsonTermInstr[i].termOffered);
+	        	}
+	        	if (jsonTermInstr[i].termOffered == savedTerm || savedTerm == "") {
+		        	courseIds.push(jsonTermInstr[i].courseId);
+	        	}
+	        }
+	  }
+	  else {
+	        for (i = 0; i < jsonTermInstr.length; i++) {
+	        	console.log("instructor: " + jsonTermInstr[i].instructor);
+	        	if (!terms.includes(jsonTermInstr[i].termOffered) && jsonTermInstr[i].instructor == $('#instructorDropDown').val()) {
+	        		terms.push(jsonTermInstr[i].termOffered);
+	        	}
+	        	if (jsonTermInstr[i].instructor == $('#instructorDropDown').val() && (jsonTermInstr[i].termOffered == savedTerm || savedTerm == "")) {
+	        		courseIds.push(jsonTermInstr[i].courseId);
+	        	}
+	        }
+	        
+	  }
+      console.log("terms: " + terms);
+      console.log("course ids: " + courseIds);
+	  $('#termDropDown').find('option').remove();
+      $('#termDropDown').append('<option value="">All Terms</option>').val('');
+      $.each(terms, function(index, value) {
+          $('#termDropDown').append('<option value="' + value + '">' + value +'</option>');
+      });
+	  if ($('#termDropDown option[value="' + savedTerm + '"]').length > 0) {
+		  $('#termDropDown').val(savedTerm);
+	  }
   });
 
   /* Action when clicking the Search Course button on the landing page */
@@ -120,7 +175,23 @@ $(document).ready(function() {
     //var res = validateSearchForm();
     console.log("Search button pressed!");
     if(validateSearchForm()){
-      window.location.href = 'course_page.html?courseId='+$('#searchCourseBtn').val();
+    	var dept = $('#subjectDropDown').val();
+        var course = $('#courseDropDown').val();
+        var term = $('#termDropDown').val() == "" ? "ALL" : $('#termDropDown').val();
+        var instructor = $('#instructorDropDown').val() == "" ? "ALL" : $('#instructorDropDown').val();
+        var courseIdParam = '';
+        $.each(courseIds, function(index, value) {
+        	courseIdParam += 'C' + value; 
+        });
+
+        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}'; 
+        console.log("json data: " + jsonData);
+        
+        // get Course ID
+        //var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
+        //var jsonCourseId = jQuery.parseJSON(courseId);
+        //$('#searchCourseBtn').val(jsonCourseId.courseId);
+      window.location.href = 'course_page.html?courseId=' + courseIdParam;
     }
   });
 
@@ -234,17 +305,17 @@ function validateSearchForm() {
   var courseNumberField = $('#courseDropDown').val();
   var termField = $('#termDropDown').val();
   var instructorField = $('#instructorDropDown').val();
-  if (subjectField == null || subjectField == "") {
+  if (subjectField == "") {
     $("#fillFormAlert").html("Please select a subject!");
     $("#fillFormAlert").css("display", "block");
     return false;
   }
-  else if (courseNumberField == null || courseNumberField == "") {
+  else if (courseNumberField == "") {
     $("#fillFormAlert").html("Please select a course number!");
     $("#fillFormAlert").css("display", "block");
     return false;
   }
-  else if (termField == null || termField == "") {
+  /*else if (termField == null || termField == "") {
     $("#fillFormAlert").html("Please select a term!");
     $("#fillFormAlert").css("display", "block");
     return false;
@@ -253,7 +324,7 @@ function validateSearchForm() {
     $("#fillFormAlert").html("Please select an instructor!");
     $("#fillFormAlert").css("display", "block");
     return false;
-  }
+  }*/
   $("#fillFormAlert").css("display", "none");
   return true;
 }
