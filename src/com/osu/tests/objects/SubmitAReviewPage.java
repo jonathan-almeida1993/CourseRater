@@ -16,7 +16,7 @@ public class SubmitAReviewPage {
 	public static final String gradeReceivedDropdown = "//select[@id='gradeDropdown']";
 	
 	public static final String ratingLabel = "//label[.='*Rating:']";
-	public static final String ratingDropdown = "//img[contains(@id, 'ratingStarChk')]";
+	public static final String thirdRatingStar = "(//img[contains(@id, 'ratingStarChk')]/..)[3]";
 	
 	public static final String yourReviewLabel = "//label[.='Your Review:']";
 	public static final String yourReviewTxtBox = "//textarea[@id='reviewText']";
@@ -27,5 +27,12 @@ public class SubmitAReviewPage {
 	public static final String reviewSubmitConfirmationTxt = "//div[@id='submitSuccessAlert']";
 	public static final String reviewSubmitConfirmartionOkBtn = "//button[@id='dismissSubmitSuccessAlert']";
 
-	public static final String submitAnonymouslyChkbox = "//label[contains(text(),\"I'd like to submit my review anonymously.\")]";
+	public static final String submitAnonymouslyChkbox = "//input[@id='anonymousCheck']//following-sibling::label";
+	public static final String anonymousReviewBoxMessage = "//small[@id='anonymousMsg' and .='Your review will appear as \"Anonymous\".']";
+	public static final String submittingReviewTxt = "//div[@id='submitPendingAlert' and contains(.,'Submitting review...')]";
+	
+	public static final String closeConfirmationText = "//span[.='You have an unfinished review. Are you sure you want to close the form? Your progress will be saved until you leave the page.']";
+	public static final String yesCloseConfirmationText = "//button[@id='yesCloseReviewFormBtn']";
+	public static final String noCloseConfirmationText = "//button[@id='noCloseReviewFormBtn']";
+
 }
