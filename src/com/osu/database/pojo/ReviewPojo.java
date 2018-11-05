@@ -8,8 +8,9 @@ public class ReviewPojo extends BasePojo {
 	private int rating;
 	private String review;
 	private String gradeReceived;
+	private long datePosted;
 	private boolean anonymous;
-	
+
 	public int getReviewId() {
 		return reviewId;
 	}
@@ -40,6 +41,12 @@ public class ReviewPojo extends BasePojo {
 	public void setReview(String review) {
 		this.review = review;
 	}
+	public long getDatePosted() {
+		return datePosted;
+	}
+	public void setDatePosted(long datePosted) {
+		this.datePosted = datePosted;
+	}
 	public String getGradeReceived() {
 		return gradeReceived;
 	}
@@ -52,5 +59,5 @@ public class ReviewPojo extends BasePojo {
 	public void setAnonymous(boolean anonymous) {
 		this.anonymous = anonymous;
 	}
-	
+
 }
