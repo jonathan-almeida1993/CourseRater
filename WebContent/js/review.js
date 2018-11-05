@@ -47,6 +47,8 @@ $(document).ready(function(){
 	$('#termTaken').val(courseDetailsJSON.termOffered);
 	$('#courseDesc').text(courseDetailsJSON.courseDesc);
 
+
+
 	//get department list
 	var departmentList = sendDataSync("","fetchDepartments","CourseController");
 	console.log("Department List = "+departmentList);
@@ -127,6 +129,12 @@ $(document).ready(function(){
 		$('#instructorDropDownCP').val(instructors[0]);
 	}
 
+	var savedSubject = courseDetailsJSON.department;
+	var savedCourseNo = courseDetailsJSON.courseNo;
+	var savedTerm = (idTerms.length > 1) ? "All Terms" : courseDetailsJSON.termOffered;
+	var savedInstructor = (idInstructors.length > 1) ? "All Professors/Instructors" : courseDetailsJSON.instructor;
+	checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
+
 	/* When the user changes the subject in the Course Search form */
 	$('#subjectDropDownCP').change(function(){
 		var dept = $('#subjectDropDownCP').val();
@@ -153,6 +161,7 @@ $(document).ready(function(){
 		$.each(jsonCourse, function(index, value) {
 			$('#courseDropDownCP').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
 		});
+		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 	});
 
 	/* When the user changes the course number in the Course Search form */
@@ -201,6 +210,7 @@ $(document).ready(function(){
 		$.each(instructors, function(index, value) {
 			$('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
 		});
+		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 	});
 
 	/* When the user changes the term taken in the Course Search form */
@@ -239,6 +249,7 @@ $(document).ready(function(){
 		if ($('#instructorDropDownCP option[value="' + savedInstructor + '"]').length > 0) {
 			$('#instructorDropDownCP').val(savedInstructor);
 		}
+		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 	});
 
 	/* When the user changes instructor in the Course Search form */
@@ -278,6 +289,7 @@ $(document).ready(function(){
 		if ($('#termDropDownCP option[value="' + savedTerm + '"]').length > 0) {
 			$('#termDropDownCP').val(savedTerm);
 		}
+		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 	});
 
 	/* Action when clicking the Search Course button on the landing page */
@@ -776,4 +788,22 @@ function updateAverageRating(reviews) {
 	}
 	$('#averageRatingStars').html(avgStarSpanHTML);
 	$('#averageRatingValue').html(averageRating + "/5");
+}
+
+function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor) {
+	console.log($('#subjectDropDownCP').val() + ", " + savedSubject);
+	console.log($('#courseDropDownCP').val() + ", " + savedCourseNo);
+	console.log($('#termDropDownCP').val() + ", " + savedTerm);
+	console.log($('#instructorDropDownCP').val() + ", " + savedInstructor);
+
+	if ($('#subjectDropDownCP').val() == savedSubject &&
+			$('#courseDropDownCP').val() == savedCourseNo &&
+			$('#termDropDownCP').val() == savedTerm &&
+			$('#instructorDropDownCP').val() == savedInstructor) {
+				$('#searchCourseBtnCP').attr('disabled', 'disabled');
+	}
+	else {
+		$('#searchCourseBtnCP').removeAttr('disabled');
+	}
+
 }
