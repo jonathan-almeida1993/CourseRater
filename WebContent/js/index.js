@@ -273,7 +273,7 @@ $(document).ready(function() {
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].term + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
+    //row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
     $("#recentReviewTable tbody").append(row);
 
     numReviewsShown++;
