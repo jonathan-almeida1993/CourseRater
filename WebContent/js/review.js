@@ -630,9 +630,9 @@ $('#noCloseReviewFormBtn').click(function() {
 $('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
-	/*$('#gradeDropdown').val("");
+	$('#gradeDropdown').val("");
 	$('#ratingDropdown').val("");
-	$('#reviewText').text("");*/
+	$('#reviewText').text("");
 	$('#submitReviewModal').modal('hide');
 });
 
@@ -644,9 +644,9 @@ $('#noCloseReviewFormBtn').click(function() {
 $('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
-	/*$('#gradeDropdown').val("");
+	$('#gradeDropdown').val("");
 	$('#ratingDropdown').val("");
-	$('#reviewText').text("");*/
+	$('#reviewText').text("");
 	$('#submitReviewModal').modal('hide');
 });
 
