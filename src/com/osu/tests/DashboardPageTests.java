@@ -11,7 +11,6 @@ public class DashboardPageTests extends SeleniumUtils{
 
 	@Test(description="Verify the header on Dashboard page")
 	public void dashboardPageTest1() {
-		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
 
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.osuLogo, "'OSU' logo", true), "OSU logo hasn't been displayed as expected on the Dashboard page.");
@@ -20,7 +19,6 @@ public class DashboardPageTests extends SeleniumUtils{
 
 	@Test(description="Verify if the subject dropdowns is enabled while other dropdowns are disabled by default")
 	public void dashboardPageTest2() {
-		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
 
 		Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown", true), "Subject dropdown is not enabled as expected.");
@@ -31,7 +29,6 @@ public class DashboardPageTests extends SeleniumUtils{
 
 	@Test(description="Verify if 'Find a course' section has all mandatory elements")
 	public void dashboardPageTest3() {
-		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
 
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.findACourseHeader, "'Find a Course' header", true), "'Find a course' header isn't displayed as expected.");
@@ -57,7 +54,6 @@ public class DashboardPageTests extends SeleniumUtils{
 
 	@Test(description="Verify if reviews are displayed in the 'Your Recent Reviews' table", enabled = false)
 	public void dashboardPageTest5() {
-		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
 
 		int numOfRows = getElements(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@scope='row']").size();
@@ -73,14 +69,13 @@ public class DashboardPageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that the user is logged out by clicking on 'Log out' button")
 	public void dashboardPageTest6() {
-		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
 
 		if(isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "'Course Rater' header", true)){
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.logoutBtn, "Logout button", true), "Log out button");
 			click(Locator.XPATH, DashboardPage.logoutBtn, "'Logout' button", true);
 
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.logoutConfirmationText, "Login header", true), "User is not navigated to login page as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.logoutConfirmationText, "Logout confirmation text", true), "User is not logged out or logout confirmation text has not been displayed as expected.");
 		}
 	}
 

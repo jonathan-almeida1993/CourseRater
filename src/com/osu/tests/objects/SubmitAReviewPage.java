@@ -6,17 +6,17 @@ public class SubmitAReviewPage {
 	
 	public static final String submitAReviewHeader = "//h5[.='Submitting a Review']";
 	
-	public static final String nameLabel = "//label[.='Name']";
+	public static final String nameLabel = "//label[.='Name:']";
 	public static final String nameTxtBox = "//input[@id='studentName']";
 	
-	public static final String termTakenLabel = "//label[.='Term Taken']";
+	public static final String termTakenLabel = "//label[.='Term Taken:']";
 	public static final String termTakenTxtBox = "//input[@id='termTaken']";
 	
-	public static final String gradeReceivedLabel = "//label[.='Grade Received']";
+	public static final String gradeReceivedLabel = "//label[.='Grade Received:']";
 	public static final String gradeReceivedDropdown = "//select[@id='gradeDropdown']";
 	
-	public static final String ratingLabel = "//label[.='Rating (required)']";
-	public static final String ratingDropdown = "//select[@id='ratingDropdown']";
+	public static final String ratingLabel = "//label[.='*Rating:']";
+	public static final String ratingDropdown = "//img[contains(@id, 'ratingStarChk')]";
 	
 	public static final String yourReviewLabel = "//label[.='Your Review:']";
 	public static final String yourReviewTxtBox = "//textarea[@id='reviewText']";
