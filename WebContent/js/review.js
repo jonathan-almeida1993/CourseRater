@@ -148,9 +148,9 @@ $(document).ready(function(){
 
 	var savedSubject = courseDetailsJSON.department;
 	var savedCourseNo = courseDetailsJSON.courseNo;
-	var savedTerm = (idTerms.length > 1) ? "All Terms" : courseDetailsJSON.termOffered;
-	var savedInstructor = (idInstructors.length > 1) ? "All Professors/Instructors" : courseDetailsJSON.instructor;
-	checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
+	var savedTerm = (idTerms.length > 1) ? "" : courseDetailsJSON.termOffered;
+	var savedInstructor = (idInstructors.length > 1) ? "" : courseDetailsJSON.instructor;
+	//checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 
 	/* When the user changes the subject in the Course Search form */
 	$('#subjectDropDownCP').change(function(){
