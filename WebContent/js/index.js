@@ -273,7 +273,7 @@ $(document).ready(function() {
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].term + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    row.append("<td>" + "<span>View</span><br />" + "<span>Edit</span><br />" + "<span>Delete</span><br /></td>");
+    row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
     $("#recentReviewTable tbody").append(row);
 
     numReviewsShown++;
@@ -293,7 +293,7 @@ $(document).ready(function() {
         row.append("<td>" + starHTML + "</td>");
         row.append("<td>" + reviews[i+numReviewsShown].courseNo + " (" + reviews[i+numReviewsShown].term + ")</td>");
         row.append("<td>" + reviews[i+numReviewsShown].instructor + "</td>");
-        row.append("<td>" + "<span>View</span><br />" + "<span>Edit</span><br />" + "<span>Delete</span><br /></td>");
+        row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
         $("#recentReviewTable tbody").append(row);
 
         numReviewsShown++;
