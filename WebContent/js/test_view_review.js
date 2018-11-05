@@ -14,17 +14,31 @@ $(document).ready(function(){
 	
 });
 
-function testAll(){
+function testAll(courseId){
 	testMyReviews();
-	testCourseReviews();
+	testCourseReviews(courseId);
 }
 
-function testCourseReviews(){
-	testCourseReviewsSingleCourse();
+function testCourseReviews(courseId){
+	testCourseReviewsSingleCourse(courseId);
 }
 
-function testCourseReviewsSingleCourse(){
+function testCourseReviewsSingleCourse(courseId){
+	var reviews = sendDataSync("{'courseId':"+courseId+"}", "getCourseReviews","ReviewController");
+	reviews = jQuery.parseJSON(reviews);
+	flag = false;
+	$(reviews).each(function(idx, obj){
+		if(obj.courseId != courseId){
+			flag = true;
+			return false;
+		}
+	});
 	
+	if(flag){
+		console.log("CourseReviewsSingleCourse - FAILED");
+	}else {
+		console.log("CourseReviewsSingleCourse - PASSED");
+	}
 }
 
 
@@ -60,7 +74,7 @@ function testMyReviewsValidReviews(){
 	var flag = false;
 	
 	$(actual).each(function(idx, obj){
-		console.log(obj.reviewId);
+		//console.log(obj.reviewId);
 		if(obj.onid != user){
 			flag = true;
 			return false;
