@@ -55,8 +55,10 @@ public class LoginController extends HttpServlet {
 				session.setMaxInactiveInterval(30*60);
 				session.setAttribute("user", loginDetails.getOnid());
 				Cookie userName = new Cookie("user", userDetails.getFirstName() +"-"+userDetails.getLastName());
+				Cookie userOnid = new Cookie("onid", loginDetails.getOnid());
 				userName.setMaxAge(30*60);
 				response.addCookie(userName);
+				response.addCookie(userOnid);
 				response.sendRedirect("index.html");
 			
 			}else{
