@@ -183,10 +183,12 @@ a.link{
 #badPasswordAlert { display: none; }
 #fillFormAlert { display: none; }
 #fillFormAlertCP { display: none; }
+#fillFormAlertRV { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }
 #confirmCloseReviewFormAlert { display: none; }
 #anonymousMsg { display: none; }
+#courseIdHolder { display: none; }
 
 /* login start */
 /* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;

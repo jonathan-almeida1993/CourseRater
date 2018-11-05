@@ -139,7 +139,7 @@
                 <button type="button" class="btn btn-secondary float-right" id="yesCloseReviewFormBtn">Yes</button>
               </div>
             </div>
-            <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
+            <div class="alert alert-danger" role="alert" id="fillFormAlertRV"></div>
             <div class="alert alert-info" role="alert" id="submitPendingAlert">
               Submitting review...
             </div>
@@ -164,11 +164,26 @@
                   </div>
 
                   <div class="form-group">
-                    <fieldset disabled>
+                    <!-- <fieldset disabled>
                       <label for="termDropdown">Term Taken:</label>
                       <input type="text" class="form-control" id="termTaken" placeholder="[Term Taken]">
-                    </fieldset>
+                    </fieldset> -->
+                    <label for="termDropdownRV">*Term Taken:</label>
+                    <select name="termTaken" class="custom-select" id="termDropdownRV">
+                      <option value="" id="emptyTermRV">Select Term</option>
+                    </select>
                   </div>
+                  <div class="form-group">
+                    <!-- <fieldset disabled>
+                      <label for="termDropdown">Term Taken:</label>
+                      <input type="text" class="form-control" id="termTaken" placeholder="[Term Taken]">
+                    </fieldset> -->
+                    <label for="instructorDropdownRV">*Instructor:</label>
+                    <select name="instructorDropdownRV" class="custom-select" id="instructorDropdownRV">
+                      <option value="" id="emptyInstructorRV">Select Professor/Instructor</option>
+                    </select>
+                  </div>
+                  <div id="courseIdHolder"></div>
                   <div class="form-group">
                     <label for="gradeDropdown">Grade Received:</label>
                     <select name="gradeReceived" class="custom-select" id="gradeDropdown">
