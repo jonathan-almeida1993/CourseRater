@@ -609,10 +609,29 @@ $(document).ready(function(){
 
 $('#confirmCloseReviewBtn').click(function() {
 	console.log("Close Review button pressed!");
+	//console.log("grade: '" + $('#gradeDropdown').val() + "'");
+	//console.log("rating: '" + $('#gradeDropdown').val() + "'");
+	//console.log("grade: '" + $('#gradeDropdown').val() + "'");
+
 	$('#fillFormAlertCP').hide();
 	$('#submitPendingAlert').hide();
 	$('#submitSuccessAlert').hide();
-	if ($('#gradeDropdown').val() != "" || $('#ratingDropdown').val() != "" ||
+	if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
+	$('#reviewText').text() != "") {
+		$('#confirmCloseReviewFormAlert').show();
+	}
+	else {
+		$('#confirmCloseReviewFormAlert').hide();
+		$('#submitReviewModal').modal('hide');
+	}
+});
+
+$('#closeReviewFormX').click(function() {
+	console.log("Close Review X pressed!");
+	$('#fillFormAlertCP').hide();
+	$('#submitPendingAlert').hide();
+	$('#submitSuccessAlert').hide();
+	if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
 	$('#reviewText').text() != "") {
 		$('#confirmCloseReviewFormAlert').show();
 	}
@@ -631,7 +650,7 @@ $('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
 	$('#gradeDropdown').val("");
-	$('#ratingDropdown').val("");
+	$('#ratingCheckbox').val("");
 	$('#reviewText').text("");
 	$('#submitReviewModal').modal('hide');
 });
@@ -645,8 +664,14 @@ $('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
 	$('#gradeDropdown').val("");
-	$('#ratingDropdown').val("");
 	$('#reviewText').text("");
+	$('#ratingStarChk1').css("opacity", "0.2");
+	$('#ratingStarChk2').css("opacity", "0.2");
+	$('#ratingStarChk3').css("opacity", "0.2");
+	$('#ratingStarChk4').css("opacity", "0.2");
+	$('#ratingStarChk5').css("opacity", "0.2");
+	$('#ratingStarValue').text("");
+	$('#ratingCheckbox').val("");
 	$('#submitReviewModal').modal('hide');
 });
 
@@ -817,10 +842,10 @@ function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor
 			$('#courseDropDownCP').val() == savedCourseNo &&
 			$('#termDropDownCP').val() == savedTerm &&
 			$('#instructorDropDownCP').val() == savedInstructor) {
-				$('#searchCourseBtnCP').attr('disabled', 'disabled');
+				$('#searchCourseBtnCP').addClass('disabled');
 	}
 	else {
-		$('#searchCourseBtnCP').removeAttr('disabled');
+		$('#searchCourseBtnCP').removeClass('disabled');
 	}
 
 }
