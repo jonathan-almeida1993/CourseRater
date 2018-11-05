@@ -112,7 +112,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		ArrayList<ReviewPojo> reviewList = new ArrayList<ReviewPojo>();
 
-		//course_id , onid, rating, review, grade_received, anonymous
+		//course_id , onid, rating, review, created_date, grade_received, anonymous
 		try {
 			conn = getConnection();
 			preparedStatement = conn.prepareStatement(SqlConstants.GET_COURSE_REVIEWS);

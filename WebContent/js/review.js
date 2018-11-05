@@ -338,6 +338,12 @@ $(document).ready(function(){
 		if (reviews[i].review == "") {
 			reviews[i].review = "*This student did not write a review in their submission.*";
 		}
+		for (j = 0; j < jsonTermInstr.length; j++) {
+			if (reviews[i].courseId == jsonTermInstr[j].courseId) {
+				reviews[i].term = jsonTermInstr[j].termOffered;
+				break;
+			}
+		}
 		console.log("date ms: " + reviews[i].datePosted);
 
 		$('#reviews').append(
