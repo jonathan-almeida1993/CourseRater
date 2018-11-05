@@ -49,16 +49,16 @@ public class CourseController extends HttpServlet {
 			String jsonString = gson.toJson(courseNoList);
 			response.getWriter().write(jsonString);
 		
-		}else if(null != message && CommonConstants.OP_FETCH_TERM.equalsIgnoreCase(message)) {
+		}else if(null != message && CommonConstants.OP_FETCH_TERM_INSTR.equalsIgnoreCase(message)) {
 			
 			Gson gson = new Gson();
 			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);
 			dao = new CourseDAOImpl();
-			ArrayList<CoursePojo> termList = dao.fetchTerm(searchKey);
-			String jsonString = gson.toJson(termList);
+			ArrayList<CoursePojo> termInstrList = dao.fetchTermAndInstructors(searchKey);
+			String jsonString = gson.toJson(termInstrList);
 			response.getWriter().write(jsonString);
 			
-		}else if(null != message && CommonConstants.OP_FETCH_INSTRUCTOR.equalsIgnoreCase(message)) {
+		}/*else if(null != message && CommonConstants.OP_FETCH_INSTRUCTOR.equalsIgnoreCase(message)) {
 			
 			Gson gson = new Gson();
 			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);
@@ -67,7 +67,7 @@ public class CourseController extends HttpServlet {
 			String jsonString = gson.toJson(instructorList);
 			response.getWriter().write(jsonString);
 			
-		}else if(null != message && CommonConstants.OP_FETCH_COURSEID.equalsIgnoreCase(message)) {
+		}*/else if(null != message && CommonConstants.OP_FETCH_COURSEID.equalsIgnoreCase(message)) {
 			
 			Gson gson = new Gson();
 			CoursePojo searchKey = gson.fromJson(jsonData, CoursePojo.class);

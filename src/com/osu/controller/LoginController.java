@@ -67,6 +67,12 @@ public class LoginController extends HttpServlet {
 						"Invalid Username or Password. Please try again.</div>");
 				rd.include(request, response);
 			}
+		}else if(null != message && CommonConstants.OP_LOGOUT.equalsIgnoreCase(message)) {
+			HttpSession session = request.getSession(false);
+			if(session != null) {
+				session.invalidate();
+			}
+			response.sendRedirect("login.html");
 		}
 		System.out.println("LoginController:doPost Exiting...");
 	}
