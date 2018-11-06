@@ -14,7 +14,7 @@
 	    document.body.scrollTop = 0;
 	    document.documentElement.scrollTop = 0;
 	}
-	
+
 $(document).ready(function() {
 
   //get department list
@@ -87,7 +87,7 @@ $(document).ready(function() {
 
     jsonTermInstr = jQuery.parseJSON(termInstrList);
     console.log("jsonTermInstr: " + jsonTermInstr);
-    
+
     var terms = [];
     var instructors = [];
     courseIds = [];
@@ -100,11 +100,11 @@ $(document).ready(function() {
     	}
     	courseIds.push(jsonTermInstr[i].courseId);
     }
-    
+
     $.each(terms, function(index, value) {
       $('#termDropDown').append('<option value="'+value+'">'+value+'</option>');
     });
-    
+
     $.each(instructors, function(index, value) {
       $('#instructorDropDown').append('<option value="' + value + '">' + value +'</option>');
     });
@@ -173,7 +173,7 @@ $(document).ready(function() {
 	        		courseIds.push(jsonTermInstr[i].courseId);
 	        	}
 	        }
-	        
+
 	  }
       console.log("terms: " + terms);
       console.log("course ids: " + courseIds);
@@ -198,12 +198,12 @@ $(document).ready(function() {
         var instructor = $('#instructorDropDown').val() == "" ? "ALL" : $('#instructorDropDown').val();
         var courseIdParam = '';
         $.each(courseIds, function(index, value) {
-        	courseIdParam += 'C' + value; 
+        	courseIdParam += 'C' + value;
         });
 
-        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}'; 
+        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
         console.log("json data: " + jsonData);
-        
+
         // get Course ID
         //var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
         //var jsonCourseId = jQuery.parseJSON(courseId);
@@ -213,102 +213,152 @@ $(document).ready(function() {
   });
 
   var exampleRev1 = new Object();
-  exampleRev1.name = "Omeed Habibelahian";
-  exampleRev1.anonymous = 0;
+  exampleRev1.firstName = "Omeed";
+  exampleRev1.lastName = "Habibelahian";
   exampleRev1.courseNo = "CS 290";
   exampleRev1.instructor = "Christopher Scaffidi";
+	exampleRev1.anonymous = 1;
   exampleRev1.rating = 3;
   exampleRev1.term = "Winter 2018";
-  exampleRev1.datePosted = "08/07/2018";
-  exampleRev1.grade = "B";
-  exampleRev1.reviewText = "";
+  exampleRev1.datePosted = "8/7/2018";
+  exampleRev1.gradeReceived = "B";
+  exampleRev1.review = "I liked this class";
 
   var exampleRev2 = new Object();
-  exampleRev2.name = "Omeed Habibelahian";
+  exampleRev2.firstName = "Omeed";
+  exampleRev2.lastName = "Habibelahian";
   exampleRev2.courseNo = "CS 340";
   exampleRev2.instructor = "Christopher Scaffidi";
   exampleRev2.anonymous = 0;
   exampleRev2.rating = 2;
   exampleRev2.term = "Spring 2018";
-  exampleRev2.datePosted = "07/15/2018";
-  exampleRev2.grade = "B";
-  exampleRev2.reviewText = "";
+  exampleRev2.datePosted = "7/15/2018";
+  exampleRev2.gradeReceived = "B";
+  exampleRev2.review = "Difficult class";
 
   var exampleRev3 = new Object();
-  exampleRev3.name = "Omeed Habibelahian";
+  exampleRev3.firstName = "Omeed";
+  exampleRev3.lastName = "Habibelahian";
   exampleRev3.courseNo = "CS 463";
   exampleRev3.instructor = "D McGrath";
   exampleRev3.anonymous = 0;
   exampleRev3.rating = 4;
   exampleRev3.term = "Spring 2018";
-  exampleRev3.datePosted = "07/13/2018";
-  exampleRev3.grade = "A";
-  exampleRev3.reviewText = "";
+  exampleRev3.datePosted = "7/13/2018";
+  exampleRev3.gradeReceived = "A";
+  exampleRev3.review = "Capstone 3!";
 
   var exampleRev4 = new Object();
-  exampleRev4.name = "Omeed Habibelahian";
+  exampleRev4.firstName = "Omeed";
+  exampleRev4.lastName = "Habibelahian";
   exampleRev4.courseNo = "CS 462";
   exampleRev4.instructor = "D McGrath";
-  exampleRev4.anonymous = 0;
+  exampleRev4.anonymous = 1;
   exampleRev4.rating = 4;
   exampleRev4.term = "Winter 2018";
-  exampleRev4.datePosted = "03/21/2018";
-  exampleRev4.grade = "A";
-  exampleRev4.reviewText = "";
+  exampleRev4.datePosted = "3/21/2018";
+  exampleRev4.gradeReceived = "A";
+  exampleRev4.review = "Capstone 2!";
 
   var reviews = [];
   reviews.push(exampleRev1, exampleRev2, exampleRev3, exampleRev4);
+  /*reviews.sort(function(a,b) {
+		return b.datePosted - a.datePosted;
+  });*/
+  
   var numStars = 0;
   var starHTML = "";
   var numReviewsShown = 0;
   var row = 0;
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < reviews.length; i++) {
     numStars = reviews[i].rating;
     starHTML = "";
     for (j = 0; j < numStars; j++) {
       starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
     }
-    row = $("<tr>");
+		if (numReviewsShown < 3) {
+    	row = $("<tr id=\"row" + i + "YV\">");
+			numReviewsShown++;
+		}
+		else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
     row.append("<td>" + reviews[i].datePosted+"</td>");
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].term + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    //row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
+    row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View</a></td>");
     $("#recentReviewTable tbody").append(row);
 
-    numReviewsShown++;
   }
   manageSeeMoreReviewsBtn(reviews, numReviewsShown);
 
   $('#seeMoreReviewsBtn').click(function() {
     for (i = 0; i < 3; i++) {
-      if (i+numReviewsShown < reviews.length) {
-        numStars = reviews[i+numReviewsShown].rating;
-        starHTML = "";
-        for (j = 0; j < numStars; j++) {
-          starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-        }
-        row = $("<tr>");
-        row.append("<td>" + reviews[i+numReviewsShown].datePosted+"</td>");
-        row.append("<td>" + starHTML + "</td>");
-        row.append("<td>" + reviews[i+numReviewsShown].courseNo + " (" + reviews[i+numReviewsShown].term + ")</td>");
-        row.append("<td>" + reviews[i+numReviewsShown].instructor + "</td>");
-        row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
-        $("#recentReviewTable tbody").append(row);
-
-        numReviewsShown++;
-      }
+		$('#row' + (i+numReviewsShown) + 'YV').removeClass("hidden-review");
+		numReviewsShown++;
+		if (i+numReviewsShown == reviews.length) break;
     }
     manageSeeMoreReviewsBtn(reviews, numReviewsShown);
   });
+
+	$('.viewReviewBtn').click(function() {
+		$('#chosenReviewId').val($(this).data('id'));
+		console.log("id: " + $('#chosenReviewId').val());
+	});
+
+	$('#yourReviewModal').on('shown.bs.modal', function() {
+		//var chosenReviewId = $('#chosenReviewId').val();
+		var i = $('#chosenReviewId').val();
+		//console.log("id: " + chosenReviewId);
+		$('#modalTitleYV').html("Your Review for " + reviews[i].courseNo);
+		$('#yourNameYV').val(reviews[i].firstName + " " + reviews[i].lastName);
+		$('#anonymousCheckYV').attr('checked', reviews[i].anonymous);
+		$('#emptyTermYV').text(reviews[i].term);
+		$('#emptyInstructorYV').text(reviews[i].instructor);
+		$('#gradeDropdownYV').val(reviews[i].gradeReceived);
+		colorClickedStarRadioGroup(reviews[i].rating);
+		$('#reviewTextYV').val((reviews[i].review.length == 0 ? "[No review text]" : reviews[i].review));
+	});
+
+	$('#closeYourReviewFormX').click(function() {
+		console.log("Close Your Review X pressed!");
+		$('#fillFormAlertYV').hide();
+		$('#submitPendingAlertYV').hide();
+		// if contents have changed, give confirmation alert
+		//else:
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
+
+	$('#confirmCloseYourReviewBtn').click(function() {
+		console.log("YV Close Review button pressed!");
+		$('#fillFormAlertYV').hide();
+		$('#submitPendingAlertYV').hide();
+		// if contents have changed, give confirmation alert
+		//else:
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
+
+	$('#noCloseReviewFormBtnYV').click(function() {
+		console.log("YV Close Review Confirmation: No button pressed!");
+		$('#confirmCloseReviewFormAlertYV').hide();
+	});
+
+	$('#yesCloseReviewFormBtnYV').click(function() {
+		console.log("YV Close Review Confirmation: Yes button pressed!");
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
 });
 
 function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
+	console.log("total reviews: " + reviews.length);
+	console.log("reviews shown: " + numReviewsShown);
 	if (reviews.length - numReviewsShown >= 3) {
-		$('#seeMoreReviewsBtn').html("See 3 More");
+		$('#seeMoreReviewsBtn').html("See 3 More Reviews");
 	}
 	else if (reviews.length - numReviewsShown > 0 && reviews.length - numReviewsShown < 3) {
-		$('#seeMoreReviewsBtn').html("See All");
+		$('#seeMoreReviewsBtn').html("See All Reviews");
 	}
 	else if (reviews.length - numReviewsShown == 0) {
 		$('#seeMoreReviewsBtn').css("display", "none");
@@ -344,4 +394,23 @@ function validateSearchForm() {
   }*/
   $("#fillFormAlert").css("display", "none");
   return true;
+}
+
+function colorClickedStarRadioGroup(numChecked) {
+	if (numChecked > 0) {
+		for (i = 1; i <= numChecked; i++) {
+			var starID = "#ratingStarChkYV" + i.toString();
+			$(starID).css("opacity", "1");
+		}
+		for (i = numChecked + 1; i <= 5; i++) {
+			var starID = "#ratingStarChkYV" + i.toString();
+			$(starID).css("opacityYV", "0.2");
+		}
+	}
+	else {
+		for (i = 0; i <= 5; i++) {
+			var starID = "#ratingStarChk" + i.toString();
+			$(starID).css("opacity", "0.2");
+		}
+	}
 }

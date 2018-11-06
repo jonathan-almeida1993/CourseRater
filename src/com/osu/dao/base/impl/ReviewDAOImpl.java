@@ -92,6 +92,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 				singleReview.setRating(resultSet.getInt("rating"));
 				singleReview.setReview(resultSet.getString("review"));
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
+				singleReview.setDatePosted(resultSet.getDate("created_date").getTime());
 				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
 				reviewList.add(singleReview);
 			}
@@ -112,7 +113,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		ArrayList<ReviewPojo> reviewList = new ArrayList<ReviewPojo>();
 
-		//course_id , onid, rating, review, created_date, grade_received, anonymous
+		//review_id, course_id , onid, first_name, last_name, rating, review, created_date, grade_received, anonymous
 		try {
 			conn = getConnection();
 			preparedStatement = conn.prepareStatement(SqlConstants.GET_COURSE_REVIEWS);
@@ -123,11 +124,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 				singleReview.setReviewId(resultSet.getInt("review_id"));
 				singleReview.setCourseId(resultSet.getInt("course_id"));
 				singleReview.setOnid(resultSet.getString("onid"));
+				singleReview.setFirstName(resultSet.getString("first_name"));
+				singleReview.setLastName(resultSet.getString("last_name"));
 				singleReview.setRating(resultSet.getInt("rating"));
 				singleReview.setReview(resultSet.getString("review"));
+				//singleReview.setDatePosted(resultSet.getDate("created_date"));
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
+				singleReview.setDatePosted(resultSet.getDate("created_date").getTime());
 				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
-				//singleReview.setDatePosted(resultSet.getDate("created_date").getTime());
 				reviewList.add(singleReview);
 			}
 		}catch(Exception e) {

@@ -5,6 +5,8 @@ public class ReviewPojo extends BasePojo {
 	private int reviewId;
 	private int courseId;
 	private String onid;
+	private String firstName;
+	private String lastName;
 	private int rating;
 	private String review;
 	private String gradeReceived;
@@ -28,6 +30,18 @@ public class ReviewPojo extends BasePojo {
 	}
 	public void setOnid(String onid) {
 		this.onid = onid;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	public int getRating() {
 		return rating;

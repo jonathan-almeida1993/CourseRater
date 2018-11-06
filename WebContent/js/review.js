@@ -247,14 +247,14 @@ $(document).ready(function(){
 	});
 
 	/* When the user changes the course number in the Course Search form */
-	$('#courseDropDown').change(function(){
+	$('#courseDropDownCP').change(function(){
 		var dept = $('#subjectDropDownCP').val();
 		var course = $('#courseDropDownCP').val();
 		var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
 		var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
 		console.log("Term List = "+termInstrList);
-
+		console.log("course val: " + course);
 		$('#termDropDownCP').find('option').remove();
 		$('#termDropDownCP').append('<option value="">All Terms</option>').val('');
 		$('#instructorDropDownCP').find('option').remove();
@@ -412,6 +412,7 @@ $(document).ready(function(){
 	$.each(courseIds, function(index, id) {
 		var jsonData = '{"courseId":"' + id + '"}';
 		var reviewList = sendDataSync(jsonData, "getCourseReviews", "ReviewController");
+		console.log("reviews: " + reviewList);
 
 		//parse the string for each review and put them into correct field of a review object
 		var jsonReviews = jQuery.parseJSON(reviewList);
@@ -420,6 +421,10 @@ $(document).ready(function(){
 		$.each(jsonReviews, function(index, value) {
 			reviews.push(value);
 		});
+	});
+	
+	reviews.sort(function(a,b) {
+		return b.datePosted - a.datePosted;
 	});
 
 	updateAverageRating(reviews);
@@ -453,7 +458,7 @@ $(document).ready(function(){
 			"<label>" +
 			"<strong>Posted By: </strong>" +
 			"<span>" +
-			reviews[i].onid +
+			reviews[i].firstName + " " + reviews[i].lastName +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
@@ -594,10 +599,10 @@ $(document).ready(function(){
 				newReview.gradeReceived = "N";
 			}
 			else newReview.gradeReceived = $('#gradeDropdown').val();
-			if ($('#reviewText').text().length == 0) {
+			if ($('#reviewText').val() == "") {
 				newReview.review = "*This student did not write a review in their submission.*"
 			}
-			else newReview.review = $('reviewText').text();
+			else newReview.review = $('#reviewText').val();
 
 			reviews.push(newReview);
 			updateAverageRating(reviews);
@@ -878,7 +883,7 @@ function validateSearchForm() {
 		$("#fillFormAlertCP").css("display", "block");
 		return false;
 	}
-	
+
 	$("#fillFormAlertCP").css("display", "none");
 	return true;
 }

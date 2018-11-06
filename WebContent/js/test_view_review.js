@@ -58,7 +58,7 @@ function testMyReviewsInvalidSession(){
 	if(expectedValue == actual){
 		console.log("MyReviewsInvalidSession - PASSED");
 	}else {
-		consol.log("MyReviewsInvalidSession - FAILED");
+		console.log("MyReviewsInvalidSession - FAILED");
 	}
 }
 

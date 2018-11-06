@@ -192,80 +192,10 @@
               <th scope="col">Rating</th>
               <th scope="col">Course Name</th>
               <th scope="col">Professor/Instructor</th>
-              <!-- <th scope="col">Actions</th> -->
+              <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody id="recentReviewTableBody">
-            <!-- <tr>
-              <th scope="row">08/07/18</th>
-              <td>
-                <span id="reviewRating2" value="3">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                </span>
-              </td>
-              <td>CS 290 (Web Development) - Winter 2018</td>
-              <td>Christopher Scaffidi</td>
-              <td>
-                <span>
-                  View
-                </span><br />
-                <span>
-                  Delete
-                </span><br />
-                <span>
-                  Edit
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">08/07/18</th>
-              <td>
-                <span id="reviewRating2" value="3">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                </span>
-              </td>
-              <td>CS 290 (Web Development) - Winter 2018</td>
-              <td>Christopher Scaffidi</td>
-              <td>
-                <span>
-                  View
-                </span><br />
-                <span>
-                  Delete
-                </span><br />
-                <span>
-                  Edit
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">08/07/18</th>
-              <td>
-                <span id="reviewRating2" value="3">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                  <img class="rating-star" src="images/star-8x_full.png">
-                </span>
-              </td>
-              <td>CS 290 (Web Development) - Winter 2018</td>
-              <td>Christopher Scaffidi</td>
-              <td>
-                <span>
-                  View
-                </span><br />
-                <span>
-                  Delete
-                </span><br />
-                <span>
-                  Edit
-                </span>
-              </td>
-            </tr> -->
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
       <div class="row">
@@ -278,6 +208,113 @@
         </div>
       </div><br />
 
+    </div>
+  </div>
+  
+  <input id="chosenReviewId"></input>
+  
+  <!-- Your review modal -->
+    <div class="row">
+      <div class="modal fade" id="yourReviewModal" tabindex="-1" role="dialog" aria-labelledby="yourReviewModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTitleYV"></h5>
+              <button type="button" class="close" aria-label="Close" id="closeYourReviewFormX">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="alert alert-warning" id="confirmCloseReviewFormAlertYV">
+              <span class="float-left">You have unsaved changes. Are you sure you want to close the form? Your changes will be lost.</span>
+              <div class="float-right">
+                <button type="button" class="btn btn-primary float-left" id="noCloseReviewFormBtnYV">No</button>
+                <button type="button" class="btn btn-secondary float-right" id="yesCloseReviewFormBtnYV">Yes</button>
+              </div>
+            </div>
+            <div class="alert alert-danger" role="alert" id="fillFormAlertYV"></div>
+            <div class="alert alert-info" role="alert" id="submitPendingAlertYV">
+              Submitting changes...
+            </div>
+            <!-- <div class="alert alert-success" role="alert" id="submitSuccessAlert">
+              Your review has been submitted!
+              <button type="button" class="btn btn-secondary float-right" id="dismissSubmitSuccessAlert">OK</button>
+            </div> -->
+            <div class="modal-body">
+              <form class="row" id="yourReviewForm">
+
+                <div class="form-group col-md-6">
+                  <div class="form-group">
+                    <fieldset disabled>
+                      <label for="yourNameYV">Name:</label>
+                      <!-- student name will appear filled in, there is an anonymity check box below it.  -->
+                      <input type="name" class="form-control" id="yourNameYV" placeholder="[Student Name]" name="yourName">
+                    </fieldset>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="anonymousCheckYV" onclick="toggleAnonymousMsg()" name="anonymous" value=true disabled="disabled">
+                      <label class="custom-control-label" for="anonymousCheckYV">I'd like to submit my review anonymously.</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <!-- <fieldset disabled>
+                      <label for="termDropdown">Term Taken:</label>
+                      <input type="text" class="form-control" id="termTaken" placeholder="[Term Taken]">
+                    </fieldset> -->
+                    <label for="termDropdownYV">*Term Taken:</label>
+                    <select name="termTaken" class="custom-select" id="termDropdownYV" disabled="disabled">
+                      <option value="" id="emptyTermYV">Select Term</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="instructorDropdownYV">*Professor/Instructor:</label>
+                    <select name="instructorDropdownYV" class="custom-select" id="instructorDropdownYV" disabled="disabled">
+                      <option value="" id="emptyInstructorYV">Select Professor/Instructor</option>
+                    </select>
+                  </div>
+                  <div id="courseIdHolderYV"></div>
+                  <div class="form-group">
+                    <label for="gradeDropdownYV">Grade Received:</label>
+                    <select name="gradeReceived" class="custom-select" id="gradeDropdownYV" disabled="disabled">
+                      <option value="">Select...</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="F">F</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="ratingCheckboxYV">*Rating:</label>
+                  <span name="rating" id="ratingCheckboxYV" value="" disabled="disabled">
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChkYV1"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChkYV2"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChkYV3"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChkYV4"></a>
+                    <a href="#"><img class="rating-star-check" type="button" src="images/star-8x_full.png" id="ratingStarChkYV5"></a>
+                    <strong><span id="ratingStarValueYV"></span></strong>
+                  </span>
+                </div>
+                <div class="form-group">
+                  <label for="reviewTextYV">Your Review:</label>
+                  <textarea name="review" class="form-control" id="reviewTextYV" disabled="disabled"></textarea>
+                  <!-- The small tag below should only appear if the user has selected the "anonymous" checkbox. -->
+                  <small id="anonymousMsg">Your review will appear as "Anonymous".</small><br>
+                  <small>* Required Field</small>
+                </div>
+                <input type="hidden" name="courseId" id="yourReviewCourseId"></input>
+              </div>
+            </form>
+            <div class="form-group">
+              <div class="modal-footer float-right">
+                <button type="button" class="btn btn-secondary float-left" id="confirmCloseYourReviewBtn">Close</button>
+                <!-- <button type="button" class="btn btn-primary float-right" id="submitChangesBtn">Save Changes</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
