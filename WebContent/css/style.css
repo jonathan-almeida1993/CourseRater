@@ -183,10 +183,12 @@ a.link{
 #badPasswordAlert { display: none; }
 #fillFormAlert { display: none; }
 #fillFormAlertCP { display: none; }
-#fillFormAlertRV { display: none; }
+#fillFormAlertYV { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }
+#submitPendingAlertYV { display: none; }
 #confirmCloseReviewFormAlert { display: none; }
+#confirmCloseReviewFormAlertYV { display: none; }
 #anonymousMsg { display: none; }
 #courseIdHolder { display: none; }
 

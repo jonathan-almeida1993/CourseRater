@@ -14,7 +14,7 @@
 	    document.body.scrollTop = 0;
 	    document.documentElement.scrollTop = 0;
 	}
-	
+
 $(document).ready(function() {
 
   //get department list
@@ -87,7 +87,7 @@ $(document).ready(function() {
 
     jsonTermInstr = jQuery.parseJSON(termInstrList);
     console.log("jsonTermInstr: " + jsonTermInstr);
-    
+
     var terms = [];
     var instructors = [];
     courseIds = [];
@@ -100,11 +100,11 @@ $(document).ready(function() {
     	}
     	courseIds.push(jsonTermInstr[i].courseId);
     }
-    
+
     $.each(terms, function(index, value) {
       $('#termDropDown').append('<option value="'+value+'">'+value+'</option>');
     });
-    
+
     $.each(instructors, function(index, value) {
       $('#instructorDropDown').append('<option value="' + value + '">' + value +'</option>');
     });
@@ -173,7 +173,7 @@ $(document).ready(function() {
 	        		courseIds.push(jsonTermInstr[i].courseId);
 	        	}
 	        }
-	        
+
 	  }
       console.log("terms: " + terms);
       console.log("course ids: " + courseIds);
@@ -198,12 +198,12 @@ $(document).ready(function() {
         var instructor = $('#instructorDropDown').val() == "" ? "ALL" : $('#instructorDropDown').val();
         var courseIdParam = '';
         $.each(courseIds, function(index, value) {
-        	courseIdParam += 'C' + value; 
+        	courseIdParam += 'C' + value;
         });
 
-        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}'; 
+        var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
         console.log("json data: " + jsonData);
-        
+
         // get Course ID
         //var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
         //var jsonCourseId = jQuery.parseJSON(courseId);
@@ -220,8 +220,8 @@ $(document).ready(function() {
   exampleRev1.rating = 3;
   exampleRev1.term = "Winter 2018";
   exampleRev1.datePosted = "08/07/2018";
-  exampleRev1.grade = "B";
-  exampleRev1.reviewText = "";
+  exampleRev1.gradeReceived = "B";
+  exampleRev1.review = "";
 
   var exampleRev2 = new Object();
   exampleRev2.name = "Omeed Habibelahian";
@@ -231,8 +231,8 @@ $(document).ready(function() {
   exampleRev2.rating = 2;
   exampleRev2.term = "Spring 2018";
   exampleRev2.datePosted = "07/15/2018";
-  exampleRev2.grade = "B";
-  exampleRev2.reviewText = "";
+  exampleRev2.gradeReceived = "B";
+  exampleRev2.review = "";
 
   var exampleRev3 = new Object();
   exampleRev3.name = "Omeed Habibelahian";
@@ -242,8 +242,8 @@ $(document).ready(function() {
   exampleRev3.rating = 4;
   exampleRev3.term = "Spring 2018";
   exampleRev3.datePosted = "07/13/2018";
-  exampleRev3.grade = "A";
-  exampleRev3.reviewText = "";
+  exampleRev3.gradeReceived = "A";
+  exampleRev3.review = "";
 
   var exampleRev4 = new Object();
   exampleRev4.name = "Omeed Habibelahian";
@@ -253,8 +253,8 @@ $(document).ready(function() {
   exampleRev4.rating = 4;
   exampleRev4.term = "Winter 2018";
   exampleRev4.datePosted = "03/21/2018";
-  exampleRev4.grade = "A";
-  exampleRev4.reviewText = "";
+  exampleRev4.gradeReceived = "A";
+  exampleRev4.review = "";
 
   var reviews = [];
   reviews.push(exampleRev1, exampleRev2, exampleRev3, exampleRev4);
@@ -273,7 +273,7 @@ $(document).ready(function() {
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].term + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    //row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
+    row.append("<td><a href='#' data-toggle=\"modal\" data-id=\'" + i + "\' data-target=\"#yourReviewModal\">View</a></td>");
     $("#recentReviewTable tbody").append(row);
 
     numReviewsShown++;
@@ -293,7 +293,7 @@ $(document).ready(function() {
         row.append("<td>" + starHTML + "</td>");
         row.append("<td>" + reviews[i+numReviewsShown].courseNo + " (" + reviews[i+numReviewsShown].term + ")</td>");
         row.append("<td>" + reviews[i+numReviewsShown].instructor + "</td>");
-        row.append("<td>" + "<a href='#'>View</a><br />" + "<a href='#'>Edit</a><br />" + "<a href='#'>Delete</a><br /></td>");
+        row.append("<td><a href='#' data-toggle=\"modal\" data-id=\'" + (i+numReviewsShown) + "\' data-target=\"#yourReviewModal\ id=\"viewReviewBtn\"">View</a></td>");
         $("#recentReviewTable tbody").append(row);
 
         numReviewsShown++;
@@ -301,6 +301,37 @@ $(document).ready(function() {
     }
     manageSeeMoreReviewsBtn(reviews, numReviewsShown);
   });
+
+	$('#closeYourReviewFormX').click(function() {
+		console.log("Close Your Review X pressed!");
+		$('#fillFormAlertYV').hide();
+		$('#submitPendingAlertYV').hide();
+		// if contents have changed, give confirmation alert
+		//else:
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
+
+	$('#confirmCloseYourReviewBtn').click(function() {
+		console.log("YV Close Review button pressed!");
+		$('#fillFormAlertYV').hide();
+		$('#submitPendingAlertYV').hide();
+		// if contents have changed, give confirmation alert
+		//else:
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
+
+	$('#noCloseReviewFormBtnYV').click(function() {
+		console.log("YV Close Review Confirmation: No button pressed!");
+		$('#confirmCloseReviewFormAlertYV').hide();
+	});
+
+	$('#yesCloseReviewFormBtnYV').click(function() {
+		console.log("YV Close Review Confirmation: Yes button pressed!");
+		$('#confirmCloseReviewFormAlertYV').hide();
+		$('#yourReviewModal').modal('hide');
+	});
 });
 
 function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
