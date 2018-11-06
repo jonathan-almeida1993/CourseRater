@@ -293,8 +293,9 @@ $(document).ready(function() {
 
   $('#seeMoreReviewsBtn').click(function() {
     for (i = 0; i < 3; i++) {
-			$('#row' + (i+numReviewsShown) + 'YV').removeClass("hidden-review");
-			numReviewsShown++;
+		$('#row' + (i+numReviewsShown) + 'YV').removeClass("hidden-review");
+		numReviewsShown++;
+		if (i+numReviewsShown == reviews.length) break;
     }
     manageSeeMoreReviewsBtn(reviews, numReviewsShown);
   });
@@ -351,6 +352,8 @@ $(document).ready(function() {
 });
 
 function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
+	console.log("total reviews: " + reviews.length);
+	console.log("reviews shown: " + numReviewsShown);
 	if (reviews.length - numReviewsShown >= 3) {
 		$('#seeMoreReviewsBtn').html("See 3 More Reviews");
 	}
