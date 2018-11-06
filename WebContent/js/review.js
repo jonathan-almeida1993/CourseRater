@@ -422,6 +422,10 @@ $(document).ready(function(){
 			reviews.push(value);
 		});
 	});
+	
+	reviews.sort(function(a,b) {
+		return b.datePosted - a.datePosted;
+	});
 
 	updateAverageRating(reviews);
 

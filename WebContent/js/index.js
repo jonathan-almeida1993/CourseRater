@@ -262,6 +262,10 @@ $(document).ready(function() {
 
   var reviews = [];
   reviews.push(exampleRev1, exampleRev2, exampleRev3, exampleRev4);
+  /*reviews.sort(function(a,b) {
+		return b.datePosted - a.datePosted;
+  });*/
+  
   var numStars = 0;
   var starHTML = "";
   var numReviewsShown = 0;
