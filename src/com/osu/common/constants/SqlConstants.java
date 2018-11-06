@@ -28,10 +28,10 @@ public interface SqlConstants {
 	String GET_COURSE_DETAILS = "SELECT course_id, course_name, department,  course_number, term_offered, instructor, course_desc from course_master_tbl " + 
 			"where course_id = ?";
 	
-	String GET_MY_REVIEWS = "SELECT review_id, course_id , onid, rating, review, grade_received, anonymous "+
+	String GET_MY_REVIEWS = "SELECT review_id, course_id , onid, rating, review, grade_received, created_date, anonymous "+
 			"FROM review_master_tbl WHERE onid= ?";
 
-	String GET_COURSE_REVIEWS = "SELECT review_id, course_id , onid, rating, review, grade_received, anonymous "+
-			"FROM review_master_tbl WHERE course_id = ?";
+	String GET_COURSE_REVIEWS = "SELECT R.review_id, R.course_id , R.onid, U.first_name, U.last_name, R.rating, R.review, R.grade_received, R.created_date, R.anonymous "+
+			"FROM review_master_tbl R, user_master_tbl U WHERE (R.course_id = ?) AND (R.onid = U.onid)";
 
 }

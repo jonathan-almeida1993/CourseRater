@@ -412,6 +412,7 @@ $(document).ready(function(){
 	$.each(courseIds, function(index, id) {
 		var jsonData = '{"courseId":"' + id + '"}';
 		var reviewList = sendDataSync(jsonData, "getCourseReviews", "ReviewController");
+		console.log("reviews: " + reviewList);
 
 		//parse the string for each review and put them into correct field of a review object
 		var jsonReviews = jQuery.parseJSON(reviewList);
@@ -453,7 +454,7 @@ $(document).ready(function(){
 			"<label>" +
 			"<strong>Posted By: </strong>" +
 			"<span>" +
-			reviews[i].onid +
+			reviews[i].firstName + " " + reviews[i].lastName +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +

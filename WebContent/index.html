@@ -211,13 +211,15 @@
     </div>
   </div>
   
+  <input id="chosenReviewId"></input>
+  
   <!-- Your review modal -->
     <div class="row">
       <div class="modal fade" id="yourReviewModal" tabindex="-1" role="dialog" aria-labelledby="yourReviewModal" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Your Review</h5>
+              <h5 class="modal-title" id="modalTitleYV"></h5>
               <button type="button" class="close" aria-label="Close" id="closeYourReviewFormX">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -243,9 +245,9 @@
                 <div class="form-group col-md-6">
                   <div class="form-group">
                     <fieldset disabled>
-                      <label for="yourName">Name:</label>
+                      <label for="yourNameYV">Name:</label>
                       <!-- student name will appear filled in, there is an anonymity check box below it.  -->
-                      <input type="name" class="form-control" id="yourName" placeholder="[Student Name]" name="yourName">
+                      <input type="name" class="form-control" id="yourNameYV" placeholder="[Student Name]" name="yourName">
                     </fieldset>
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" id="anonymousCheckYV" onclick="toggleAnonymousMsg()" name="anonymous" value=true disabled="disabled">
@@ -264,7 +266,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="instructorDropdownYV">*Instructor:</label>
+                    <label for="instructorDropdownYV">*Professor/Instructor:</label>
                     <select name="instructorDropdownYV" class="custom-select" id="instructorDropdownYV" disabled="disabled">
                       <option value="" id="emptyInstructorYV">Select Professor/Instructor</option>
                     </select>
@@ -307,7 +309,7 @@
             <div class="form-group">
               <div class="modal-footer float-right">
                 <button type="button" class="btn btn-secondary float-left" id="confirmCloseYourReviewBtn">Close</button>
-                <button type="button" class="btn btn-primary float-right" id="submitChangesBtn">Submit Review</button>
+                <!-- <button type="button" class="btn btn-primary float-right" id="submitChangesBtn">Save Changes</button> -->
               </div>
             </div>
           </div>

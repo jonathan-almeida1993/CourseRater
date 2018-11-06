@@ -170,6 +170,10 @@ a.link{
   opacity: 0.2;
 }
 
+.hidden-review {
+	display: none;
+}
+
 #newReview {
 	border: 3px solid rgba(177, 223, 187, 0);
 	border-radius: 7px;
@@ -183,6 +187,7 @@ a.link{
 #badPasswordAlert { display: none; }
 #fillFormAlert { display: none; }
 #fillFormAlertCP { display: none; }
+#fillFormAlertRV { display: none; }
 #fillFormAlertYV { display: none; }
 #submitPendingAlert { display: none; }
 #submitSuccessAlert { display: none; }
@@ -191,6 +196,7 @@ a.link{
 #confirmCloseReviewFormAlertYV { display: none; }
 #anonymousMsg { display: none; }
 #courseIdHolder { display: none; }
+#chosenReviewId { display: none; }
 
 /* login start */
 /* .loginScreenBg{background: url(../images/bg.jpg) no-repeat top left fixed;
