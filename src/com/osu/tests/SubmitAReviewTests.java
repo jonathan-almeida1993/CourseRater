@@ -28,6 +28,29 @@ public class SubmitAReviewTests extends SeleniumUtils{
 		}
 	}
 
+	private void fillSubmitReviewModal() {
+		Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
+		Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously checkbox", true));
+		
+		click(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously", true);
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.anonymousReviewBoxMessage, "Anonymous Review message", true));
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		select(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received").selectByValue("B");
+		
+		if(isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
+			click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
+
+		enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text", "Your Review textbox", true);
+		
+	}
+	
 	@Test(description = "Verify that all the mandatory elements in 'Submit a Review' form are displayed as expected.")
 	public void submitReviewTest1() {
 		navigateToSubmitReview();
@@ -89,7 +112,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
+			/*Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
 
 			try {
@@ -103,8 +126,9 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			if(isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
 				click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
 
-			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text", "Your Review textbox", true);
+			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text", "Your Review textbox", true);*/
 
+			fillSubmitReviewModal();
 			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
 
 			if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.reviewSubmitConfirmationTxt, "Submit Confirmation Text", true))
@@ -132,7 +156,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				e.printStackTrace();
 			}
 			
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name"), "Jonathan Almeida");
+			/*Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name"), "Jonathan Almeida");
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken"), "Spring 2018");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received", true));
 			
@@ -141,8 +165,9 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			if(isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
 				click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
 
-			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text for closing modal test", "Your Review textbox", true);
+			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text for closing modal test", "Your Review textbox", true);*/
 
+			fillSubmitReviewModal();
 			click(Locator.XPATH, SubmitAReviewPage.closeBtn, "Close button", true);
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.closeConfirmationText, "Close modal confirmation text", true));
@@ -169,30 +194,27 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously checkbox", true));
 			
-			click(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously", true);
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.anonymousReviewBoxMessage, "Anonymous Review message", true));
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			select(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received").selectByValue("B");
-			
-			if(isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
-				click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
-
-			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text", "Your Review textbox", true);
-			
+			fillSubmitReviewModal();
 			click(Locator.XPATH, SubmitAReviewPage.closeBtn, "Close Submit Review modal", true);
 			click(Locator.XPATH, SubmitAReviewPage.yesCloseConfirmationText, "Yes Cancel submitting review", true);
 			
-			driver.navigate().back();
+			click(Locator.XPATH, DashboardPage.homeBtnLink, "Home button", true);
+			
+			navigateToSubmitReview();
+			if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+				click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				Assert.assertEquals(getText(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "Name"), "Jonathan Almeida");
+				Assert.assertEquals(getText(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "Term taken"), "Spring 2018");
+				//Assert.assertEquals(, arg1);
+			}
 			
 			//TODO - The review text is still displayed even after the user clicks on back button and returns to the review page. Verify the functionality and accordingly complete the test. 
 		}

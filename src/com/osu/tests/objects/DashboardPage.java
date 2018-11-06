@@ -25,11 +25,11 @@ public class DashboardPage {
 	public static final String fillFormAlert = "//div[@id='fillFormAlert']";
 	
 	public static final String yourRecentReviewsLabel = "//h3[text()='Your Recent Reviews']";
-	public static final String dateHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Date']";
-	public static final String courseHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Course']";
-	public static final String ratingHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Rating']";
-	public static final String actionHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Action']";
-	
+	public static final String dateHeaderLabel = "//table[@id='recentReviewTable']//th[.='Date']";
+	public static final String courseHeaderLabel = "//table[@id='recentReviewTable']//th[.='Course Name']";
+	public static final String ratingHeaderLabel = "//table[@id='recentReviewTable']//th[.='Rating']";
+	public static final String actionHeaderLabel = "//table[@id='recentReviewTable']//th[.='Action']";
+	public static final String seeAllReviewsBtn = "//h3[text()='Your Recent Reviews']/ancestor::div[@class='modal-content']//button[@id='seeMoreReviewsBtn' and .='See All Reviews']";
 	
 	
 }

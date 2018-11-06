@@ -32,4 +32,6 @@ public class ViewCoursePage {
 	public static final String submitReviewBtn = "//button[@id='submitReviewBtn']";
 	public static final String fillReviewFormAlert = "//div[@id='fillFormAlert']";
 
+	public static final String courseNumberHeader = "//h3[@id='courseNameHeader']";
+	
 }

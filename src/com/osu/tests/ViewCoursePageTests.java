@@ -1,5 +1,9 @@
 package com.osu.tests;
 
+import java.util.HashMap;
+
+import javax.swing.plaf.ActionMapUIResource;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,7 +13,7 @@ import com.osu.tests.support.SeleniumUtils;
 
 public class ViewCoursePageTests extends SeleniumUtils{
 	
-	public void navigateToSubmitReview(){
+	public HashMap<String, String> navigateToSubmitReview(){
 		login();
 
 		select(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
@@ -17,6 +21,12 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		select(Locator.XPATH, DashboardPage.termEnabledDropdown, "'Term' dropdown").selectByValue("Spring 2018");
 		select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Juli Schutford");
 
+		HashMap<String, String> selections = new HashMap<String, String>();
+		selections.put("Subject", "Computer Science (CS)");
+		selections.put("CourseNumber", "325");
+		selections.put("Term", "Spring 2018");
+		selections.put("Professor", "Juli Schutford");
+		
 		try {
 			Thread.sleep(500);
 			click(Locator.XPATH, DashboardPage.searchBtn, "'Search' button", true);
@@ -24,6 +34,8 @@ public class ViewCoursePageTests extends SeleniumUtils{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return selections;
 	}
 	
 	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.")
@@ -252,6 +264,24 @@ public class ViewCoursePageTests extends SeleniumUtils{
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is visible");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.fillReviewFormAlert).getText().equals("Please give the course a rating!"), "The Fill Form alert tells the user to give the course a rating");
 		}
+	}
+	
+	@Test(description = "Verify that header on reviews page correctly displays the dept, course, term and professor name as selected in the search modal.")
+	public void viewCourseTest15() {
+		login();
+		
+		//TODO - actualSelections gives an error. 
+		
+		/*HashMap<String, String> acutalSelections = navigateToSubmitReview();
+
+		String subject = actualSelections.get("Subject");
+		String courseNumber = actualSelections.get("CourseNumber");
+		String term = actualSelections.get("Term");
+		String professor = actualSelections.get("Professor");*/
+		
+		//courseHeader = subject
+		
+		//Assert.assertEquals(getText(Locator.XPATH, ViewCoursePage.courseNumberLabel, "Course Name header"), courseHeader);
 	}
 	
 }
