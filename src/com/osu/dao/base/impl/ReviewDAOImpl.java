@@ -94,6 +94,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
 				singleReview.setDatePosted(resultSet.getDate("created_date").getTime());
 				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
+				singleReview.setInstructor(resultSet.getString("instructor"));
+				singleReview.setDepartment(resultSet.getString("department"));
+				singleReview.setTermOffered(resultSet.getString("term_offered"));
+				singleReview.setCourseNo(resultSet.getInt("course_number"));
+
 				reviewList.add(singleReview);
 			}
 		}catch(Exception e) {

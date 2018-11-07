@@ -212,56 +212,16 @@ $(document).ready(function() {
     }
   });
 
-  var exampleRev1 = new Object();
-  exampleRev1.firstName = "Omeed";
-  exampleRev1.lastName = "Habibelahian";
-  exampleRev1.courseNo = "CS 290";
-  exampleRev1.instructor = "Christopher Scaffidi";
-	exampleRev1.anonymous = 1;
-  exampleRev1.rating = 3;
-  exampleRev1.term = "Winter 2018";
-  exampleRev1.datePosted = "8/7/2018";
-  exampleRev1.gradeReceived = "B";
-  exampleRev1.review = "I liked this class";
-
-  var exampleRev2 = new Object();
-  exampleRev2.firstName = "Omeed";
-  exampleRev2.lastName = "Habibelahian";
-  exampleRev2.courseNo = "CS 340";
-  exampleRev2.instructor = "Christopher Scaffidi";
-  exampleRev2.anonymous = 0;
-  exampleRev2.rating = 2;
-  exampleRev2.term = "Spring 2018";
-  exampleRev2.datePosted = "7/15/2018";
-  exampleRev2.gradeReceived = "B";
-  exampleRev2.review = "Difficult class";
-
-  var exampleRev3 = new Object();
-  exampleRev3.firstName = "Omeed";
-  exampleRev3.lastName = "Habibelahian";
-  exampleRev3.courseNo = "CS 463";
-  exampleRev3.instructor = "D McGrath";
-  exampleRev3.anonymous = 0;
-  exampleRev3.rating = 4;
-  exampleRev3.term = "Spring 2018";
-  exampleRev3.datePosted = "7/13/2018";
-  exampleRev3.gradeReceived = "A";
-  exampleRev3.review = "Capstone 3!";
-
-  var exampleRev4 = new Object();
-  exampleRev4.firstName = "Omeed";
-  exampleRev4.lastName = "Habibelahian";
-  exampleRev4.courseNo = "CS 462";
-  exampleRev4.instructor = "D McGrath";
-  exampleRev4.anonymous = 1;
-  exampleRev4.rating = 4;
-  exampleRev4.term = "Winter 2018";
-  exampleRev4.datePosted = "3/21/2018";
-  exampleRev4.gradeReceived = "A";
-  exampleRev4.review = "Capstone 2!";
-
-  var reviews = [];
-  reviews.push(exampleRev1, exampleRev2, exampleRev3, exampleRev4);
+  console.log(document.cookie);
+  var studentNameCookie = document.cookie.split(';')[1].substr(1);
+  console.log(studentNameCookie);
+  
+  var reviewList = sendDataSync("", "getMyReviews", "ReviewController");
+  console.log("MyReviews: " + reviewList);
+  
+  var reviews = jQuery.parseJSON(reviewList);
+  
+  //reviews.push(exampleRev1, exampleRev2, exampleRev3, exampleRev4);
   /*reviews.sort(function(a,b) {
 		return b.datePosted - a.datePosted;
   });*/
@@ -281,9 +241,9 @@ $(document).ready(function() {
 			numReviewsShown++;
 		}
 		else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
-    row.append("<td>" + reviews[i].datePosted+"</td>");
+    row.append("<td>" + new Date(reviews[i].datePosted).toLocaleDateString() +"</td>");
     row.append("<td>" + starHTML + "</td>");
-    row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].term + ")</td>");
+    row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
     row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View</a></td>");
     $("#recentReviewTable tbody").append(row);
@@ -309,14 +269,18 @@ $(document).ready(function() {
 		//var chosenReviewId = $('#chosenReviewId').val();
 		var i = $('#chosenReviewId').val();
 		//console.log("id: " + chosenReviewId);
-		$('#modalTitleYV').html("Your Review for " + reviews[i].courseNo);
-		$('#yourNameYV').val(reviews[i].firstName + " " + reviews[i].lastName);
+		var subjectCode = reviews[i].department.split("(")[1].slice(0,-1);
+		$('#modalTitleYV').html("Your Review for " + subjectCode + " " + reviews[i].courseNo);
+		$('#yourNameYV').val(studentNameCookie.split('=')[1].replace('-',' '));
 		$('#anonymousCheckYV').attr('checked', reviews[i].anonymous);
-		$('#emptyTermYV').text(reviews[i].term);
+		$('#emptyTermYV').text(reviews[i].termOffered);
 		$('#emptyInstructorYV').text(reviews[i].instructor);
-		$('#gradeDropdownYV').val(reviews[i].gradeReceived);
+		console.log("grade value: " + reviews[i].gradeReceived);
+		console.log("grade shown: " + (reviews[i].gradeReceived == "N" ? "" : reviews[i].gradeReceived));
+		$('#gradeDropdownYV').val((reviews[i].gradeReceived == "N" ? "" : reviews[i].gradeReceived));
+		
 		colorClickedStarRadioGroup(reviews[i].rating);
-		$('#reviewTextYV').val((reviews[i].review.length == 0 ? "[No review text]" : reviews[i].review));
+		$('#reviewTextYV').val((reviews[i].review == "*This student did not write a review in their submission.*" ? "[No review text]" : reviews[i].review));
 	});
 
 	$('#closeYourReviewFormX').click(function() {
