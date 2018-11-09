@@ -243,7 +243,7 @@ $(document).ready(function() {
 		else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
     row.append("<td>" + new Date(reviews[i].datePosted).toLocaleDateString() +"</td>");
     row.append("<td>" + starHTML + "</td>");
-    row.append("<td>" + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
+    row.append("<td>" + reviews[i].department.split("(")[1].slice(0,-1) + " " + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
     row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View</a></td>");
     $("#recentReviewTable tbody").append(row);
