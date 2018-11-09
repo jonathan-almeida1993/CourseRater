@@ -24,7 +24,10 @@ $(document).ready(function(){
 	courseIds.splice(0,1);
 
 	console.log(document.cookie);
-	$('#studentName').val(document.cookie.split('=')[1].replace('-',' '));
+	var studentNameCookie = document.cookie.split(';')[1].substr(1);
+	console.log(studentNameCookie);
+	$('#studentName').val(studentNameCookie.split('=')[1].replace('-',' '));
+	
 
 	$("#header").load("header.html");
 	var idInstructors = [];
@@ -58,7 +61,7 @@ $(document).ready(function(){
 		$('#courseInstructorHeader').text(courseDetailsJSON.instructor);
 	}
 	//$('#termDropdownRV').val(courseDetailsJSON.termOffered);
-	//$('#courseDesc').text(courseDetailsJSON.courseDesc);
+	$('#courseDesc').text(courseDetailsJSON.courseDesc);
 	$.each(idTerms, function(index, value) {
 		$('#termDropdownRV').append('<option value="' + value + '">' + value + '</option>');
 	});
