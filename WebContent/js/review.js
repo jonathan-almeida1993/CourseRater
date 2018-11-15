@@ -997,6 +997,7 @@ function updateAverageRating(reviews) {
 	console.log(averageRating);
 	var numStars = averageRating;
 	var avgStarSpanHTML = "";
+	
 	while (numStars > 0) {
 		if (numStars >= 1) {
 			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
@@ -1012,8 +1013,14 @@ function updateAverageRating(reviews) {
 		}
 		numStars--;
 	}
+	
+
 	$('#averageRatingStars').html(avgStarSpanHTML);
 	$('#averageRatingValue').html(averageRating + "/5");
+	if(reviews.length<=0){
+		$('#averageRatingValue').html("0/5");
+	}
+	
 }
 
 function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor) {
