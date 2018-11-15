@@ -1019,6 +1019,7 @@ function updateAverageRating(reviews) {
 	$('#averageRatingValue').html(averageRating + "/5");
 	if(reviews.length<=0){
 		$('#averageRatingValue').html("0/5");
+		$('#reviews').html("No reviews have been submitted.");
 	}
 	
 }
