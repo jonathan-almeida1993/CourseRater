@@ -29,7 +29,9 @@ public class DashboardPage {
 	public static final String courseHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Course']";
 	public static final String ratingHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Rating']";
 	public static final String actionHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Action']";
-	
-	
+
+	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
+	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
+	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
 	
 }

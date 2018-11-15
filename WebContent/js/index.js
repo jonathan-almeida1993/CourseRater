@@ -24,9 +24,15 @@ $(document).ready(function() {
   //append department list to the subject drop down
 
   $('#subjectDropDown').find('option').remove();
-  $('#subjectDropDown').append('<option value="">Select Department</option>').val('');
+  $('#subjectDropDown').append('<option value="">Select Subject</option>').val('');
 
   var jsonDept = jQuery.parseJSON(departmentList);
+  jsonDept.sort(function(a, b) {
+	 var deptA = a.department.toLowerCase(), deptB = b.department.toLowerCase();
+	 if (deptA < deptB) return -1;
+	 if (deptA > deptB) return 1;
+	 return 0;
+  });
   var jsonTermInstr = '';
   var courseIds = [];
 
@@ -56,7 +62,9 @@ $(document).ready(function() {
     $('#termDropDown').val('');
 
     var jsonCourse = jQuery.parseJSON(courseList);
-
+    jsonCourse.sort(function(a, b) {
+    	return a.courseNo - b.courseNo;
+    });
     $.each(jsonCourse, function(index, value) {
       $('#courseDropDown').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
     });
@@ -100,6 +108,26 @@ $(document).ready(function() {
     	}
     	courseIds.push(jsonTermInstr[i].courseId);
     }
+    terms.sort(function(a,b) {
+		  var termA = a.toLowerCase().split(' ')[0];
+		  var termB = b.toLowerCase().split(' ')[0];
+		  var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+		  var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+		  if (yearA > yearB) return -1;
+		  if (yearA < yearB) return 1;
+		  if (termA == 'fall' || termB == 'winter') return -1;
+		  if (termA == 'winter' || termB == 'fall') return 1;
+		  if (termA == 'summer' && termB == 'spring') return -1;
+		  if (termA == 'spring' && termB == 'summer') return 1;
+    });
+    instructors.sort(function(a, b) {
+    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
+    	console.log(instrA);
+    	console.log(instrB);
+    	if (instrA < instrB) return -1;
+   	 	if (instrA > instrB) return 1;
+   	 	return 0;
+    });
 
     $.each(terms, function(index, value) {
       $('#termDropDown').append('<option value="'+value+'">'+value+'</option>');
@@ -136,6 +164,14 @@ $(document).ready(function() {
         	}
         }
     }
+    instructors.sort(function(a, b) {
+    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
+    	console.log(instrA);
+    	console.log(instrB);
+    	if (instrA < instrB) return -1;
+   	 	if (instrA > instrB) return 1;
+   	 	return 0;
+    });
     console.log("instructors: " + instructors);
     console.log("course ids: " + courseIds);
     $('#instructorDropDown').find('option').remove();
@@ -175,6 +211,18 @@ $(document).ready(function() {
 	        }
 
 	  }
+	  terms.sort(function(a,b) {
+		  var termA = a.toLowerCase().split(' ')[0];
+		  var termB = b.toLowerCase().split(' ')[0];
+		  var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+		  var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+		  if (yearA > yearB) return -1;
+		  if (yearA < yearB) return 1;
+		  if (termA == 'fall' || termB == 'winter') return -1;
+		  if (termA == 'winter' || termB == 'fall') return 1;
+		  if (termA == 'summer' && termB == 'spring') return -1;
+		  if (termA == 'spring' && termB == 'summer') return 1;
+	  });
       console.log("terms: " + terms);
       console.log("course ids: " + courseIds);
 	  $('#termDropDown').find('option').remove();
@@ -213,7 +261,7 @@ $(document).ready(function() {
   });
 
   console.log(document.cookie);
-  var studentNameCookie = document.cookie.split(';')[1].substr(1);
+  var studentNameCookie = getCookie();
   console.log(studentNameCookie);
   
   var reviewList = sendDataSync("", "getMyReviews", "ReviewController");
@@ -236,11 +284,11 @@ $(document).ready(function() {
     for (j = 0; j < numStars; j++) {
       starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
     }
-		if (numReviewsShown < 3) {
-    	row = $("<tr id=\"row" + i + "YV\">");
-			numReviewsShown++;
-		}
-		else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
+	if (numReviewsShown < 3) {
+	row = $("<tr id=\"row" + i + "YV\">");
+		numReviewsShown++;
+	}
+	else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
     row.append("<td>" + new Date(reviews[i].datePosted).toLocaleDateString() +"</td>");
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].department.split("(")[1].slice(0,-1) + " " + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
@@ -271,8 +319,10 @@ $(document).ready(function() {
 		//console.log("id: " + chosenReviewId);
 		var subjectCode = reviews[i].department.split("(")[1].slice(0,-1);
 		$('#modalTitleYV').html("Your Review for " + subjectCode + " " + reviews[i].courseNo);
-		$('#yourNameYV').val(studentNameCookie.split('=')[1].replace('-',' '));
-		$('#anonymousCheckYV').attr('checked', reviews[i].anonymous);
+		$('#yourNameYV').val(studentNameCookie);
+		$('#yourNameYV').text(studentNameCookie);
+		console.log(reviews[i].anonymous);
+		$('#anonymousCheckYV').prop("checked", reviews[i].anonymous);
 		$('#emptyTermYV').text(reviews[i].termOffered);
 		$('#emptyInstructorYV').text(reviews[i].instructor);
 		console.log("grade value: " + reviews[i].gradeReceived);
@@ -324,7 +374,7 @@ function manageSeeMoreReviewsBtn(reviews, numReviewsShown) {
 	else if (reviews.length - numReviewsShown > 0 && reviews.length - numReviewsShown < 3) {
 		$('#seeMoreReviewsBtn').html("See All Reviews");
 	}
-	else if (reviews.length - numReviewsShown == 0) {
+	else if (reviews.length - numReviewsShown <= 0) {
 		$('#seeMoreReviewsBtn').css("display", "none");
 	}
 }
@@ -337,12 +387,12 @@ function validateSearchForm() {
   var termField = $('#termDropDown').val();
   var instructorField = $('#instructorDropDown').val();
   if (subjectField == "") {
-    $("#fillFormAlert").html("Please select a subject!");
+    $("#fillFormAlert").html("Please select a subject.");
     $("#fillFormAlert").css("display", "block");
     return false;
   }
   else if (courseNumberField == "") {
-    $("#fillFormAlert").html("Please select a course number!");
+    $("#fillFormAlert").html("Please select a course number.");
     $("#fillFormAlert").css("display", "block");
     return false;
   }
@@ -377,4 +427,19 @@ function colorClickedStarRadioGroup(numChecked) {
 			$(starID).css("opacity", "0.2");
 		}
 	}
+}
+
+function getCookie() {
+	var value = "; " + document.cookie;
+	var parts = value.split("; ");
+	var name = "";
+	console.log(parts);
+	for (i = 0; i < parts.length; i++) {
+		if (parts[i].substring(0,4) == "user") {
+			name = parts[i].substring(5).replace('-', ' ');
+			break;
+		}
+	}
+	console.log(name);
+	return name;
 }

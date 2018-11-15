@@ -28,6 +28,21 @@ public class SubmitAReviewTests extends SeleniumUtils{
 		}
 	}
 
+	public void navigateToSubmitReviewNoTermProf(){
+		login();
+
+		select(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+		select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("160");
+
+		try {
+			Thread.sleep(500);
+			click(Locator.XPATH, DashboardPage.searchBtn, "'Search' button", true);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Test(description = "Verify that all the mandatory elements in 'Submit a Review' form are displayed as expected.")
 	public void submitReviewTest1() {
 		navigateToSubmitReview();
@@ -47,9 +62,9 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "'Name' textbox", true), "'Name' textbox isn't displayed as expected.");
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
 
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenLabel, "'Term taken' label", true), "'Term taken' label isn't displayed as expected.");
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "'Term taken' dropdown", true), "'Term taken' dropdown isn't displayed as expected.");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenLabelRV, "'Term taken' label", true), "'Term taken' label isn't displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "'Term taken' dropdown", true), "'Term taken' dropdown isn't displayed as expected.");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken textbox"), "Spring 2018");
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedLabel, "'Grade received' label", true), "'Grade Received' label isn't displayed as expected.");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "'Grade Received' dropdown", true), "'Grade Received' dropdown isn't displayed as expected.");
@@ -90,7 +105,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				e1.printStackTrace();
 			}
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken textbox"), "Spring 2018");
 
 			try {
 				Thread.sleep(500);
@@ -133,7 +148,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 			}
 			
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name"), "Jonathan Almeida");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken"), "Spring 2018");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken"), "Spring 2018");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received", true));
 			
 			select(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received").selectByValue("A");
@@ -170,7 +185,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				e1.printStackTrace();
 			}
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken textbox"), "Spring 2018");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously checkbox", true));
 			
 			click(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously", true);
@@ -213,7 +228,7 @@ public class SubmitAReviewTests extends SeleniumUtils{
 				e1.printStackTrace();
 			}
 			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), "Jonathan Almeida");
-			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenTxtBox, "value", "Term taken textbox"), "Spring 2018");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken textbox"), "Spring 2018");
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously checkbox", true));
 			
 			click(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "Submit Review Anonymously", true);
@@ -243,5 +258,239 @@ public class SubmitAReviewTests extends SeleniumUtils{
 		}
 	}
 
+	@Test(description = "Verify that if the fill review form alert is visible and the user closes and reopens the review form, the fill review form alert has disappeared.")
+	public void fillFormAlertRVTest1() {
+		login();
+
+		navigateToSubmitReview();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is displayed");
+			click(Locator.XPATH, SubmitAReviewPage.closeBtn, "Close", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("none"), "The Fill Form alert is hidden");
+		}
+	}
+
+	@Test(description = "Verify that if the fill review form alert is visible and the user tries to close the form with an incomplete review, the fill review form alert disappears and the confirmation message appears.")
+	public void fillFormAlertRVTest2() {
+		login();
+
+		navigateToSubmitReview();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is displayed");
+			enterText(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "Sample review text", "Your Review textbox", true);
+			click(Locator.XPATH, SubmitAReviewPage.closeBtn, "Close", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("none"), "The Fill Form alert is hidden");
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.closeConfirmationText).getCssValue("display").equals("block"), "The Close confirmation alert is displayed");
+		}
+	}
+
+	@Test(description = "Verify that if the fill review form alert is hidden and the user closes and reopens the review form while the form is still empty, the fill review form alert stays hidden.")
+	public void fillFormAlertRVTest3() {
+		login();
+
+		navigateToSubmitReview();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("none"), "The Fill Form alert is hidden");
+			click(Locator.XPATH, SubmitAReviewPage.closeBtn, "Close", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("none"), "The Fill Form alert is hidden");
+		}
+	}
+
+	@Test(description = "Verify that if the term field of the review form is empty, the review submission fails and the user is told to select a term.")
+	public void testReviewFormValidation1() {
+		login();
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is displayed");
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getText().equals("Please select a term."), "The alert tells the user to select a term.");
+		}
+	}
+
+	@Test(description = "Verify that if the instructor field of the review form is empty, the review submission fails and the user is told to select a instructor.")
+	public void testReviewFormValidation2() {
+		login();
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Fall 2018");
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is displayed");
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getText().equals("Please select a professor/instructor."), "The alert tells the user to select an instructor.");
+		}
+	}
+
+	@Test(description = "Verify that if the term and instructor fields of the review form are filled but the rating star group is empty, the submission fails and the user is told to give the course a rating.")
+	public void testReviewFormValidation3() {
+		login();
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Fall 2018");
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getCssValue("display").equals("block"), "The Fill Form alert is displayed");
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.fillReviewFormAlert).getText().equals("Please give the course a rating."), "The alert tells the user to give the course a rating.");
+		}
+	}
+
+	@Test(description = "Verify that if the user does not provide a grade in their submitted review, the 'Grade Received' portion of their review on the page is hidden")
+	public void testGradeReceivedDisplay1() {
+		navigateToSubmitReview();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			if (isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
+				click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
+
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.newReviewGradeSpan, "'New Review' grade received", true), "The 'Grade Received' portion of the new review is hidden");
+		}
+	}
+
+	@Test(description = "Verify that if the user provides a grade in their submitted review, the 'Grade Received' portion of their review on the page is displayed")
+	public void testGradeReceivedDisplay2() {
+		navigateToSubmitReview();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			select(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "Grade Received").selectByValue("B");
+
+
+			if (isElementClickable(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: Third star", true))
+				click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating", true);
+
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "Submit Review", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.newReviewGradeSpan, "'New Review' grade received", true), "The 'Grade Received' portion of the new review is displaye");
+			Assert.assertTrue(getElement(Locator.XPATH, SubmitAReviewPage.newReviewGradeSpan).getText().equals("B"), "The grade displayed for the new review is correct");
+		}
+	}
 
 }

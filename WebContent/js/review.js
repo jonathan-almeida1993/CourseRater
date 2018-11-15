@@ -24,9 +24,10 @@ $(document).ready(function(){
 	courseIds.splice(0,1);
 
 	console.log(document.cookie);
-	var studentNameCookie = document.cookie.split(';')[1].substr(1);
+	var studentNameCookie = getCookie();
 	console.log(studentNameCookie);
-	$('#studentName').val(studentNameCookie.split('=')[1].replace('-',' '));
+	$('#studentName').val(studentNameCookie);
+	$('#studentName').text(studentNameCookie);
 	
 
 	$("#header").load("header.html");
@@ -62,6 +63,18 @@ $(document).ready(function(){
 	}
 	//$('#termDropdownRV').val(courseDetailsJSON.termOffered);
 	$('#courseDesc').text(courseDetailsJSON.courseDesc);
+	idTerms.sort(function(a,b) {
+		var termA = a.toLowerCase().split(' ')[0];
+		var termB = b.toLowerCase().split(' ')[0];
+		var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+		var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+		if (yearA > yearB) return -1;
+		if (yearA < yearB) return 1;
+		if (termA == 'fall' || termB == 'winter') return -1;
+		if (termA == 'winter' || termB == 'fall') return 1;
+		if (termA == 'summer' && termB == 'spring') return -1;
+		if (termA == 'spring' && termB == 'summer') return 1;
+	});
 	$.each(idTerms, function(index, value) {
 		$('#termDropdownRV').append('<option value="' + value + '">' + value + '</option>');
 	});
@@ -70,6 +83,14 @@ $(document).ready(function(){
 		$('#termDropdownRV').attr('disabled', 'disabled');
 	}
 
+	idInstructors.sort(function(a, b) {
+    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
+    	console.log(instrA);
+    	console.log(instrB);
+    	if (instrA < instrB) return -1;
+   	 	if (instrA > instrB) return 1;
+   	 	return 0;
+    });
 	$.each(idInstructors, function(index, value) {
 		$('#instructorDropdownRV').append('<option value="' + value + '">' + value + '</option>');
 	});
@@ -85,9 +106,15 @@ $(document).ready(function(){
 	//append department list to the subject drop down
 
 	$('#subjectDropDownCP').find('option').remove();
-	$('#subjectDropDownCP').append('<option value="">Select Department</option>').val('');
+	$('#subjectDropDownCP').append('<option value="">Select Subject</option>').val('');
 
 	var jsonDept = jQuery.parseJSON(departmentList);
+	jsonDept.sort(function(a, b) {
+		var deptA = a.department.toLowerCase(), deptB = b.department.toLowerCase();
+		if (deptA < deptB) return -1;
+		if (deptA > deptB) return 1;
+		return 0;
+	});
 
 	$.each(jsonDept, function(index, value) {
 		$('#subjectDropDownCP').append('<option value="'+value.department+'">'+value.department+'</option>');
@@ -101,6 +128,9 @@ $(document).ready(function(){
 	$('#courseDropDownCP').find('option').remove();
 	$('#courseDropDownCP').append('<option value="">Select Course Number</option>').val('');
 	var jsonCourse = jQuery.parseJSON(courseList);
+	jsonCourse.sort(function(a, b) {
+    	return a.courseNo - b.courseNo;
+    });
 	$.each(jsonCourse, function(index, value) {
 		$('#courseDropDownCP').append('<option value="'+value.courseNo+'">'+value.courseNo+'</option>');
 	});
@@ -199,6 +229,26 @@ $(document).ready(function(){
 			console.log("instructors now: " + instructors);
 		}
 	});*/
+	terms.sort(function(a,b) {
+		var termA = a.toLowerCase().split(' ')[0];
+		var termB = b.toLowerCase().split(' ')[0];
+		var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+		var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+		if (yearA > yearB) return -1;
+		if (yearA < yearB) return 1;
+		if (termA == 'fall' || termB == 'winter') return -1;
+		if (termA == 'winter' || termB == 'fall') return 1;
+		if (termA == 'summer' && termB == 'spring') return -1;
+		if (termA == 'spring' && termB == 'summer') return 1;
+	});
+	instructors.sort(function(a, b) {
+    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
+    	console.log(instrA);
+    	console.log(instrB);
+    	if (instrA < instrB) return -1;
+   	 	if (instrA > instrB) return 1;
+   	 	return 0;
+    });
 
 	$.each(terms, function(index, value) {
 		$('#termDropDownCP').append('<option value="'+value+'">'+value+'</option>');
@@ -287,6 +337,26 @@ $(document).ready(function(){
 			}
 			courseIds.push(jsonTermInstr[i].courseId);
 		}
+		terms.sort(function(a,b) {
+			var termA = a.toLowerCase().split(' ')[0];
+			var termB = b.toLowerCase().split(' ')[0];
+			var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+			var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+			if (yearA > yearB) return -1;
+			if (yearA < yearB) return 1;
+			if (termA == 'fall' || termB == 'winter') return -1;
+			if (termA == 'winter' || termB == 'fall') return 1;
+			if (termA == 'summer' && termB == 'spring') return -1;
+			if (termA == 'spring' && termB == 'summer') return 1;
+		});
+		instructors.sort(function(a, b) {
+	    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
+	    	console.log(instrA);
+	    	console.log(instrB);
+	    	if (instrA < instrB) return -1;
+	   	 	if (instrA > instrB) return 1;
+	   	 	return 0;
+	    });
 
 		$.each(terms, function(index, value) {
 			$('#termDropDownCP').append('<option value="'+value+'">'+value+'</option>');
@@ -367,6 +437,18 @@ $(document).ready(function(){
 			}
 
 		}
+		terms.sort(function(a,b) {
+			var termA = a.toLowerCase().split(' ')[0];
+			var termB = b.toLowerCase().split(' ')[0];
+			var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+			var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+			if (yearA > yearB) return -1;
+			if (yearA < yearB) return 1;
+			if (termA == 'fall' || termB == 'winter') return -1;
+			if (termA == 'winter' || termB == 'fall') return 1;
+			if (termA == 'summer' && termB == 'spring') return -1;
+			if (termA == 'spring' && termB == 'summer') return 1;
+		});
 		console.log("terms: " + terms);
 		console.log("course ids: " + courseIds);
 		$('#termDropDownCP').find('option').remove();
@@ -456,40 +538,40 @@ $(document).ready(function(){
 		console.log("date ms: " + reviews[i].datePosted);
 
 		$('#reviews').append(
-			"<div class=\"modal-body row\">" +
+			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
 			"<div class=\"col-md-3\">" +
 			"<label>" +
 			"<strong>Posted By: </strong>" +
-			"<span>" +
-			reviews[i].firstName + " " + reviews[i].lastName +
+			"<span id=\"review" + (i+1) + "Name\">" +
+			(reviews[i].anonymous ? "Anonymous Student" : reviews[i].firstName + " " + reviews[i].lastName) +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
 			"<strong>Rating: </strong>" +
-			"<span>" +
+			"<span id=\"review" + (i+1) + "Rating\">" +
 			starHTML +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
 			"<strong>Term: </strong>" +
-			"<span>" +
+			"<span id=\"review" + (i+1) + "Term\">" +
 			reviews[i].term +
 			"</span>" +
 			"</label><br>" +
 			"<label>" +
 			"<strong>Date Posted: </strong>" +
-			"<span>" +
+			"<span id=\"review" + (i+1) + "Date\">" +
 			new Date(reviews[i].datePosted).toLocaleDateString() +
 			"</span>" +
 			"</label><br>" +
-			"<label>" +
+			(reviews[i].gradeReceived == "N" ? "" : ("<label>" +
 			"<strong>Grade Received: </strong>" +
-			"<span>" +
-			(reviews[i].gradeReceived == "N" ? "N/A" : reviews[i].gradeReceived) +
+			"<span id=\"review" + (i+1) + "Grade\">" +
+			reviews[i].gradeReceived +
 			"</span>" +
-			"</label>" +
+			"</label>")) +
 			"</div>" +
-			"<div class=\"col-md-7\">" +
+			"<div class=\"col-md-7\" id=\"review" + (i+1) + "Text\">" +
 			reviews[i].review +
 			"</div>" +
 			"</div>" +
@@ -621,36 +703,36 @@ $(document).ready(function(){
 				"<div class=\"col-md-3\">" +
 				"<label>" +
 				"<strong>Posted By: </strong>" +
-				"<span>" +
+				"<span id=\"newReviewName\">" +
 				(newReview.anonymous ? "Anonymous Student" : newReview.name) +
 				"</span>" +
 				"</label><br>" +
 				"<label>" +
 				"<strong>Rating: </strong>" +
-				"<span>" +
+				"<span id=\"newReviewRating\">" +
 				starHTML +
 				"</span>" +
 				"</label><br>" +
 				"<label>" +
 				"<strong>Term: </strong>" +
-				"<span>" +
+				"<span id=\"newReviewTerm\">" +
 				newReview.term +
 				"</span>" +
 				"</label><br>" +
 				"<label>" +
 				"<strong>Date Posted: </strong>" +
-				"<span>" +
+				"<span id=\"newReviewDate\">" +
 				today +
 				"</span>" +
 				"</label><br>" +
-				"<label>" +
-				"<strong>Grade Received: </strong>" +
-				"<span>" +
-				(newReview.gradeReceived == "N" ? "N/A" : newReview.gradeReceived) +
-				"</span>" +
-				"</label>" +
+				(newReview.gradeReceived == "N" ? "" : ("<label>" +
+						"<strong>Grade Received: </strong>" +
+						"<span id=\"newReviewGrade\">" +
+						newReview.gradeReceived +
+						"</span>" +
+						"</label>")) +
 				"</div>" +
-				"<div class=\"col-md-7\">" +
+				"<div class=\"col-md-7\" id=\"newReviewText\">" +
 				newReview.review +
 				"</div>" +
 				"</div>" +
@@ -705,14 +787,18 @@ $('#confirmCloseReviewBtn').click(function() {
 	//console.log("rating: '" + $('#gradeDropdown').val() + "'");
 	//console.log("grade: '" + $('#gradeDropdown').val() + "'");
 
-	$('#fillFormAlertCP').hide();
+	$('#fillFormAlertRV').hide();
 	$('#submitPendingAlert').hide();
 	$('#submitSuccessAlert').hide();
-	if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
-	$('#reviewText').text() != "") {
+	console.log($('#termDropdownRV').val());
+	
+	if ($('#termDropdownRV').val() != savedTerm || $('#instructorDropdownRV').val() != savedInstructor || $('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" || $('#reviewText').text() != "") {
 		$('#confirmCloseReviewFormAlert').show();
 	}
 	else {
+		var anonymousCheck = document.getElementById("anonymousCheck");
+		anonymousCheck.checked = false;
+		$("#anonymousMsg").css("display", "none");
 		$('#confirmCloseReviewFormAlert').hide();
 		$('#submitReviewModal').modal('hide');
 	}
@@ -720,14 +806,16 @@ $('#confirmCloseReviewBtn').click(function() {
 
 $('#closeReviewFormX').click(function() {
 	console.log("Close Review X pressed!");
-	$('#fillFormAlertCP').hide();
+	$('#fillFormAlertRV').hide();
 	$('#submitPendingAlert').hide();
 	$('#submitSuccessAlert').hide();
-	if ($('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" ||
-	$('#reviewText').text() != "") {
+	if ($('#termDropdownRV').val() != savedTerm || $('#instructorDropdownRV').val() != savedInstructor || $('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" || $('#reviewText').text() != "") {
 		$('#confirmCloseReviewFormAlert').show();
 	}
 	else {
+		var anonymousCheck = document.getElementById("anonymousCheck");
+		anonymousCheck.checked = false;
+		$("#anonymousMsg").css("display", "none");
 		$('#confirmCloseReviewFormAlert').hide();
 		$('#submitReviewModal').modal('hide');
 	}
@@ -738,14 +826,16 @@ $('#noCloseReviewFormBtn').click(function() {
 	$('#confirmCloseReviewFormAlert').hide();
 });
 
-$('#yesCloseReviewFormBtn').click(function() {
+/*$('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
+	$('#termDropdownRV').val(savedTerm);
+	$('#instructorDropdownRV').val(savedInstructor);
 	$('#gradeDropdown').val("");
 	$('#ratingCheckbox').val("");
 	$('#reviewText').text("");
 	$('#submitReviewModal').modal('hide');
-});
+});*/
 
 $('#noCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: No button pressed!");
@@ -754,7 +844,11 @@ $('#noCloseReviewFormBtn').click(function() {
 
 $('#yesCloseReviewFormBtn').click(function() {
 	console.log("Close Review Confirmation: Yes button pressed!");
+	var anonymousCheck = document.getElementById("anonymousCheck");
+	anonymousCheck.checked = false;
 	$('#confirmCloseReviewFormAlert').hide();
+	$('#termDropdownRV').val(savedTerm);
+	$('#instructorDropdownRV').val(savedInstructor);
 	$('#gradeDropdown').val("");
 	$('#reviewText').text("");
 	$('#ratingStarChk1').css("opacity", "0.2");
@@ -774,17 +868,17 @@ function validateSubmitReviewForm() {
 	$("#confirmCloseReviewFormAlert").hide();
 	$('#submitPendingAlert').hide();
 	if ($('#termDropdownRV').val() == "" || $('#termDropdownRV').val() == null) {
-		$("#fillFormAlertRV").html("Please select a term!");
+		$("#fillFormAlertRV").html("Please select a term.");
 		$("#fillFormAlertRV").show();
 		return false;
 	}
 	else if ($('#instructorDropdownRV').val() == "" || $('#instructorDropdownRV').val() == null) {
-		$("#fillFormAlertRV").html("Please select a professor/instructor!");
+		$("#fillFormAlertRV").html("Please select a professor/instructor.");
 		$("#fillFormAlertRV").show();
 		return false;
 	}
 	else if ($('#ratingCheckbox').val() == "" || $('#ratingCheckbox').val() == null) {
-		$("#fillFormAlertRV").html("Please give the course a rating!");
+		$("#fillFormAlertRV").html("Please give the course a rating.");
 		$("#fillFormAlertRV").show();
 		return false;
 	}
@@ -877,12 +971,12 @@ function validateSearchForm() {
 	var termField = $('#termDropDownCP').val();
 	var instructorField = $('#instructorDropDownCP').val();
 	if (subjectField == null || subjectField == "") {
-		$("#fillFormAlertCP").html("Please select a subject!");
+		$("#fillFormAlertCP").html("Please select a subject.");
 		$("#fillFormAlertCP").css("display", "block");
 		return false;
 	}
 	else if (courseNumberField == null || courseNumberField == "") {
-		$("#fillFormAlertCP").html("Please select a course number!");
+		$("#fillFormAlertCP").html("Please select a course number.");
 		$("#fillFormAlertCP").css("display", "block");
 		return false;
 	}
@@ -938,4 +1032,19 @@ function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor
 		$('#searchCourseBtnCP').removeClass('disabled');
 	}
 
+}
+
+function getCookie() {
+	var value = "; " + document.cookie;
+	var parts = value.split("; ");
+	var name = "";
+	console.log(parts);
+	for (i = 0; i < parts.length; i++) {
+		if (parts[i].substring(0,4) == "user") {
+			name = parts[i].substring(5).replace('-', ' ');
+			break;
+		}
+	}
+	console.log(name);
+	return name;
 }
