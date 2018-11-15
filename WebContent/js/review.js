@@ -370,7 +370,7 @@ $(document).ready(function(){
 
 	/* When the user changes the term taken in the Course Search form */
 	$('#termDropDownCP').change(function(){
-		var savedInstructor = $('#instructorDropDownCP').val();
+		var chosenInstructor = $('#instructorDropDownCP').val();
 		var instructors = [];
 		courseIds = [];
 		if ($('#termDropDownCP').val() == "") {
@@ -378,7 +378,7 @@ $(document).ready(function(){
 				if (!instructors.includes(jsonTermInstr[i].instructor)) {
 					instructors.push(jsonTermInstr[i].instructor);
 				}
-				if (jsonTermInstr[i].instructor == savedInstructor || savedInstructor == "") {
+				if (jsonTermInstr[i].instructor == chosenInstructor || chosenInstructor == "") {
 					courseIds.push(jsonTermInstr[i].courseId);
 				}
 			}
@@ -389,7 +389,7 @@ $(document).ready(function(){
 				if (!instructors.includes(jsonTermInstr[i].instructor) && jsonTermInstr[i].termOffered == $('#termDropDownCP').val()) {
 					instructors.push(jsonTermInstr[i].instructor);
 				}
-				if (jsonTermInstr[i].termOffered == $('#termDropDownCP').val() && (jsonTermInstr[i].instructor == savedInstructor || savedInstructor == "")) {
+				if (jsonTermInstr[i].termOffered == $('#termDropDownCP').val() && (jsonTermInstr[i].instructor == chosenInstructor || chosenInstructor == "")) {
 					courseIds.push(jsonTermInstr[i].courseId);
 				}
 			}
@@ -401,10 +401,10 @@ $(document).ready(function(){
 		$.each(instructors, function(index, value) {
 			$('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
 		});
-		if ($('#instructorDropDownCP option[value="' + savedInstructor + '"]').length > 0) {
-			$('#instructorDropDownCP').val(savedInstructor);
+		if ($('#instructorDropDownCP option[value="' + chosenInstructor + '"]').length > 0) {
+			$('#instructorDropDownCP').val(chosenInstructor);
 		}
-		if (!instructors.includes(savedInstructor)) {
+		if (!instructors.includes(chosenInstructor)) {
 			$('#instructorDropDownCP').val("");
 		}
 		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
@@ -412,7 +412,7 @@ $(document).ready(function(){
 
 	/* When the user changes instructor in the Course Search form */
 	$('#instructorDropDownCP').change(function(){
-		var savedTerm = $('#termDropDownCP').val();
+		var chosenTerm = $('#termDropDownCP').val();
 		var terms = [];
 		courseIds = [];
 		if ($('#instructorDropDownCP').val() == "") {
@@ -420,7 +420,7 @@ $(document).ready(function(){
 				if (!terms.includes(jsonTermInstr[i].termOffered)) {
 					terms.push(jsonTermInstr[i].termOffered);
 				}
-				if (jsonTermInstr[i].termOffered == savedTerm || savedTerm == "") {
+				if (jsonTermInstr[i].termOffered == chosenTerm || chosenTerm == "") {
 					courseIds.push(jsonTermInstr[i].courseId);
 				}
 			}
@@ -431,7 +431,7 @@ $(document).ready(function(){
 				if (!terms.includes(jsonTermInstr[i].termOffered) && jsonTermInstr[i].instructor == $('#instructorDropDownCP').val()) {
 					terms.push(jsonTermInstr[i].termOffered);
 				}
-				if (jsonTermInstr[i].instructor == $('#instructorDropDownCP').val() && (jsonTermInstr[i].termOffered == savedTerm || savedTerm == "")) {
+				if (jsonTermInstr[i].instructor == $('#instructorDropDownCP').val() && (jsonTermInstr[i].termOffered == chosenTerm || chosenTerm == "")) {
 					courseIds.push(jsonTermInstr[i].courseId);
 				}
 			}
@@ -456,10 +456,10 @@ $(document).ready(function(){
 		$.each(terms, function(index, value) {
 			$('#termDropDownCP').append('<option value="' + value + '">' + value +'</option>');
 		});
-		if ($('#termDropDownCP option[value="' + savedTerm + '"]').length > 0) {
-			$('#termDropDownCP').val(savedTerm);
+		if ($('#termDropDownCP option[value="' + chosenTerm + '"]').length > 0) {
+			$('#termDropDownCP').val(chosenTerm);
 		}
-		if (!terms.includes(savedTerm)) {
+		if (!terms.includes(chosenTerm)) {
 			$('#termDropDownCP').val("");
 		}
 		console.log("term dropdown: "+ $('#termDropDownCP').placeholder);
@@ -1019,7 +1019,7 @@ function updateAverageRating(reviews) {
 	$('#averageRatingValue').html(averageRating + "/5");
 	if(reviews.length<=0){
 		$('#averageRatingValue').html("0/5");
-		$('#reviews').html("No reviews have been submitted.");
+		$('#newReview').html("No reviews have been submitted.");
 	}
 	
 }
@@ -1035,9 +1035,11 @@ function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor
 			$('#termDropDownCP').val() == savedTerm &&
 			$('#instructorDropDownCP').val() == savedInstructor) {
 				$('#searchCourseBtnCP').addClass('disabled');
+				$('#searchCourseBtnCP').prop('disabled', true);
 	}
 	else {
 		$('#searchCourseBtnCP').removeClass('disabled');
+		$('#searchCourseBtnCP').prop('disabled', false);
 	}
 
 }

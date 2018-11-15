@@ -389,4 +389,36 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 		Assert.assertTrue(gradeHiddenAsExpected, "All 'Grade Received' fields are hidden for reviews without a grade.");
 	}
+
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and term, but leaves the instructor blank")
+	public void testSearchButtonStillEnabled1() {
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
+			Assert.assertFalse(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is disabled");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "Subject dropdown").selectByValue("Statistics (ST)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after switching the subject");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after reverting the subject");
+			select(Locator.XPATH, ViewCoursePage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("325");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is still enabled after setting the course to its previous value");
+			select(Locator.XPATH, ViewCoursePage.termEnabledDropdown, "'Term' dropdown").selectByValue("Spring 2018");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after setting the term to its previous value");
+		}
+	}
+
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and instructor, but leaves the instructor blank")
+	public void testSearchButtonStillEnabled2() {
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
+			Assert.assertFalse(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is disabled");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "Subject dropdown").selectByValue("Statistics (ST)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after switching the subject");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after reverting the subject");
+			select(Locator.XPATH, ViewCoursePage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("325");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is still enabled after setting the course to its previous value");
+			select(Locator.XPATH, ViewCoursePage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Spring 2018");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after setting the professor to its previous value");
+		}
+	}
 }

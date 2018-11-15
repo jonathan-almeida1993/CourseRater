@@ -367,6 +367,55 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
+	@Test(description = "Verify that all of the users reviews appear in the Your Reviews section")
+	public void testViewAllYourReviews() {
+		login();
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchMyReviews("almeidaj");
+		int i = 0;
+		while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+			System.out.println("more reviews");
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+		}
+		click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+	}
+
 	/*@Test(description="Verify that user is navigated to the dashboard page when the user clicks on Course Rater header")
 	public void test7(){
 		launchPage(ConfigurationProperties.getProperty("DashboardURL"));

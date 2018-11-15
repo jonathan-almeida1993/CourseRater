@@ -285,10 +285,14 @@ $(document).ready(function() {
       starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
     }
 	if (numReviewsShown < 3) {
-	row = $("<tr id=\"row" + i + "YV\">");
+		row = $("<tr id=\"row" + i + "YV\">");
+		console.log("show " + i);
 		numReviewsShown++;
 	}
-	else row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
+	else {
+		console.log("hide " + i);
+		row = $("<tr class=\"hidden-review\" id=\"row" + i + "YV\">");
+	}
     row.append("<td>" + new Date(reviews[i].datePosted).toLocaleDateString() +"</td>");
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].department.split("(")[1].slice(0,-1) + " " + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
@@ -301,10 +305,12 @@ $(document).ready(function() {
 
   $('#seeMoreReviewsBtn').click(function() {
     for (i = 0; i < 3; i++) {
+    	console.log("show " + (i+numReviewsShown));
 		$('#row' + (i+numReviewsShown) + 'YV').removeClass("hidden-review");
-		numReviewsShown++;
-		if (i+numReviewsShown == reviews.length) break;
+		//numReviewsShown++;
+		//if (i+numReviewsShown == reviews.length) break;
     }
+    numReviewsShown += 3;
     manageSeeMoreReviewsBtn(reviews, numReviewsShown);
   });
 
