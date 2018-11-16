@@ -33,5 +33,9 @@ public class DashboardPage {
 	
 	public static final String viewReviewCloseBtn = "//button[@id='confirmCloseYourReviewBtn']";
 	public static final String viewReviewCrossCloseBtn = "//button[@id='closeYourReviewFormX']";
+
+	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
+	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
+	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
 	
 }

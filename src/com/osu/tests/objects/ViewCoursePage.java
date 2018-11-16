@@ -2,6 +2,8 @@ package com.osu.tests.objects;
 
 public class ViewCoursePage {
 
+	public static final String courseRaterHeader = "//p[text()='Course Rater']";
+
 	public static final String searchCourseForm = "//form[@id='searchCourseFormCP']";
 	public static final String subjectLabel = "//label[text()='*Subject']";
 	public static final String subjectDropdown = "//select[@id='subjectDropDownCP']";
@@ -25,12 +27,19 @@ public class ViewCoursePage {
 	public static final String reviewsLabel = "//h4[.='Reviews']";
 
 	public static final String createReviewBtn = "//button[@id='createReviewBtn']";
-	public static final String anonymousCheckbox = "//input[@id='anonymousCheck']";
+	public static final String reviewFormYourName = "//input[@id='studentName']";
+	public static final String anonymousCheckbox = "//input[@id='anonymousCheck']//following-sibling::label";
+	public static final String anonymousReviewBoxMessage = "//small[@id='anonymousMsg' and .='Your review will appear as \"Anonymous\".']";
 	public static final String gradeReceivedDropdown = "//select[@id='gradeDropdown']";
 	public static final String ratingCheckbox = "//span[@id='ratingCheckbox']";
+	public static final String ratingLabel = "//label[.='*Rating:']";
+	public static final String thirdRatingStar = "(//img[contains(@id, 'ratingStarChk')]/..)[3]";
 	public static final String reviewText = "//textarea[@id='reviewText']";
 	public static final String submitReviewBtn = "//button[@id='submitReviewBtn']";
-	public static final String fillReviewFormAlert = "//div[@id='fillFormAlert']";
+	public static final String fillReviewFormAlert = "//div[@id='fillFormAlertRV']";
+
+	public static final String newReview = "//div[@id='newReview']";
+	public static final String newReviewName = "//span[@id='newReviewName']";
 
 	public static final String courseNumberHeader = "//h3[@id='courseNameHeader']";
 	

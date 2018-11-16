@@ -1,12 +1,14 @@
 package com.osu.tests;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.plaf.ActionMapUIResource;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.osu.dao.base.impl.ReviewDAOImpl;
+import com.osu.dao.base.interfaces.ReviewDAO;
+import com.osu.database.pojo.ReviewPojo;
 import com.osu.tests.objects.DashboardPage;
 import com.osu.tests.objects.ViewCoursePage;
 import com.osu.tests.support.SeleniumUtils;
@@ -31,11 +33,26 @@ public class ViewCoursePageTests extends SeleniumUtils{
 			Thread.sleep(500);
 			click(Locator.XPATH, DashboardPage.searchBtn, "'Search' button", true);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return selections;
+	}
+
+	public void navigateToCS160CP() {
+		login();
+
+		select(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+		select(Locator.XPATH, DashboardPage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("160");
+		select(Locator.XPATH, DashboardPage.termEnabledDropdown, "'Term' dropdown").selectByValue("Fall 2018");
+		select(Locator.XPATH, DashboardPage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Jennifer Parham-Mocello");
+
+		try {
+			Thread.sleep(500);
+			click(Locator.XPATH, DashboardPage.searchBtn, "'Search' button", true);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.")
@@ -265,7 +282,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.fillReviewFormAlert).getText().equals("Please give the course a rating!"), "The Fill Form alert tells the user to give the course a rating");
 		}
 	}
-	
+
 	@Test(description = "Verify that header on reviews page correctly displays the dept, course, term and professor name as selected in the search modal.")
 	public void viewCourseTest15() {
 		login();
@@ -284,4 +301,144 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		//Assert.assertEquals(getText(Locator.XPATH, ViewCoursePage.courseNumberLabel, "Course Name header"), courseHeader);
 	}
 	
+	@Test(description = "Verify that all anonymous reviews show \"Anonymous Student\" as the student's name")
+	public void testReviewAnonymityOnCP1() {
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
+
+		boolean anonymousAsExpected = true;
+		navigateToCS160CP();
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "Course subject header", true)) {
+			for (int i = 0; i < reviewList.size(); i++) {
+				String cpReviewName = "//span[@id='review" + (i+1) + "Name']";
+				if (reviewList.get(i).isAnonymous() && !getElement(Locator.XPATH, cpReviewName).getText().equals("Anonymous Student")) {
+					anonymousAsExpected = false;
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(anonymousAsExpected, "All anonymous reviews show \"Anonymous Student\" as the student's name.");
+	}
+
+	@Test(description = "Verify that when the user submits a review anonymously, their new review on the course page shows \"Anonymous Student\" for their name")
+	public void testReviewAnonymityOnCP2() {
+		navigateToCS160CP();
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "'Create Review' button", true)) {
+			click(Locator.XPATH, ViewCoursePage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			click(Locator.XPATH, ViewCoursePage.anonymousCheckbox, "Anonymity checkbox", true);
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.anonymousReviewBoxMessage, "Anonymous Review message", true));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			select(Locator.XPATH, ViewCoursePage.gradeReceivedDropdown, "Grade Received").selectByValue("B");
+
+			if(isElementClickable(Locator.XPATH, ViewCoursePage.thirdRatingStar, "Rating: Third star", true))
+				click(Locator.XPATH, ViewCoursePage.thirdRatingStar, "Rating", true);
+
+			click(Locator.XPATH, ViewCoursePage.submitReviewBtn, "'Submit Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.newReviewName).getText().equals("Anonymous Student"), "The user's new anonymous review shows \"Anonymous Student\" for their name.");
+		}
+	}
+
+	@Test(description = "Verify that the text in the 'Name' field of the Reiview form is their name, not their ONID")
+	public void testCookieInReviewForm() {
+		navigateToCS160CP();
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "'Create Review' button", true)) {
+			click(Locator.XPATH, ViewCoursePage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			String x = getElement(Locator.XPATH, ViewCoursePage.reviewFormYourName).getText();
+			Assert.assertTrue(!getElement(Locator.XPATH, ViewCoursePage.reviewFormYourName).isEnabled(), "The 'Name' field is disabled as expected");
+			Assert.assertTrue(!getElement(Locator.XPATH, ViewCoursePage.reviewFormYourName).getText().equals("almeidaj"), "The name is not 'almeidaj'");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.reviewFormYourName).getText().equals("Jonathan Almeida"), "The name is Jonathan Almeida");
+		}
+	}
+
+	@Test(description = "Verify that for all reviews where the user did provide a grade, the 'Grade Received' field is displayed")
+	public void testGradeReceivedDisplay3() {
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
+
+		boolean gradeDisplayedAsExpected = true;
+		navigateToCS160CP();
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "Course subject header", true)) {
+			for (int i = 0; i < reviewList.size(); i++) {
+				String cpReviewGrade = "//span[@id='review" + (i+1) + "Grade']";
+				if (!reviewList.get(i).getGradeReceived().equals("N") && !isElementAvailable(Locator.XPATH, cpReviewGrade, "'Grade Received' field", true)) {
+					gradeDisplayedAsExpected = false;
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(gradeDisplayedAsExpected, "All 'Grade Received' fields are displayed for reviews with a grade.");
+	}
+
+	@Test(description = "Verify that for all reviews where the user did not provide a grade, the 'Grade Received' field is hidden")
+	public void testGradeReceivedDisplay4() {
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
+
+		boolean gradeHiddenAsExpected = true;
+		navigateToCS160CP();
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "Course subject header", true)) {
+			for (int i = 0; i < reviewList.size(); i++) {
+				String cpReviewGrade = "//span[@id='review" + (i+1) + "Grade']";
+				if (reviewList.get(i).getGradeReceived().equals("N") && isElementAvailable(Locator.XPATH, cpReviewGrade, "'Grade Received' field", true)) {
+					gradeHiddenAsExpected = false;
+					break;
+				}
+			}
+		}
+
+		Assert.assertTrue(gradeHiddenAsExpected, "All 'Grade Received' fields are hidden for reviews without a grade.");
+	}
+
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and term, but leaves the instructor blank")
+	public void testSearchButtonStillEnabled1() {
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
+			Assert.assertFalse(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is disabled");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "Subject dropdown").selectByValue("Statistics (ST)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after switching the subject");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after reverting the subject");
+			select(Locator.XPATH, ViewCoursePage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("325");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is still enabled after setting the course to its previous value");
+			select(Locator.XPATH, ViewCoursePage.termEnabledDropdown, "'Term' dropdown").selectByValue("Spring 2018");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after setting the term to its previous value");
+		}
+	}
+
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and instructor, but leaves the instructor blank")
+	public void testSearchButtonStillEnabled2() {
+		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
+			Assert.assertFalse(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is disabled");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "Subject dropdown").selectByValue("Statistics (ST)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after switching the subject");
+			select(Locator.XPATH, ViewCoursePage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after reverting the subject");
+			select(Locator.XPATH, ViewCoursePage.courseEnabledDropdown, "'Course Number' dropdown").selectByValue("325");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is still enabled after setting the course to its previous value");
+			select(Locator.XPATH, ViewCoursePage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Spring 2018");
+			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after setting the professor to its previous value");
+		}
+	}
 }

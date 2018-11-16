@@ -1,11 +1,16 @@
 package com.osu.tests;
 
-import com.osu.tests.objects.ViewCoursePage;
+import java.util.ArrayList;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.osu.dao.base.impl.ReviewDAOImpl;
+import com.osu.dao.base.interfaces.ReviewDAO;
+import com.osu.database.pojo.ReviewPojo;
 import com.osu.tests.objects.DashboardPage;
 import com.osu.tests.objects.LoginPage;
+import com.osu.tests.objects.ViewCoursePage;
 import com.osu.tests.support.SeleniumUtils;
 
 public class DashboardPageTests extends SeleniumUtils{
@@ -333,7 +338,161 @@ public class DashboardPageTests extends SeleniumUtils{
 	}
 
 
+	@Test(description = "Verify that the text in the 'Name' field of the Your Review modal is their name, not their ONID")
+	public void testCookieInYourReview() {
+		login();
+		if(isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "'Course Rater' header", true)) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getCssValue("display").equals("block")) {
+				while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+					System.out.println("more reviews");
+					click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='1' and @class='viewReviewBtn']", "'View' button", true));
+				click(Locator.XPATH, "//a[@data-id='0' and @class='viewReviewBtn']", "'View' button", true);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.yourReviewModalName, "'Name' field of Your Review modal", true), "The 'Name' field of the Your Review modal is visible");
+				String obj = getElement(Locator.XPATH, DashboardPage.yourReviewModalName).toString();
+				String x = getElement(Locator.XPATH, DashboardPage.yourReviewModalName).getText();
+				Assert.assertTrue(!getElement(Locator.XPATH, DashboardPage.yourReviewModalName).getText().equals("almeidaj"), "The name is not 'almeidaj'");
+				Assert.assertTrue(getElement(Locator.XPATH, DashboardPage.yourReviewModalName).getText().equals("Jonathan Almeida"), "The name is Jonathan Almeida");
+			}
+			else {
+				System.out.println("No reviews have been retrieved");
+			}
+		}
+	}
 
+	@Test(description = "Verify that if a review was submitted anonymously, the anonymity checkbox for that review is checked in the Your Review modal")
+	public void testAnonymousCheckboxYV1() {
+		login();
+		if (isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "Course subject header", true)) {
+			while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+				System.out.println("more reviews");
+				click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			click(Locator.XPATH, "//a[@data-id='0' and @class='viewReviewBtn']", "'View' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, DashboardPage.yourReviewAnonymousCheck).isSelected(), "The anonymity checkbox is selected");
+		}
+	}
+
+	@Test(description = "Verify that if a review was not submitted anonymously, the anonymity checkbox for that review is not checked in the Your Review modal")
+	public void testAnonymousCheckboxYV2() {
+		login();
+		while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+			System.out.println("more reviews");
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+		if (isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "Course subject header", true)) {
+			click(Locator.XPATH, "//a[@data-id='2' and @class='viewReviewBtn']", "'View' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Assert.assertTrue(!getElement(Locator.XPATH, DashboardPage.yourReviewAnonymousCheck).isSelected(), "The anonymity checkbox is selected");
+		}
+	}
+
+	@Test(description = "Verify that all of the users reviews appear in the Your Reviews section")
+	public void testViewAllYourReviews() {
+		login();
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchMyReviews("almeidaj");
+		int i = 0;
+		while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+			System.out.println("more reviews");
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+			if (i < reviewList.size()) {
+				Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+				i++;
+			}
+		}
+		click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+		if (i < reviewList.size()) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='viewReviewBtn']", "'View' button", true), "The 'View' button for the last review is available");
+			i++;
+		}
+	}
+	
 	/*@Test(description="Verify that user is navigated to the dashboard page when the user clicks on Course Rater header")
 	public void test7(){
 		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
