@@ -803,7 +803,7 @@ $(document).ready(function(){
 	/*Incase of having disabled term and instructor dropdowns, trigger the onchange event,
 	 * to prevent multiple reviews from being submitted.*/
 	$("#submitReviewModal").on("show.bs.modal", function () {
-		$('#instructorDropdownRV, #termDropdownRV').change();
+		$('#instructorDropdownRV').change();
 	});
 	
 	/*Multiple reviews prevention ends*/
