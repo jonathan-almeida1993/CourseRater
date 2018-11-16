@@ -31,5 +31,7 @@ public class DashboardPage {
 	public static final String actionHeaderLabel = "//table[@id='recentReviewTable']//th[.='Action']";
 	public static final String seeAllReviewsBtn = "//h3[text()='Your Recent Reviews']/ancestor::div[@class='modal-content']//button[@id='seeMoreReviewsBtn' and .='See All Reviews']";
 	
+	public static final String viewReviewCloseBtn = "//button[@id='confirmCloseYourReviewBtn']";
+	public static final String viewReviewCrossCloseBtn = "//button[@id='closeYourReviewFormX']";
 	
 }
