@@ -57,6 +57,12 @@ public class SeleniumUtils extends BaseTest{
 			enterText(Locator.XPATH, LoginPage.password, ConfigurationProperties.getProperty("password"), "Password textbox", true);
 
 			click(Locator.XPATH, LoginPage.loginBtn, "Login button", true);
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.logoutBtn, "Logout button", true), "User isn't logged in by entering valid username and password");
 		}
