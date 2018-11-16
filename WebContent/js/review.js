@@ -19,13 +19,13 @@ $(document).ready(function(){
 
 	var url = new URL(window.location.href);
 	var courseIdURL = url.searchParams.get("courseId");
-	console.log("courseIdURL: " + courseIdURL);
+	//console.log("courseIdURL: " + courseIdURL);
 	var courseIds = courseIdURL.split('C');
 	courseIds.splice(0,1);
 
-	console.log(document.cookie);
+	//console.log(document.cookie);
 	var studentNameCookie = getCookie();
-	console.log(studentNameCookie);
+	//console.log(studentNameCookie);
 	$('#studentName').val(studentNameCookie);
 	$('#studentName').text(studentNameCookie);
 	
@@ -34,10 +34,12 @@ $(document).ready(function(){
 	var idInstructors = [];
 	var idTerms = [];
 	var courseDetailsJSON = [];
+	var courseDetailsJSONList = [];
 	$.each(courseIds, function(index, value) {
 		var courseDetails = sendDataSync("{'courseId':'"+value+"'}","fetchCourseDetails","CourseController");
-		console.log("Course details: " + courseDetails);
+		//console.log("Course details: " + courseDetails);
 		courseDetailsJSON = jQuery.parseJSON(courseDetails);
+		courseDetailsJSONList.push(courseDetailsJSON);
 		if (!idInstructors.includes(courseDetailsJSON.instructor)) {
 			idInstructors.push(courseDetailsJSON.instructor);
 		}
@@ -45,14 +47,14 @@ $(document).ready(function(){
 			idTerms.push(courseDetailsJSON.termOffered);
 		}
 		/*var subjectCode = courseDetailsJSON.department.split("(")[1].slice(0,-1);
-		console.log("Subject code: " + subjectCode);*/
+		//console.log("Subject code: " + subjectCode);*/
 
 	});
 	/*var courseDetails = sendDataSync("{'courseId':'"+courseIdURL+"'}","fetchCourseDetails","CourseController");
-	console.log("Course details: " + courseDetails);
+	//console.log("Course details: " + courseDetails);
 	var courseDetailsJSON = jQuery.parseJSON(courseDetails);*/
 	var subjectCode = courseDetailsJSON.department.split("(")[1].slice(0,-1);
-	console.log("Subject code: " + subjectCode);
+	//console.log("Subject code: " + subjectCode);
 	var termHeader = (idTerms.length > 1) ? "All Terms" : courseDetailsJSON.termOffered;
 	$('#courseNameHeader').text(subjectCode + " " + courseDetailsJSON.courseNo+ " - " +courseDetailsJSON.courseName + " (" + termHeader + ")");
 	if (idInstructors.length > 1) {
@@ -85,8 +87,8 @@ $(document).ready(function(){
 
 	idInstructors.sort(function(a, b) {
     	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
-    	console.log(instrA);
-    	console.log(instrB);
+    	//console.log(instrA);
+    	//console.log(instrB);
     	if (instrA < instrB) return -1;
    	 	if (instrA > instrB) return 1;
    	 	return 0;
@@ -101,7 +103,7 @@ $(document).ready(function(){
 
 	//get department list
 	var departmentList = sendDataSync("","fetchDepartments","CourseController");
-	console.log("Department List = "+departmentList);
+	//console.log("Department List = "+departmentList);
 
 	//append department list to the subject drop down
 
@@ -124,7 +126,7 @@ $(document).ready(function(){
 	var dept = $('#subjectDropDownCP').val();
 	var jsonData = '{"department":"'+dept+'"}';
 	var courseList = sendDataSync(jsonData,"fetchCourseNo","CourseController");
-	console.log("Course List = "+courseList);
+	//console.log("Course List = "+courseList);
 	$('#courseDropDownCP').find('option').remove();
 	$('#courseDropDownCP').append('<option value="">Select Course Number</option>').val('');
 	var jsonCourse = jQuery.parseJSON(courseList);
@@ -140,24 +142,24 @@ $(document).ready(function(){
 	var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
 	var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
-	console.log("Term List = "+termInstrList);
+	//console.log("Term List = "+termInstrList);
 
 	$('#termDropDownCP').find('option').remove();
 	$('#termDropDownCP').append('<option value="">All Terms</option>').val('');
 	$('#instructorDropDownCP').find('option').remove();
 	$('#instructorDropDownCP').append('<option value="">All Professors/Instructors</option>').val('');
 	var jsonTermInstr = jQuery.parseJSON(termInstrList);
-	console.log("jsonTermInstr: " + termInstrList);
+	//console.log("jsonTermInstr: " + termInstrList);
 
 	var terms = [];
 	var instructors = [];
-	console.log("course IDs: [" + courseIds + "]");
+	//console.log("course IDs: [" + courseIds + "]");
 	$('#termDropDownCP').val('');
 	$('#instructorDropDownCP').val('');
-	console.log(termHeader);
-	console.log($('#courseInstructorHeader').text());
+	//console.log(termHeader);
+	//console.log($('#courseInstructorHeader').text());
 	if (termHeader == "All Terms" && $('#courseInstructorHeader').text() == "All Professors/Instructors") {
-		console.log("both term and instructor empty");
+		//console.log("both term and instructor empty");
 		$.each(jsonTermInstr, function(index, value) {
 			if (!terms.includes(value.termOffered)) {
 				terms.push(value.termOffered);
@@ -168,7 +170,7 @@ $(document).ready(function(){
 		});
 	}
 	else if (termHeader != "All Terms" && $('#courseInstructorHeader').text() == "All Professors/Instructors") {
-		console.log("term filled, instructor empty");
+		//console.log("term filled, instructor empty");
 		$.each(jsonTermInstr, function(index, value) {
 			if (!terms.includes(value.termOffered)) {
 				terms.push(value.termOffered);
@@ -183,7 +185,7 @@ $(document).ready(function(){
 		});
 	}
 	else if (termHeader == "All Terms" && $('#courseInstructorHeader').text() != "All Professors/Instructors") {
-		console.log("term empty, instructor filled");
+		//console.log("term empty, instructor filled");
 		$.each(jsonTermInstr, function(index, value) {
 			if (!instructors.includes(value.instructor)) {
 				instructors.push(value.instructor);
@@ -243,8 +245,8 @@ $(document).ready(function(){
 	});
 	instructors.sort(function(a, b) {
     	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
-    	console.log(instrA);
-    	console.log(instrB);
+    	//console.log(instrA);
+    	//console.log(instrB);
     	if (instrA < instrB) return -1;
    	 	if (instrA > instrB) return 1;
    	 	return 0;
@@ -258,10 +260,10 @@ $(document).ready(function(){
 		$('#instructorDropDownCP').append('<option value="' + value + '">' + value +'</option>');
 	});
 
-	console.log(terms);
+	//console.log(terms);
 	$('#termDropDownCP').val((idTerms.length > 1) ? "" : courseDetailsJSON.termOffered);
 
-	console.log(instructors);
+	//console.log(instructors);
 	$('#instructorDropDownCP').val((idInstructors.length > 1) ? "" : courseDetailsJSON.instructor);
 
 	var savedSubject = courseDetailsJSON.department;
@@ -275,7 +277,7 @@ $(document).ready(function(){
 		var dept = $('#subjectDropDownCP').val();
 		var jsonData = '{"department":"'+dept+'"}';
 		var courseList = sendDataSync(jsonData,"fetchCourseNo","CourseController");
-		console.log("Course List = "+courseList);
+		//console.log("Course List = "+courseList);
 
 		$('#courseDropDownCP').find('option').remove();
 		$('#courseDropDownCP').append('<option value="">Select Course Number</option>').val('');
@@ -306,8 +308,8 @@ $(document).ready(function(){
 		var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'"}';
 
 		var termInstrList = sendDataSync(jsonData,"fetchTermInstr","CourseController");
-		console.log("Term List = "+termInstrList);
-		console.log("course val: " + course);
+		//console.log("Term List = "+termInstrList);
+		//console.log("course val: " + course);
 		$('#termDropDownCP').find('option').remove();
 		$('#termDropDownCP').append('<option value="">All Terms</option>').val('');
 		$('#instructorDropDownCP').find('option').remove();
@@ -323,7 +325,7 @@ $(document).ready(function(){
 		}
 
 		jsonTermInstr = jQuery.parseJSON(termInstrList);
-		console.log("jsonTermInstr: " + termInstrList);
+		//console.log("jsonTermInstr: " + termInstrList);
 
 		var terms = [];
 		var instructors = [];
@@ -351,8 +353,8 @@ $(document).ready(function(){
 		});
 		instructors.sort(function(a, b) {
 	    	var instrA = a.toLowerCase().split(' ')[1], instrB = b.toLowerCase().split(' ')[1];
-	    	console.log(instrA);
-	    	console.log(instrB);
+	    	//console.log(instrA);
+	    	//console.log(instrB);
 	    	if (instrA < instrB) return -1;
 	   	 	if (instrA > instrB) return 1;
 	   	 	return 0;
@@ -385,7 +387,7 @@ $(document).ready(function(){
 		}
 		else {
 			for (i = 0; i < jsonTermInstr.length; i++) {
-				console.log("term offered: " + jsonTermInstr[i].termOffered);
+				//console.log("term offered: " + jsonTermInstr[i].termOffered);
 				if (!instructors.includes(jsonTermInstr[i].instructor) && jsonTermInstr[i].termOffered == $('#termDropDownCP').val()) {
 					instructors.push(jsonTermInstr[i].instructor);
 				}
@@ -394,8 +396,8 @@ $(document).ready(function(){
 				}
 			}
 		}
-		console.log("instructors: " + instructors);
-		console.log("course ids: " + courseIds);
+		//console.log("instructors: " + instructors);
+		//console.log("course ids: " + courseIds);
 		$('#instructorDropDownCP').find('option').remove();
 		$('#instructorDropDownCP').append('<option value="">All Professors/Instructors</option>').val('');
 		$.each(instructors, function(index, value) {
@@ -427,7 +429,7 @@ $(document).ready(function(){
 		}
 		else {
 			for (i = 0; i < jsonTermInstr.length; i++) {
-				console.log("instructor: " + jsonTermInstr[i].instructor);
+				//console.log("instructor: " + jsonTermInstr[i].instructor);
 				if (!terms.includes(jsonTermInstr[i].termOffered) && jsonTermInstr[i].instructor == $('#instructorDropDownCP').val()) {
 					terms.push(jsonTermInstr[i].termOffered);
 				}
@@ -449,8 +451,8 @@ $(document).ready(function(){
 			if (termA == 'summer' && termB == 'spring') return -1;
 			if (termA == 'spring' && termB == 'summer') return 1;
 		});
-		console.log("terms: " + terms);
-		console.log("course ids: " + courseIds);
+		//console.log("terms: " + terms);
+		//console.log("course ids: " + courseIds);
 		$('#termDropDownCP').find('option').remove();
 		$('#termDropDownCP').append('<option value="">All Terms</option>').val('');
 		$.each(terms, function(index, value) {
@@ -462,14 +464,14 @@ $(document).ready(function(){
 		if (!terms.includes(chosenTerm)) {
 			$('#termDropDownCP').val("");
 		}
-		console.log("term dropdown: "+ $('#termDropDownCP').placeholder);
+		//console.log("term dropdown: "+ $('#termDropDownCP').placeholder);
 		checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor);
 	});
 
 	/* Action when clicking the Search Course button on the landing page */
 	$('#searchCourseBtnCP').click(function() {
 		//var res = validateSearchForm();
-		console.log("Search button pressed!");
+		//console.log("Search button pressed!");
 		if(validateSearchForm()){
 			var dept = $('#subjectDropDownCP').val();
 			var course = $('#courseDropDownCP').val();
@@ -481,7 +483,7 @@ $(document).ready(function(){
 			});
 
 			var jsonData = '{"department":"'+dept+'","courseNo":"'+course+'","termOffered":"'+term+'","instructor":"'+instructor+'"}';
-			console.log("json data: " + jsonData);
+			//console.log("json data: " + jsonData);
 
 			// get Course ID
 			//var courseId = sendDataSync(jsonData,"fetchCourseID","CourseController");
@@ -497,7 +499,7 @@ $(document).ready(function(){
 	$.each(courseIds, function(index, id) {
 		var jsonData = '{"courseId":"' + id + '"}';
 		var reviewList = sendDataSync(jsonData, "getCourseReviews", "ReviewController");
-		console.log("reviews: " + reviewList);
+//		console.log("reviews: " + reviewList);
 
 		//parse the string for each review and put them into correct field of a review object
 		var jsonReviews = jQuery.parseJSON(reviewList);
@@ -535,7 +537,7 @@ $(document).ready(function(){
 				break;
 			}
 		}
-		console.log("date ms: " + reviews[i].datePosted);
+		//console.log("date ms: " + reviews[i].datePosted);
 
 		$('#reviews').append(
 			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
@@ -621,40 +623,101 @@ $(document).ready(function(){
 
 	$('#ratingStarChk1').click(function() {
 		$('#ratingCheckbox').val("1");
-		console.log("Rating: " + $('#ratingCheckbox').val());
+		//console.log("Rating: " + $('#ratingCheckbox').val());
 		colorClickedStarRadioGroup(1);
 	});
 
 	$('#ratingStarChk2').click(function() {
 		$('#ratingCheckbox').val("2");
-		console.log("Rating: " + $('#ratingCheckbox').val());
+		//console.log("Rating: " + $('#ratingCheckbox').val());
 		colorClickedStarRadioGroup(2);
 	});
 
 	$('#ratingStarChk3').click(function() {
 		$('#ratingCheckbox').val("3");
-		console.log("Rating: " + $('#ratingCheckbox').val());
+		//console.log("Rating: " + $('#ratingCheckbox').val());
 		colorClickedStarRadioGroup(3);
 	});
 
 	$('#ratingStarChk4').click(function() {
 		$('#ratingCheckbox').val("4");
-		console.log("Rating: " + $('#ratingCheckbox').val());
+		//console.log("Rating: " + $('#ratingCheckbox').val());
 		colorClickedStarRadioGroup(4);
 	});
 
 	$('#ratingStarChk5').click(function() {
 		$('#ratingCheckbox').val("5");
-		console.log("Rating: " + $('#ratingCheckbox').val());
+		//console.log("Rating: " + $('#ratingCheckbox').val());
 		colorClickedStarRadioGroup(5);
 
 	});
 
+	/*This prevents user from submitting multiple 
+	 * reviews for a given course id, which is unique for a 
+	 * given combination of term and instructor.*/
+	
+	$('#instructorDropdownRV, #termDropdownRV').change(function(){
+		//console.log(reviews);
+		//console.log(courseDetailsJSONList);
+		/*First, find the course ID for the selected combination of 
+		 * instructor and term drop downs*/
+		$('#submitReviewBtn').removeAttr('disabled');
+		var currentInstructor = $('#instructorDropdownRV').val();
+		var currentTerm = $('#termDropdownRV').val();
+		var currentCourseId;
+		
+		$(courseDetailsJSONList).each(function(idx, obj){
+			if(obj.instructor == currentInstructor && obj.termOffered == currentTerm){
+				//alert(obj.courseId);
+				currentCourseId = obj.courseId;
+				return;
+			}
+		});
+		
+		/*Second, check if there exists a review by the logged in user for the above course ID.*/
+		var cookieInfo = document.cookie.split(';');
+		cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
+		cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
+		var cookieFirstName = cookieInfo[1].split('-')[0];
+		var cookieLastName = cookieInfo[1].split('-')[1];
+		var reviewExists = false;
+		
+		$(reviews).each(function(idx, obj){
+			if(obj.courseId == currentCourseId){
+				if(obj.onid == cookieInfo[0] || obj.firstName == cookieFirstName || obj.lastName == cookieLastName){
+					reviewExists = true;
+				}
+			}
+		});
+//		console.log("course Id="+currentCourseId);
+//		console.log("Review Exists? "+reviewExists);
+		
+		if(reviewExists){
+			$('#submitReviewBtn').attr('disabled','disabled');
+			alert("You have already submitted a review for this course.");
+		}
+		
+	});
+	/*This removes the disabled button property on modal hide to prevent 
+	 * issues in other place. Trying to keep this functionality independent.*/
+	$("#submitReviewModal").on("hidden.bs.modal", function () {
+		$('#submitReviewBtn').removeAttr('disabled');
+	});
+	
+	/*Incase of having disabled term and instructor dropdowns, trigger the onchange event,
+	 * to prevent multiple reviews from being submitted.*/
+	$("#submitReviewModal").on("show.bs.modal", function () {
+		$('#instructorDropdownRV, #termDropdownRV').change();
+	});
+	
+	/*Multiple reviews prevention ends*/
+	
 	/* Action when clicking the Submit Review button */
 	$('#submitReviewBtn').click(function() {
+		
 		if (validateSubmitReviewForm()) {
 			var today = new Date();
-			console.log(today);
+			//console.log(today);
 			var dd = today.getDate();
 			var mm = today.getMonth() + 1;
 			var yyyy = today.getFullYear();
@@ -669,7 +732,7 @@ $(document).ready(function(){
 					return;
 				}
 			});
-			console.log("course ID: " + courseIds[0])
+			//console.log("course ID: " + courseIds[0])
 			newReview.name = $('#studentName').val();
 			//console.log($('#anonymousCheck').checked);
 			var anonymousCheck = document.getElementById("anonymousCheck");
@@ -678,7 +741,7 @@ $(document).ready(function(){
 			newReview.rating = $('#ratingCheckbox').val();
 			newReview.term = $('#termDropdownRV').val();
 			newReview.datePosted = today.getTime();
-			console.log("ms: " + newReview.datePosted);
+			//console.log("ms: " + newReview.datePosted);
 			today = mm + '/' + dd + '/' + yyyy;
 			if ($('#gradeDropdown').val() == "") {
 				newReview.gradeReceived = "N";
@@ -743,7 +806,7 @@ $(document).ready(function(){
 				duration: 1000,
 				step: function() {
 					$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
-					console.log("border getting brighter");
+					//console.log("border getting brighter");
 				}
 			});
 
@@ -752,7 +815,7 @@ $(document).ready(function(){
 					duration: 1000,
 					step: function() {
 						$('#newReview').css("border-color", "rgba(177, 223, 187, " + this.alpha + ")");
-						console.log("border getting lighter");
+						//console.log("border getting lighter");
 					}
 				});
 			}, 5000);
@@ -760,7 +823,7 @@ $(document).ready(function(){
 			$('#submitReviewCourseId').val(courseIds[0]);
 			//var reviewJson = newReview.serializeJSON();
 			//console.log("form: " + $('#submitReviewForm'));
-			console.log(JSON.stringify(newReview));
+			//console.log(JSON.stringify(newReview));
 			var status = sendDataSync(JSON.stringify(newReview),"addReview","ReviewController");
 			if (status == "JDBC_OK") {
 				$('#submitPendingAlert').hide();
@@ -782,7 +845,7 @@ $(document).ready(function(){
 });*/
 
 $('#confirmCloseReviewBtn').click(function() {
-	console.log("Close Review button pressed!");
+	//console.log("Close Review button pressed!");
 	//console.log("grade: '" + $('#gradeDropdown').val() + "'");
 	//console.log("rating: '" + $('#gradeDropdown').val() + "'");
 	//console.log("grade: '" + $('#gradeDropdown').val() + "'");
@@ -790,7 +853,7 @@ $('#confirmCloseReviewBtn').click(function() {
 	$('#fillFormAlertRV').hide();
 	$('#submitPendingAlert').hide();
 	$('#submitSuccessAlert').hide();
-	console.log($('#termDropdownRV').val());
+	//console.log($('#termDropdownRV').val());
 	
 	if ($('#termDropdownRV').val() != savedTerm || $('#instructorDropdownRV').val() != savedInstructor || $('#gradeDropdown').val() != "" || $('#ratingCheckbox').val() != "" || $('#reviewText').text() != "") {
 		$('#confirmCloseReviewFormAlert').show();
@@ -805,7 +868,7 @@ $('#confirmCloseReviewBtn').click(function() {
 });
 
 $('#closeReviewFormX').click(function() {
-	console.log("Close Review X pressed!");
+	//console.log("Close Review X pressed!");
 	$('#fillFormAlertRV').hide();
 	$('#submitPendingAlert').hide();
 	$('#submitSuccessAlert').hide();
@@ -822,7 +885,7 @@ $('#closeReviewFormX').click(function() {
 });
 
 $('#noCloseReviewFormBtn').click(function() {
-	console.log("Close Review Confirmation: No button pressed!");
+	//console.log("Close Review Confirmation: No button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
 });
 
@@ -838,12 +901,12 @@ $('#noCloseReviewFormBtn').click(function() {
 });*/
 
 $('#noCloseReviewFormBtn').click(function() {
-	console.log("Close Review Confirmation: No button pressed!");
+	//console.log("Close Review Confirmation: No button pressed!");
 	$('#confirmCloseReviewFormAlert').hide();
 });
 
 $('#yesCloseReviewFormBtn').click(function() {
-	console.log("Close Review Confirmation: Yes button pressed!");
+	//console.log("Close Review Confirmation: Yes button pressed!");
 	var anonymousCheck = document.getElementById("anonymousCheck");
 	anonymousCheck.checked = false;
 	$('#confirmCloseReviewFormAlert').hide();
@@ -899,7 +962,7 @@ function toggleAnonymousMsg() {
 		anonymousCheck.checked = true;
 		$("#anonymousMsg").css("display", "block");
 	}
-	console.log(anonymousCheck.checked);
+	//console.log(anonymousCheck.checked);
 }
 
 function colorHoveredStarRadioGroup(numHovered) {
@@ -935,13 +998,13 @@ function colorClickedStarRadioGroup(numChecked) {
 function updateAverageRating(reviews) {
 	var averageRating = 0;
 	var ratingSum = 0;
-	console.log(reviews.length);
+	//console.log(reviews.length);
 	for (i = 0; i < reviews.length; i++) {
 		ratingSum += parseInt(reviews[i].rating);
 	}
-	console.log(ratingSum);
+	//console.log(ratingSum);
 	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,4));
-	console.log(averageRating);
+	//console.log(averageRating);
 	var numStars = averageRating;
 	var avgStarSpanHTML = "";
 	while (numStars > 0) {
@@ -988,13 +1051,13 @@ function validateSearchForm() {
 function updateAverageRating(reviews) {
 	var averageRating = 0;
 	var ratingSum = 0;
-	console.log(reviews.length);
+	//console.log(reviews.length);
 	for (i = 0; i < reviews.length; i++) {
 		ratingSum += parseInt(reviews[i].rating);
 	}
-	console.log(ratingSum);
+	//console.log(ratingSum);
 	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,4));
-	console.log(averageRating);
+	//console.log(averageRating);
 	var numStars = averageRating;
 	var avgStarSpanHTML = "";
 	
@@ -1025,10 +1088,10 @@ function updateAverageRating(reviews) {
 }
 
 function checkSavedQuery(savedSubject, savedCourseNo, savedTerm, savedInstructor) {
-	console.log($('#subjectDropDownCP').val() + ", " + savedSubject);
-	console.log($('#courseDropDownCP').val() + ", " + savedCourseNo);
-	console.log($('#termDropDownCP').val() + ", " + savedTerm);
-	console.log($('#instructorDropDownCP').val() + ", " + savedInstructor);
+//	console.log($('#subjectDropDownCP').val() + ", " + savedSubject);
+//	console.log($('#courseDropDownCP').val() + ", " + savedCourseNo);
+//	console.log($('#termDropDownCP').val() + ", " + savedTerm);
+//	console.log($('#instructorDropDownCP').val() + ", " + savedInstructor);
 
 	if ($('#subjectDropDownCP').val() == savedSubject &&
 			$('#courseDropDownCP').val() == savedCourseNo &&
@@ -1048,13 +1111,13 @@ function getCookie() {
 	var value = "; " + document.cookie;
 	var parts = value.split("; ");
 	var name = "";
-	console.log(parts);
+	//console.log(parts);
 	for (i = 0; i < parts.length; i++) {
 		if (parts[i].substring(0,4) == "user") {
 			name = parts[i].substring(5).replace('-', ' ');
 			break;
 		}
 	}
-	console.log(name);
+	//console.log(name);
 	return name;
 }

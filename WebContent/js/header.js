@@ -6,7 +6,7 @@ $(document).ready(function() {
 	// Get the name of the page the user is currently on
 	var urlPieces = window.location.pathname.split("/");
 	var currentPage = urlPieces[urlPieces.length - 1];
-	console.log("current page: " + currentPage);
+	//console.log("current page: " + currentPage);
 });
 
 /* Action on clicking the logout button */
