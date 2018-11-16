@@ -492,6 +492,102 @@ $(document).ready(function(){
 			window.location.href = 'course_page.html?courseId=' + courseIdParam;
 		}
 	});
+	
+	/* When the user changes the term taken in the Review form */
+	$('#termDropdownRV').change(function(){
+		var pickedInstructor = $('#instructorDropdownRV').val();
+		var instructors = [];
+		courseIds = [];
+		if ($('#termDropdownRV').val() == "") {
+			for (i = 0; i < jsonTermInstr.length; i++) {
+				if (!instructors.includes(jsonTermInstr[i].instructor)) {
+					instructors.push(jsonTermInstr[i].instructor);
+				}
+				if (jsonTermInstr[i].instructor == pickedInstructor || pickedInstructor == "") {
+					courseIds.push(jsonTermInstr[i].courseId);
+				}
+			}
+		}
+		else {
+			for (i = 0; i < jsonTermInstr.length; i++) {
+				console.log("term offered: " + jsonTermInstr[i].termOffered);
+				if (!instructors.includes(jsonTermInstr[i].instructor) && jsonTermInstr[i].termOffered == $('#termDropdownRV').val()) {
+					instructors.push(jsonTermInstr[i].instructor);
+				}
+				if (jsonTermInstr[i].termOffered == $('#termDropdownRV').val() && (jsonTermInstr[i].instructor == pickedInstructor || pickedInstructor == "")) {
+					courseIds.push(jsonTermInstr[i].courseId);
+				}
+			}
+		}
+		console.log("instructors: " + instructors);
+		console.log("course ids: " + courseIds);
+		$('#instructorDropdownRV').find('option').remove();
+		$('#instructorDropdownRV').append('<option value="">All Professors/Instructors</option>').val('');
+		$.each(instructors, function(index, value) {
+			$('#instructorDropdownRV').append('<option value="' + value + '">' + value +'</option>');
+		});
+		if ($('#instructorDropdownRV option[value="' + pickedInstructor + '"]').length > 0) {
+			$('#instructorDropdownRV').val(pickedInstructor);
+		}
+		if (!instructors.includes(pickedInstructor)) {
+			$('#instructorDropdownRV').val("");
+		}
+	});
+
+	/* When the user changes instructor in the Review form */
+	$('#instructorDropdownRV').change(function(){
+		var pickedTerm = $('#termDropdownRV').val();
+		var terms = [];
+		courseIds = [];
+		if ($('#instructorDropdownRV').val() == "") {
+			for (i = 0; i < jsonTermInstr.length; i++) {
+				if (!terms.includes(jsonTermInstr[i].termOffered)) {
+					terms.push(jsonTermInstr[i].termOffered);
+				}
+				if (jsonTermInstr[i].termOffered == pickedTerm || pickedTerm == "") {
+					courseIds.push(jsonTermInstr[i].courseId);
+				}
+			}
+		}
+		else {
+			for (i = 0; i < jsonTermInstr.length; i++) {
+				console.log("instructor: " + jsonTermInstr[i].instructor);
+				if (!terms.includes(jsonTermInstr[i].termOffered) && jsonTermInstr[i].instructor == $('#instructorDropdownRV').val()) {
+					terms.push(jsonTermInstr[i].termOffered);
+				}
+				if (jsonTermInstr[i].instructor == $('#instructorDropdownRV').val() && (jsonTermInstr[i].termOffered == pickedTerm || pickedTerm == "")) {
+					courseIds.push(jsonTermInstr[i].courseId);
+				}
+			}
+
+		}
+		terms.sort(function(a,b) {
+			var termA = a.toLowerCase().split(' ')[0];
+			var termB = b.toLowerCase().split(' ')[0];
+			var yearA = parseInt(a.toLowerCase().split(' ')[1]);
+			var yearB = parseInt(b.toLowerCase().split(' ')[1]);
+			if (yearA > yearB) return -1;
+			if (yearA < yearB) return 1;
+			if (termA == 'fall' || termB == 'winter') return -1;
+			if (termA == 'winter' || termB == 'fall') return 1;
+			if (termA == 'summer' && termB == 'spring') return -1;
+			if (termA == 'spring' && termB == 'summer') return 1;
+		});
+		console.log("terms: " + terms);
+		console.log("course ids: " + courseIds);
+		$('#termDropdownRV').find('option').remove();
+		$('#termDropdownRV').append('<option value="">All Terms</option>').val('');
+		$.each(terms, function(index, value) {
+			$('#termDropdownRV').append('<option value="' + value + '">' + value +'</option>');
+		});
+		if ($('#termDropdownRV option[value="' + pickedTerm + '"]').length > 0) {
+			$('#termDropdownRV').val(pickedTerm);
+		}
+		if (!terms.includes(pickedTerm)) {
+			$('#termDropdownRV').val("");
+		}
+		console.log("term dropdown: "+ $('#termDropdownRV').placeholder);
+	});
 
 	//grab all reviews based on the course Ids, and put them into a list called reviesList
 	var reviews = [];	// array that will hold all the reviews for the class

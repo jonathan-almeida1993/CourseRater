@@ -493,4 +493,106 @@ public class SubmitAReviewTests extends SeleniumUtils{
 		}
 	}
 
+	@Test(description = "Verify that if the user chooses a term in the Review form, the instructor dropdown's options are narrowed down to only the instructors who teach that course that term")
+	public void testReviewFormDropdownFilter1() {
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Fall 2018");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVJennifer, "'Jennifer' option", true), "The instructor dropdown option for Jennifer Parham-Mocello is available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVShannon, "'Shannon' option", true), "The instructor dropdown option for Shannon Ernst is available.");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVTerry, "'Terry' option", true), "The instructor dropdown option for Terry Rooker is not available.");
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Winter 2018");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVJennifer, "'Jennifer' option", true), "The instructor dropdown option for Jennifer Parham-Mocello is not available.");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVShannon, "'Shannon' option", true), "The instructor dropdown option for Shannon Ernst is not available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVTerry, "'Terry' option", true), "The instructor dropdown option for Terry Rooker is available.");
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Winter 2018");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVJennifer, "'Jennifer' option", true), "The instructor dropdown option for Jennifer Parham-Mocello is not available.");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVShannon, "'Shannon' option", true), "The instructor dropdown option for Shannon Ernst is not available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVTerry, "'Terry' option", true), "The instructor dropdown option for Terry Rooker is available.");
+
+		}
+	}
+
+	@Test(description = "Verify that if the user chooses an instructor in the Review form, the term dropdown's options are narrowed down to only the terms that that instructor teaches that course")
+	public void testReviewFormDropdownFilter2() {
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("Shannon Ernst");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2018, "'Fall 2018' option", true), "The term dropdown option for Fall 2018 is available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2017, "'Fall 2017' option", true), "The term dropdown option for Fall 2017 is not available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVWinter2018, "'Winter 2018' option", true), "The term dropdown option for Winter 2018 is not available");
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("Jennifer Parham-Mocello");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2018, "'Fall 2018' option", true), "The term dropdown option for Fall 2018 is available");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2017, "'Fall 2017' option", true), "The term dropdown option for Fall 2017 is available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVWinter2018, "'Winter 2018' option", true), "The term dropdown option for Winter 2018 is not available");
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("Terry Rooker");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2018, "'Fall 2018' option", true), "The term dropdown option for Fall 2018 is not available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2017, "'Fall 2017' option", true), "The term dropdown option for Fall 2017 is not available");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVWinter2018, "'Winter 2018' option", true), "The term dropdown option for Winter 2018 is available");
+
+		}
+	}
+
+	@Test(description = "Verify that if the user resets the term dropdown in the Review form, all the instructors become selectable in the instructor dropdown")
+	public void testReviewFormDropdownFilter3() {
+		navigateToSubmitReviewNoTermProf();
+
+		if (isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("Fall 2018");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVJennifer, "'Jennifer' option", true), "The instructor dropdown option for Jennifer Parham-Mocello is available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVShannon, "'Shannon' option", true), "The instructor dropdown option for Shannon Ernst is available.");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVTerry, "'Terry' option", true), "The instructor dropdown option for Terry Rooker is not available.");
+			select(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "Term dropdown").selectByValue("");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVJennifer, "'Jennifer' option", true), "The instructor dropdown option for Jennifer Parham-Mocello is available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVShannon, "'Shannon' option", true), "The instructor dropdown option for Shannon Ernst is available.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdownRVTerry, "'Terry' option", true), "The instructor dropdown option for Terry Rooker is available.");
+		}
+	}
+
+	@Test(description = "Verify that if the user resets the instructor dropdown in the Review form, all the terms become selectable in the term dropdown")
+	public void testReviewFormDropdownFilter4() {
+		navigateToSubmitReviewNoTermProf();
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("Shannon Ernst");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2018, "'Fall 2018' option", true), "The term dropdown option for Fall 2018 is available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2017, "'Fall 2017' option", true), "The term dropdown option for Fall 2017 is not available");
+			Assert.assertTrue(!isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVWinter2018, "'Winter 2018' option", true), "The term dropdown option for Winter 2018 is not available");
+			select(Locator.XPATH, SubmitAReviewPage.instructorDropdownRV, "Instructor dropdown").selectByValue("");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2018, "'Fall 2018' option", true), "The term dropdown option for Fall 2018 is available");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVFall2017, "'Fall 2017' option", true), "The term dropdown option for Fall 2017 is available");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRVWinter2018, "'Winter 2018' option", true), "The term dropdown option for Winter 2018 is available");
+		}
+	}
+
 }
