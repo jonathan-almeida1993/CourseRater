@@ -1,18 +1,17 @@
 package com.osu.tests;
 
-import com.osu.dao.base.impl.ReviewDAOImpl;
-import com.osu.dao.base.interfaces.ReviewDAO;
-import com.osu.database.pojo.ReviewPojo;
-import com.osu.tests.objects.ViewCoursePage;
-import com.osu.tests.support.ConfigurationProperties;
+import java.util.ArrayList;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.osu.dao.base.impl.ReviewDAOImpl;
+import com.osu.dao.base.interfaces.ReviewDAO;
+import com.osu.database.pojo.ReviewPojo;
 import com.osu.tests.objects.DashboardPage;
 import com.osu.tests.objects.LoginPage;
+import com.osu.tests.objects.ViewCoursePage;
 import com.osu.tests.support.SeleniumUtils;
-
-import java.util.ArrayList;
 
 public class DashboardPageTests extends SeleniumUtils{
 
@@ -47,7 +46,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "'Submit' button", true), "'Submit' button isn't displayed as expected.");
 	}
 
-	@Test(description="Verify if 'Your recent reviews' section has the date, course, rating and action header.", enabled = false)
+	@Test(description="Verify if 'Your recent reviews' section has the date, course, rating and action header.")
 	public void dashboardPageTest4() {
 		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
@@ -56,21 +55,22 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.dateHeaderLabel, "'Date' header label", true), "'Date' label isn't displayed as expected.");
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.courseHeaderLabel, "'Course' header label", true), "'Course' label isn't displayed as expected.");
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.ratingHeaderLabel, "'Rating' header label", true), "'Rating' label isn't displayed as expected.");
-		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.actionHeaderLabel, "'Action' header label", true), "'Action' label isn't displayed as expected.");
+		//TODO - Uncomment this in next sprint
+		//Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.actionHeaderLabel, "'Action' header label", true), "'Action' label isn't displayed as expected.");
 	}
 
-	@Test(description="Verify if reviews are displayed in the 'Your Recent Reviews' table", enabled = false)
+	@Test(description="Verify if reviews are displayed in the 'Your Recent Reviews' table")
 	public void dashboardPageTest5() {
 		login();
 
-		int numOfRows = getElements(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@scope='row']").size();
+		int numOfRows = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr").size();
 
 		for(int i=1; i<=numOfRows; i++) {
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@id='recentDate"+i+"']", "'Date for row '+i", true), "Recent date for row "+i+" is not displayed as expected.");
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@id='recentCourse"+i+"']", "Course for row "+i, true), "Recent course for row "+i+" is not displayed as expected.");
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@id='recentRating"+i+"']", "Rating for row "+i, true), "Recent rating for row "+i+" is not displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//td[1])["+i+"]", "'Date for row '+i", true), "Recent date for row "+i+" is not displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//td[3])["+i+"]", "Course for row "+i, true), "Recent course for row "+i+" is not displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//td[2]//img[@class='rating-star'])["+i+"]", "Rating for row "+i, true), "Recent rating for row "+i+" is not displayed as expected.");
 			//TODO - Fix the following xpath to reflect 'View Actions' element
-			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//table[@id='recentReviewsTable']//tbody//td[@id='recentDate"+i+"']", "View Actions for row "+i, true), "Recent View Action button for row "+i+" is not displayed as expected.");			
+			//Assert.assertTrue(isElementAvailable(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//td[@id='recentDate"+i+"']", "View Actions for row "+i, true), "Recent View Action button for row "+i+" is not displayed as expected.");			
 		}
 	}
 
@@ -81,7 +81,12 @@ public class DashboardPageTests extends SeleniumUtils{
 		if(isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "'Course Rater' header", true)){
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.logoutBtn, "Logout button", true), "Log out button");
 			click(Locator.XPATH, DashboardPage.logoutBtn, "'Logout' button", true);
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.logoutConfirmationText, "Logout confirmation text", true), "User is not logged out or logout confirmation text has not been displayed as expected.");
 
@@ -89,7 +94,7 @@ public class DashboardPageTests extends SeleniumUtils{
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.logoutConfirmationText, "Logout message", true), "User is shown successful logout message as expected.");
 		}
 	}
-	
+
 	@Test(description = "Verify that if no fields are filled in on Search click, the search fails and the page tells the user to select a subject")
 	public void dashboardPageTest7() {
 		login();
@@ -261,6 +266,78 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
+	@Test(description = "Verify that 'See all reviews' button is displayed.")
+	public void dashboardPageTest17() {
+		login();
+
+		int numOfReviews = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr").size();
+
+		Assert.assertEquals(numOfReviews, 3, "Three recent reviews are not displayed by default as expected.");
+
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true));
+	}
+
+	@Test(description = "Verify that reviews open in a modal box upon clicking on the 'View' link")
+	public void dashboardPageTest18() {
+		login();
+
+		int numOfViewLinks = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View']").size();
+
+		for(int i = 1; i<=numOfViewLinks; i++) {
+			String baseXpath = "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]";
+			
+			String courseName = getText(Locator.XPATH, "("+baseXpath+"//td[3])["+i+"]", "Course Name");
+			String termTaken = courseName.substring(courseName.indexOf("(")).replace("(", "").replace(")", "");
+			courseName = courseName.substring(0, courseName.indexOf(" ("));
+			
+			
+			String instructorName = getText(Locator.XPATH, "("+baseXpath+"//td[4])["+i+"]", "Instructor Name");
+			int rating = getElements(Locator.XPATH, "("+baseXpath+"/td[2])["+i+"]/img").size();
+			
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View'])["+i+"]", "View link", true));
+
+			click(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View'])["+i+"]", "View link", true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			String baseXpath2 = "//div[@id='yourReviewModal']//div[@class='modal-content']";
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, baseXpath2+"//h5[contains(.,'Your Review for "+courseName+"')]", "Modal header", true));
+			Assert.assertEquals(getText(Locator.XPATH, baseXpath2+"//select[@id='instructorDropdownYV' and @disabled]/option", "Instructor Name in dropdown"), instructorName);
+			Assert.assertEquals(getText(Locator.XPATH, baseXpath2+"//select[@id='termDropdownYV' and @disabled]/option", "Term Taken in dropdown"), termTaken);
+			//div[@id='yourReviewModal']//div[@class='modal-content']//span[@id='ratingCheckboxYV' and @disabled='disabled']//a/img[contains(@style,"opacity")]
+			Assert.assertEquals(getElements(Locator.XPATH, baseXpath2+"//span[@id='ratingCheckboxYV' and @disabled='disabled']//a/img[contains(@style,'opacity')]").size(), rating);
+			
+			if(i%2 == 0)
+				click(Locator.XPATH, DashboardPage.viewReviewCloseBtn, "'Close button'", true);
+			else
+				click(Locator.XPATH, DashboardPage.viewReviewCrossCloseBtn, "'X' close button", true);
+		}
+
+		//TODO - Complete this test
+	}
+
+	@Test(description = "Verify that user is able to view his other reviews apart from three of his/her default reviews by clicking on the 'See all reviews' button. ")
+	public void dashboardPageTest19() {
+		login();
+
+		int numOfReviews = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]").size();
+
+		Assert.assertEquals(numOfReviews, 3, "Three recent reviews are not displayed by default as expected.");
+
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true));
+
+		click(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true);
+		
+		int numOfViewLinks = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View']").size();
+		
+		Assert.assertTrue(numOfViewLinks>=3, "'See All Reviews' button has displayed all the reviews for the user.");
+	}
+
+
 	@Test(description = "Verify that the text in the 'Name' field of the Your Review modal is their name, not their ONID")
 	public void testCookieInYourReview() {
 		login();
@@ -415,11 +492,11 @@ public class DashboardPageTests extends SeleniumUtils{
 			i++;
 		}
 	}
-
+	
 	/*@Test(description="Verify that user is navigated to the dashboard page when the user clicks on Course Rater header")
 	public void test7(){
 		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
-		
+
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.osuLogo), arg1);
 	}
 
