@@ -36,6 +36,8 @@ public class DashboardPage {
 
 	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
 	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
+
 	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
+
 	
 }

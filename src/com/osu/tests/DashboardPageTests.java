@@ -496,10 +496,8 @@ public class DashboardPageTests extends SeleniumUtils{
 	/*@Test(description="Verify that user is navigated to the dashboard page when the user clicks on Course Rater header")
 	public void test7(){
 		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
-
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.osuLogo), arg1);
 	}
-
 	@Test(description="Verify that user is navigated to the OSU page when the user clicks on Oregon State University header")
 	public void test8(){
 		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
