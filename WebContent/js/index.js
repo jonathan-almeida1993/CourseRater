@@ -301,6 +301,12 @@ $(document).ready(function() {
     $("#recentReviewTable tbody").append(row);
 
   }
+  if(numReviewsShown == 0){
+	  $('#recentReviewTable').empty();
+	  $('#recentReviewTable').append("No course reviews have been submitted");
+		
+  }
+  
   manageSeeMoreReviewsBtn(reviews, numReviewsShown);
 
   $('#seeMoreReviewsBtn').click(function() {
