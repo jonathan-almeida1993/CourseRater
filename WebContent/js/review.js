@@ -755,6 +755,7 @@ $(document).ready(function(){
 	$('#instructorDropdownRV, #termDropdownRV').change(function(){
 		//console.log(reviews);
 		//console.log(courseDetailsJSONList);
+		
 		/*First, find the course ID for the selected combination of 
 		 * instructor and term drop downs*/
 		$('#submitReviewBtn').removeAttr('disabled');
@@ -772,6 +773,11 @@ $(document).ready(function(){
 		
 		/*Second, check if there exists a review by the logged in user for the above course ID.*/
 		var cookieInfo = document.cookie.split(';');
+		if(!cookieInfo[0].trim().startsWith('onid')){
+			var temp = cookieInfo[1];
+			cookieInfo[1] = cookieInfo[0];
+			cookieInfo[0] = temp;
+		}
 		cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
 		cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
 		var cookieFirstName = cookieInfo[1].split('-')[0];
