@@ -297,7 +297,7 @@ $(document).ready(function() {
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].department.split("(")[1].slice(0,-1) + " " + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View</a></td>");
+    row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View &nbsp</a><a href=\"#\" data-toggle=\"alert\" data-id=\"" + i + "\" data-target=\"#deleteReview\" class=\"deleteReviewBtn\">Delete</a></td>");
     $("#recentReviewTable tbody").append(row);
 
   }
