@@ -25,13 +25,16 @@ public class DashboardPage {
 	public static final String fillFormAlert = "//div[@id='fillFormAlert']";
 	
 	public static final String yourRecentReviewsLabel = "//h3[text()='Your Recent Reviews']";
-	public static final String dateHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Date']";
-	public static final String courseHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Course']";
-	public static final String ratingHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Rating']";
-	public static final String actionHeaderLabel = "//table[@id='recentReviewsTable']//th[.='Action']";
+	public static final String dateHeaderLabel = "//table[@id='recentReviewTable']//th[.='Date']";
+	public static final String courseHeaderLabel = "//table[@id='recentReviewTable']//th[.='Course']";
+	public static final String ratingHeaderLabel = "//table[@id='recentReviewTable']//th[.='Rating']";
+	public static final String actionHeaderLabel = "//table[@id='recentReviewTable']//th[.='Action']";
+	public static final String recentReviewTableBody = "//table[@id='recentReviewTable']//tbody";
 
 	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
 	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
 	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
+	public static final String noConfirmDeleteReviewBtn = "//button[@id='noConfirmDeleteReviewBtn']";
+	public static final String yesConfirmDeleteReviewBtn = "//button[@id='yesConfirmDeleteReviewBtn']";
 	
 }

@@ -166,16 +166,21 @@ a.link{
   zoom: 25%;
 }
 
+.rating-star-check {
+  zoom: 35%;
+  opacity: 0.2;
+}
+
 .thumbs-image {
   zoom: 25%;
 }
-/*.rating-star-check {
-  zoom: 35%;
-  opacity: 0.2;
-}*/
 
 .hidden-review {
 	display: none;
+}
+
+.delete-review-alert {
+	background: #f8d7da;
 }
 
 #newReview {

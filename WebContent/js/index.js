@@ -277,6 +277,7 @@ $(document).ready(function() {
   var numStars = 0;
   var starHTML = "";
   var numReviewsShown = 0;
+  var numReviewsDeleted = 0;
   var row = 0;
   for (i = 0; i < reviews.length; i++) {
     numStars = reviews[i].rating;
@@ -297,14 +298,13 @@ $(document).ready(function() {
     row.append("<td>" + starHTML + "</td>");
     row.append("<td>" + reviews[i].department.split("(")[1].slice(0,-1) + " " + reviews[i].courseNo + " (" + reviews[i].termOffered + ")</td>");
     row.append("<td>" + reviews[i].instructor + "</td>");
-    row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View &nbsp</a><a href=\"#\" data-toggle=\"alert\" data-id=\"" + i + "\" data-target=\"#deleteReview\" class=\"deleteReviewBtn\">Delete</a></td>");
+    row.append("<td><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#yourReviewModal\" class=\"viewReviewBtn\">View &nbsp</a><a href=\"#\" data-toggle=\"modal\" data-id=\"" + i + "\" data-target=\"#deleteReviewModal\" class=\"deleteReviewBtn\">Delete</a></td>");
     $("#recentReviewTable tbody").append(row);
 
   }
   if(numReviewsShown == 0){
 	  $('#recentReviewTable').empty();
-	  $('#recentReviewTable').append("No course reviews have been submitted");
-		
+	  $('#recentReviewTable').append("No course reviews have been submitted.");		
   }
   
   manageSeeMoreReviewsBtn(reviews, numReviewsShown);
@@ -322,7 +322,30 @@ $(document).ready(function() {
 
 	$('.viewReviewBtn').click(function() {
 		$('#chosenReviewId').val($(this).data('id'));
-		console.log("id: " + $('#chosenReviewId').val());
+		console.log("chosen id: " + $('#chosenReviewId').val());
+	});
+	
+	$('.deleteReviewBtn').click(function() {
+		$('#chosenReviewId').val($(this).data('id'));
+		console.log("chosen id: " + $('#chosenReviewId').val());
+	});
+	
+	$('#noConfirmDeleteReviewBtn').click(function() {
+		$('#deleteReviewModal').modal('hide');
+	})
+	
+	$('#yesConfirmDeleteReviewBtn').click(function() {
+		$('#row' + $('#chosenReviewId').val() + 'YV').addClass("hidden-review");
+		numReviewsDeleted++;
+		var removed = reviews.splice(parseInt($('#chosenReviewId').val()) - numReviewsDeleted, 1);
+		console.log("removed: " + removed);
+		console.log("now number of reviews: " + reviews.length);
+		if (reviews.length == 0) {
+			$('#recentReviewTable').empty();
+			$('#recentReviewTable').append("No course reviews have been submitted.");	
+		}
+		// code connecting to back-end to delete review
+		$('#deleteReviewModal').modal('hide');
 	});
 
 	$('#yourReviewModal').on('shown.bs.modal', function() {
@@ -343,6 +366,10 @@ $(document).ready(function() {
 		
 		colorClickedStarRadioGroup(reviews[i].rating);
 		$('#reviewTextYV').val((reviews[i].review == "*This student did not write a review in their submission.*" ? "[No review text]" : reviews[i].review));
+	});
+	
+	$('#deleteReviewModal').on('shown.bs.modal', function() {
+		var i = $('#chosenReviewId').val();
 	});
 
 	$('#closeYourReviewFormX').click(function() {
