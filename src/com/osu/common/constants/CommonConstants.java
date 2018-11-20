@@ -18,4 +18,5 @@ public interface CommonConstants {
 	String OP_ADD_REVIEW = "addReview";
 	String OP_GET_MY_REVIEWS = "getMyReviews";
 	String OP_GET_COURSE_REVIEWS = "getCourseReviews";
+	String OP_DELETE_REVIEW = "deleteReview";
 }
