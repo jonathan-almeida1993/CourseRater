@@ -163,12 +163,16 @@ a.link{
 }
 
 .rating-star {
-   zoom: 25%;
+  zoom: 25%;
 }
-.rating-star-check {
+
+.thumbs-image {
+  zoom: 25%;
+}
+/*.rating-star-check {
   zoom: 35%;
   opacity: 0.2;
-}
+}*/
 
 .hidden-review {
 	display: none;
