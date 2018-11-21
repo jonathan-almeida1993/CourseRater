@@ -345,6 +345,8 @@ $(document).ready(function() {
 			$('#recentReviewTable').append("No course reviews have been submitted.");	
 		}
 		// code connecting to back-end to delete review
+		//var status = sendDataSync('{"reviewId":'+parseInt($('#chosenReviewId').val())+'}','deleteReview','ReviewController');
+		//console.log("delete review status = "+status);
 		$('#deleteReviewModal').modal('hide');
 	});
 
