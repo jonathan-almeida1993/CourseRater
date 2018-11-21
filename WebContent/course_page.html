@@ -108,8 +108,18 @@
       </div>
     </div>
 
-    <div class="modal-header">
-      <h4 class="section-header">Reviews</h4>
+    <div class="modal-header row">
+      <h4 class="section-header col-md-2">Reviews</h4> 
+		
+<!-- 		Drop down to order by usefulness starts here. -->
+		<div class="form-group row col-md-10 ">
+		  <label for="exampleFormControlSelect1" class="col-md-1 col-form-label offset-md-8">Ordered by:</label>
+		  <select class="form-control col-md-2" id="exampleFormControlSelect1">
+		    <option>Date</option>
+		    <option>Usefulness Rating</option>
+		  </select>
+		</div>	
+
     </div>
 
     <!-- This section is how the review will appear for each one.  -->

@@ -673,7 +673,17 @@ $(document).ready(function(){
 			reviews[i].review +
 			"</div>" +
 			"</div>" +
-			"<span + class=\"modal-header\"></span>"
+			"<span + class=\"modal-header\"></span>" +
+//			Usefulness thumbs up/down is here
+			"<div class=\"row\">" +
+		    "<label class=\"col-md-1 offset-md-1\">Was this useful?</label>" +
+		    "<a href="" class=\"col-md-1 offset-md-1\">" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Useful" +
+		    "</a>" +
+		    "<a href="" class=\"col-md-1\">" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp Not Useful" +
+		    "</a>" +
+		    "</div>"
 		);
 	}
 
