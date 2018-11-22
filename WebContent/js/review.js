@@ -673,19 +673,47 @@ $(document).ready(function(){
 			reviews[i].review +
 			"</div>" +
 			"</div>" +
-			"<span + class=\"modal-header\"></span>" +
 //			Usefulness thumbs up/down is here
-			"<div class=\"row\">" +
-		    "<label class=\"col-md-1 offset-md-1\">Was this useful?</label>" +
-		    "<a href="" class=\"col-md-1 offset-md-1\">" +
-		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Useful" +
+			"<div class=\"modal-body-row\">" +
+		    "<label class=\"col-md-2\">Was this review useful?</label>" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsUpBtn\" data-id=\"" + i + "reviewThumbsUpBtn\">" +
+		    "<span class=\"num-thumbs-up\">0</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Yes" +
 		    "</a>" +
-		    "<a href="" class=\"col-md-1\">" +
-		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp Not Useful" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsDownBtn\" data-id=\"" + i + "reviewThumbsDownBtn\">" +
+		    "<span class=\"num-thumbs-down\">0</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp No" +
 		    "</a>" +
-		    "</div>"
+		    "</div>" +
+			"<div class=\"dropdown-divider\"></div>"
 		);
 	}
+	
+	$('.reviewThumbsUpBtn').click(function() {
+		var reviewIndex = $(this).data('id')[0];
+		console.log("liked review index: " + reviewIndex);
+		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+		$(this).addClass('thumbs-selected');
+		$(this).children('img').css('opacity', '1');
+		$(this).children('span').html('1');
+		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
+		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
+		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html('0');
+	});
+	
+	$('.reviewThumbsDownBtn').click(function() {
+		var reviewIndex = $(this).data('id')[0];
+		console.log("liked review index: " + reviewIndex);
+		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+		$(this).addClass('thumbs-selected');
+		$(this).children('img').css('opacity', '1');
+		$(this).children('span').html('1');
+		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
+		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
+		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html('0');
+	});
 
 	$('#ratingStarChk1').hover(function() {
 		$('#ratingStarValue').text("1/5");

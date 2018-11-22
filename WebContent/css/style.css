@@ -1,7 +1,7 @@
 
 a{
   text-decoration: none !important;
-
+  cursor: pointer;
 }
 a:hover{
   text-decoration: none !important;
@@ -173,7 +173,22 @@ a.link{
 
 .thumbs-image {
   zoom: 25%;
+  opacity: 0.3;
 }
+
+.thumbs-selected {
+	color: black;
+	font-weight: bold;
+	opacity: 1;
+}
+
+/*.num-thumbs-up {
+	color: black;
+}
+
+.num-thumbs-down {
+	color: black;
+}*/
 
 .hidden-review {
 	display: none;
