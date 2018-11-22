@@ -72,6 +72,7 @@ public class ReviewController extends HttpServlet {
 			CoursePojo coursePojo = gson.fromJson(jsonData, CoursePojo.class);
 			ArrayList<ReviewPojo> courseReviews = dao.fetchCourseReviews(coursePojo.getCourseId());
 			response.getWriter().write(gson.toJson(courseReviews));
+			
 		}else if(null != message && CommonConstants.OP_DELETE_REVIEW.equalsIgnoreCase(message)) {
 			
 			Gson gson = new Gson();

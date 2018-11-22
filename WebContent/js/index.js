@@ -335,19 +335,23 @@ $(document).ready(function() {
 	})
 	
 	$('#yesConfirmDeleteReviewBtn').click(function() {
-		$('#row' + $('#chosenReviewId').val() + 'YV').addClass("hidden-review");
-		numReviewsDeleted++;
-		var removed = reviews.splice(parseInt($('#chosenReviewId').val()) - numReviewsDeleted, 1);
-		console.log("removed: " + removed);
-		console.log("now number of reviews: " + reviews.length);
-		if (reviews.length == 0) {
-			$('#recentReviewTable').empty();
-			$('#recentReviewTable').append("No course reviews have been submitted.");	
+		$('#deleteReviewModal').modal('hide');
+		console.log("ID of review being deleted: " + reviews[parseInt($('#chosenReviewId').val())].reviewId);
+		var status = sendDataSync("{'reviewId':'"+reviews[parseInt($('#chosenReviewId').val())].reviewId+"'}", 'deleteReview', 'ReviewController');
+		console.log("delete review status = "+status);
+		if (status == 'JDBC_OK') {
+			$('#row' + $('#chosenReviewId').val() + 'YV').addClass("hidden-review");
+			numReviewsDeleted++;
+			var removed = reviews.splice(parseInt($('#chosenReviewId').val()) - numReviewsDeleted, 1);
+			console.log("removed: " + removed);
+			console.log("now number of reviews: " + reviews.length);
+			if (reviews.length == 0) {
+				$('#recentReviewTable').empty();
+				$('#recentReviewTable').append("No course reviews have been submitted.");	
+			}
 		}
 		// code connecting to back-end to delete review
 		//var status = sendDataSync('{"reviewId":'+parseInt($('#chosenReviewId').val())+'}','deleteReview','ReviewController');
-		//console.log("delete review status = "+status);
-		$('#deleteReviewModal').modal('hide');
 	});
 
 	$('#yourReviewModal').on('shown.bs.modal', function() {
