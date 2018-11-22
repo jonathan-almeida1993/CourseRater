@@ -602,6 +602,8 @@ $(document).ready(function(){
 
 		//add the review object into the review list and display them
 		$.each(jsonReviews, function(index, value) {
+			value.thumbsUp = 0;
+			value.thumbsDown = 0;
 			reviews.push(value);
 		});
 	});
@@ -612,107 +614,62 @@ $(document).ready(function(){
 
 	updateAverageRating(reviews);
 
-	var reviewDiv = "";
-	var starHTML = "";
-	numStars = 0;
-	for (i = 0; i < reviews.length; i++) {
-		numStars = reviews[i].rating;
-		starHTML = "";
-		for (j = 0; j < numStars; j++) {
-			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+	displayReviews(reviews, jsonTermInstr);
+	
+	$('#reviewSortSelect').val("Date");
+	$('#reviewSortSelect').change(function() {
+		if ($(this).val() == "Date") {
+			console.log("sort reviews by date");
+			reviews.sort(function(a,b) {
+				return b.datePosted - a.datePosted;
+			});
+			console.log("reviews now sorted by date");
 		}
-		if (reviews[i].anonymous) {
-			reviews[i].onid = "Anonymous Student";
+		else if ($(this).val() == "Usefulness") {
+			console.log("sort reviews by usefulness");
+			reviews.sort(function(a,b) {
+				return (b.thumbsUp - b.thumbsDown) - (a.thumbsUp - a.thumbsDown);
+			});
+			console.log("reviews now sorted by usefulness");
 		}
-		if (reviews[i].review == "") {
-			reviews[i].review = "*This student did not write a review in their submission.*";
-		}
-		for (j = 0; j < jsonTermInstr.length; j++) {
-			if (reviews[i].courseId == jsonTermInstr[j].courseId) {
-				reviews[i].term = jsonTermInstr[j].termOffered;
-				break;
-			}
-		}
-		//console.log("date ms: " + reviews[i].datePosted);
-
-		$('#reviews').append(
-			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
-			"<div class=\"col-md-3\">" +
-			"<label>" +
-			"<strong>Posted By: </strong>" +
-			"<span id=\"review" + (i+1) + "Name\">" +
-			(reviews[i].anonymous ? "Anonymous Student" : reviews[i].firstName + " " + reviews[i].lastName) +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Rating: </strong>" +
-			"<span id=\"review" + (i+1) + "Rating\">" +
-			starHTML +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Term: </strong>" +
-			"<span id=\"review" + (i+1) + "Term\">" +
-			reviews[i].term +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Date Posted: </strong>" +
-			"<span id=\"review" + (i+1) + "Date\">" +
-			new Date(reviews[i].datePosted).toLocaleDateString() +
-			"</span>" +
-			"</label><br>" +
-			(reviews[i].gradeReceived == "N" ? "" : ("<label>" +
-			"<strong>Grade Received: </strong>" +
-			"<span id=\"review" + (i+1) + "Grade\">" +
-			reviews[i].gradeReceived +
-			"</span>" +
-			"</label>")) +
-			"</div>" +
-			"<div class=\"col-md-7\" id=\"review" + (i+1) + "Text\">" +
-			reviews[i].review +
-			"</div>" +
-			"</div>" +
-//			Usefulness thumbs up/down is here
-			"<div class=\"modal-body-row\">" +
-		    "<label class=\"col-md-2\">Was this review useful?</label>" +
-		    //"<span class=\"offset-md-1\">0</span>" +
-		    "<a class=\"col-md-1 offset-md-1 reviewThumbsUpBtn\" data-id=\"" + i + "reviewThumbsUpBtn\">" +
-		    "<span class=\"num-thumbs-up\">0</span>" + "\t" +
-		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Yes" +
-		    "</a>" +
-		    //"<span class=\"offset-md-1\">0</span>" +
-		    "<a class=\"col-md-1 offset-md-1 reviewThumbsDownBtn\" data-id=\"" + i + "reviewThumbsDownBtn\">" +
-		    "<span class=\"num-thumbs-down\">0</span>" + "\t" +
-		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp No" +
-		    "</a>" +
-		    "</div>" +
-			"<div class=\"dropdown-divider\"></div>"
-		);
-	}
+		displayReviews(reviews, jsonTermInstr);
+		console.log("resorted reviews now displayed");
+	});
 	
 	$('.reviewThumbsUpBtn').click(function() {
 		var reviewIndex = $(this).data('id')[0];
 		console.log("liked review index: " + reviewIndex);
 		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
-		$(this).addClass('thumbs-selected');
-		$(this).children('img').css('opacity', '1');
-		$(this).children('span').html('1');
-		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
-		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
-		$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html('0');
+		if (!$(this).hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsUp++;
+			$(this).addClass('thumbs-selected');
+			$(this).children('img').css('opacity', '1');
+			$(this).children('span').html(reviews[reviewIndex].thumbsUp);
+		}
+		if ($('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsDown--;
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
+		}
 	});
 	
 	$('.reviewThumbsDownBtn').click(function() {
 		var reviewIndex = $(this).data('id')[0];
 		console.log("liked review index: " + reviewIndex);
 		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
-		$(this).addClass('thumbs-selected');
-		$(this).children('img').css('opacity', '1');
-		$(this).children('span').html('1');
-		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
-		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
-		$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html('0');
+		if (!$(this).hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsDown++;
+			$(this).addClass('thumbs-selected');
+			$(this).children('img').css('opacity', '1');
+			$(this).children('span').html(reviews[reviewIndex].thumbsDown);
+		}
+		if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsUp--;
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
+		}
 	});
 
 	$('#ratingStarChk1').hover(function() {
@@ -1065,6 +1022,90 @@ $('#yesCloseReviewFormBtn').click(function() {
 });
 
 });
+
+function displayReviews(reviews, jsonTermInstr) {
+	var starHTML = "";
+	numStars = 0;
+	for (i = 0; i < reviews.length; i++) {
+		numStars = reviews[i].rating;
+		starHTML = "";
+		for (j = 0; j < numStars; j++) {
+			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+		}
+		if (reviews[i].anonymous) {
+			reviews[i].onid = "Anonymous Student";
+		}
+		if (reviews[i].review == "") {
+			reviews[i].review = "*This student did not write a review in their submission.*";
+		}
+		for (j = 0; j < jsonTermInstr.length; j++) {
+			if (reviews[i].courseId == jsonTermInstr[j].courseId) {
+				reviews[i].term = jsonTermInstr[j].termOffered;
+				break;
+			}
+		}
+		//console.log("date ms: " + reviews[i].datePosted);
+
+		$('#reviews').append(
+			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
+			"<div class=\"col-md-3\">" +
+			"<label>" +
+			"<strong>Posted By: </strong>" +
+			"<span id=\"review" + (i+1) + "Name\">" +
+			(reviews[i].anonymous ? "Anonymous Student" : reviews[i].firstName + " " + reviews[i].lastName) +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Rating: </strong>" +
+			"<span id=\"review" + (i+1) + "Rating\">" +
+			starHTML +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Term: </strong>" +
+			"<span id=\"review" + (i+1) + "Term\">" +
+			reviews[i].term +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Date Posted: </strong>" +
+			"<span id=\"review" + (i+1) + "Date\">" +
+			new Date(reviews[i].datePosted).toLocaleDateString() +
+			"</span>" +
+			"</label><br>" +
+			(reviews[i].gradeReceived == "N" ? "" : ("<label>" +
+			"<strong>Grade Received: </strong>" +
+			"<span id=\"review" + (i+1) + "Grade\">" +
+			reviews[i].gradeReceived +
+			"</span>" +
+			"</label>")) +
+			"</div>" +
+			"<div class=\"col-md-7\" id=\"review" + (i+1) + "Text\">" +
+			reviews[i].review +
+			"</div>" +
+			"</div>" +
+//			Usefulness thumbs up/down is here
+			"<div class=\"modal-body-row\">" +
+		    "<label class=\"col-md-2\">Was this review useful?</label>" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsUpBtn\" data-id=\"" + i + "reviewThumbsUpBtn\">" +
+		    "<span class=\"num-thumbs-up\">" + 
+		    reviews[i].thumbsUp +
+		    "</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Yes" +
+		    "</a>" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsDownBtn\" data-id=\"" + i + "reviewThumbsDownBtn\">" +
+		    "<span class=\"num-thumbs-down\">" + 
+		    reviews[i].thumbsDown + 
+		    "</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp No" +
+		    "</a>" +
+		    "</div>" +
+			"<div class=\"dropdown-divider\"></div>"
+		);
+	}
+}
 
 /* Submit Review Form Validation */
 function validateSubmitReviewForm() {
