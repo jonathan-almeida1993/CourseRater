@@ -339,7 +339,7 @@ $(document).ready(function() {
 		console.log("ID of review being deleted: " + reviews[parseInt($('#chosenReviewId').val())].reviewId);
 		var status = sendDataSync("{'reviewId':'"+reviews[parseInt($('#chosenReviewId').val())].reviewId+"'}", 'deleteReview', 'ReviewController');
 		console.log("delete review status = "+status);
-		if (status == 'JDBC_OK') {
+		if (status == "JDBC_OK") {
 			$('#row' + $('#chosenReviewId').val() + 'YV').addClass("hidden-review");
 			numReviewsDeleted++;
 			var removed = reviews.splice(parseInt($('#chosenReviewId').val()) - numReviewsDeleted, 1);
