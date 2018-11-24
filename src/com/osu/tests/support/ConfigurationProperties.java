@@ -26,6 +26,16 @@ public class ConfigurationProperties {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void setPropertiesFile(String filePath) {
+		properties = new Properties();
+		try {
+			properties.load(new FileInputStream(new File(System.getProperty("user.dir")+filePath)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static List<Object> getProperties(){
 		List<Object> props = new ArrayList<Object>();
