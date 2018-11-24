@@ -43,4 +43,18 @@
 
 	</test>
 	
+	<test name="UnitTests4">
+		<!-- <groups> <run> <include name="unit"></include> <include name="database"></include> 
+			</run> </groups> -->
+			
+		<!-- <packages>
+			<package name="com.osu.tests"></package>
+		</packages> -->
+		
+		<classes>	
+			<class name="com.osu.tests.ViewCoursePageTests"></class>
+		</classes>
+
+	</test>
+	
 </suite>
