@@ -12,7 +12,7 @@ import com.osu.tests.support.SeleniumUtils;
 
 public class LoginPageTests extends SeleniumUtils{
 	
-	@Test(description = "Verify that OSU logo and CourseRater text is displayed")
+	@Test(description = "Verify that OSU logo and CourseRater text is displayed", groups = {"integration"})
 	public void loginPageTest1() throws InterruptedException {
 		launchPage(ConfigurationProperties.getProperty("loginURL"));
 		
@@ -20,7 +20,7 @@ public class LoginPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.courseRaterHeader, "'Course Rater' header", true), "Course Rater header text hasn't been displayed as expected.");
 	}
 	
-	@Test(description = "Verify that OSU logo, username, password text-boxes and sign-on button is displayed.")
+	@Test(description = "Verify that OSU logo, username, password text-boxes and sign-on button is displayed.", groups = {"unit", "integration"})
 	public void loginPageTest2() {
 		launchPage(ConfigurationProperties.getProperty("loginURL"));
 		
@@ -29,7 +29,7 @@ public class LoginPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, LoginPage.loginBtn, "Login button", true), "Log In button hasn't been displayed as expected.");
 	}
 	
-	@Test(description = "Verify that user is able to login upon entering valid username and password and clicking on Log in button.")
+	@Test(description = "Verify that user is able to login upon entering valid username and password and clicking on Log in button.", groups = {"integration"})
 	public void loginPageTest3() {
 		launchPage(ConfigurationProperties.getProperty("loginURL"));
 		
@@ -43,7 +43,7 @@ public class LoginPageTests extends SeleniumUtils{
 		}
 	}
 	
-	@Test(description = "Verify that user is able to login upon entering valid username and password and pressing enter key.")
+	@Test(description = "Verify that user is able to login upon entering valid username and password and pressing enter key.", groups = {"integration"})
 	public void loginPageTest4() {
 		launchPage(ConfigurationProperties.getProperty("loginURL"));
 		

@@ -15,7 +15,7 @@ import com.osu.tests.support.SeleniumUtils;
 
 public class DashboardPageTests extends SeleniumUtils{
 
-	@Test(description="Verify the header on Dashboard page")
+	@Test(description="Verify the header on Dashboard page", groups = {"unit"})
 	public void dashboardPageTest1() {
 		login();
 
@@ -23,7 +23,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "'Course Rater' header", true), "'Course Rater' header hasn't been displayed as expected on the Dashboard page.");
 	}
 
-	@Test(description="Verify if the subject dropdowns is enabled while other dropdowns are disabled by default")
+	@Test(description="Verify if the subject dropdowns is enabled while other dropdowns are disabled by default", groups = {"unit"})
 	public void dashboardPageTest2() {
 		login();
 
@@ -33,7 +33,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(!isElementClickable(Locator.XPATH, DashboardPage.professorDisabledDropdown, "'Professor' dropdown", true), "Professor/Instructor dropdown is not disabled as expected.");
 	}
 
-	@Test(description="Verify if 'Find a course' section has all mandatory elements")
+	@Test(description="Verify if 'Find a course' section has all mandatory elements", groups = {"unit"})
 	public void dashboardPageTest3() {
 		login();
 
@@ -46,7 +46,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.searchBtn, "'Submit' button", true), "'Submit' button isn't displayed as expected.");
 	}
 
-	@Test(description="Verify if 'Your recent reviews' section has the date, course, rating and action header.")
+	@Test(description="Verify if 'Your recent reviews' section has the date, course, rating and action header.", groups = {"unit"})
 	public void dashboardPageTest4() {
 		//launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 		login();
@@ -59,7 +59,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		//Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.actionHeaderLabel, "'Action' header label", true), "'Action' label isn't displayed as expected.");
 	}
 
-	@Test(description="Verify if reviews are displayed in the 'Your Recent Reviews' table")
+	@Test(description="Verify if reviews are displayed in the 'Your Recent Reviews' table", groups = {"integration"})
 	public void dashboardPageTest5() {
 		login();
 
@@ -74,7 +74,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that the user is logged out by clicking on 'Log out' button")
+	@Test(description = "Verify that the user is logged out by clicking on 'Log out' button", groups = {"integration"})
 	public void dashboardPageTest6() {
 		login();
 
@@ -95,7 +95,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if no fields are filled in on Search click, the search fails and the page tells the user to select a subject")
+	@Test(description = "Verify that if no fields are filled in on Search click, the search fails and the page tells the user to select a subject", groups = {"unit"})
 	public void dashboardPageTest7() {
 		login();
 
@@ -109,7 +109,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if only the subject is filled in on Search click, the search fails and the page tells the user to select a course number")
+	@Test(description = "Verify that if only the subject is filled in on Search click, the search fails and the page tells the user to select a course number", groups = {"unit", "integration"})
 	public void dashboardPageTest8() {
 		login();
 
@@ -123,7 +123,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if only the subject and course number fields are filled in on Search click, go to the course page and include all reviews for all terms and instructors for that course")
+	@Test(description = "Verify that if only the subject and course number fields are filled in on Search click, go to the course page and include all reviews for all terms and instructors for that course", groups = {"unit", "integration"})
 	public void dashboardPageTest9() {
 		login();
 
@@ -138,7 +138,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course")
+	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course", groups = {"unit", "integration"})
 	public void dashboardPageTest10() {
 		login();
 
@@ -154,7 +154,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course")
+	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course", groups = {"unit", "integration"})
 	public void dashboardPageTest11() {
 		login();
 
@@ -170,7 +170,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields are filled in on Search click, go to the course page and include all reviews for that specific instance of the course")
+	@Test(description = "Verify that if all fields are filled in on Search click, go to the course page and include all reviews for that specific instance of the course", groups = {"unit", "integration"})
 	public void dashboardPageTest12() {
 		login();
 
@@ -187,7 +187,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the instructor field is reset, the other fields don't change")
+	@Test(description = "Verify that if the instructor field is reset, the other fields don't change", groups = {"unit"})
 	public void dashboardPageTest13() {
 		login();
 
@@ -205,7 +205,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the term field is reset, the other fields don't change")
+	@Test(description = "Verify that if the term field is reset, the other fields don't change", groups = {"unit"})
 	public void dashboardPageTest14() {
 		login();
 
@@ -223,7 +223,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled")
+	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled", groups = {"unit"})
 	public void dashboardPageTest15() {
 		login();
 
@@ -243,7 +243,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled")
+	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled", groups = {"unit"})
 	public void dashboardPageTest16() {
 		login();
 
@@ -266,7 +266,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that 'See all reviews' button is displayed.")
+	@Test(description = "Verify that 'See all reviews' button is displayed.", groups = {"unit", "integration"})
 	public void dashboardPageTest17() {
 		login();
 
@@ -277,7 +277,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true));
 	}
 
-	@Test(description = "Verify that reviews open in a modal box upon clicking on the 'View' link")
+	@Test(description = "Verify that reviews open in a modal box upon clicking on the 'View' link", groups = {"integration"})
 	public void dashboardPageTest18() {
 		login();
 
@@ -320,7 +320,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		//TODO - Complete this test
 	}
 
-	@Test(description = "Verify that user is able to view his other reviews apart from three of his/her default reviews by clicking on the 'See all reviews' button. ")
+	@Test(description = "Verify that user is able to view his other reviews apart from three of his/her default reviews by clicking on the 'See all reviews' button. ", groups = {"integration"})
 	public void dashboardPageTest19() {
 		login();
 
@@ -338,7 +338,7 @@ public class DashboardPageTests extends SeleniumUtils{
 	}
 
 
-	@Test(description = "Verify that the text in the 'Name' field of the Your Review modal is their name, not their ONID")
+	@Test(description = "Verify that the text in the 'Name' field of the Your Review modal is their name, not their ONID", groups = {"unit", "integration"})
 	public void testCookieInYourReview() {
 		login();
 		if(isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "'Course Rater' header", true)) {
@@ -386,7 +386,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if a review was submitted anonymously, the anonymity checkbox for that review is checked in the Your Review modal")
+	@Test(description = "Verify that if a review was submitted anonymously, the anonymity checkbox for that review is checked in the Your Review modal", groups = {"unit", "integration"})
 	public void testAnonymousCheckboxYV1() {
 		login();
 		if (isElementAvailable(Locator.XPATH, DashboardPage.courseRaterHeader, "Course subject header", true)) {
@@ -418,7 +418,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if a review was not submitted anonymously, the anonymity checkbox for that review is not checked in the Your Review modal")
+	@Test(description = "Verify that if a review was not submitted anonymously, the anonymity checkbox for that review is not checked in the Your Review modal", groups = {"unit", "integration"})
 	public void testAnonymousCheckboxYV2() {
 		login();
 		while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
@@ -444,7 +444,7 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that all of the users reviews appear in the Your Reviews section")
+	@Test(description = "Verify that all of the users reviews appear in the Your Reviews section", groups = {"unit", "integration"})
 	public void testViewAllYourReviews() {
 		login();
 		ReviewDAO dao = new ReviewDAOImpl();
