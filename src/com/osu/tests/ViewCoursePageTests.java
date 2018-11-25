@@ -55,7 +55,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 	
-	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.")
+	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.", groups = {"unit"})
 	public void viewCourseTest1() {
 		navigateToSubmitReview();
 		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
@@ -66,7 +66,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.reviewsLabel, "Reviews", true), "Reviews label is not displayed as expected.");
 	}
 	
-	@Test(description = "Verify that all mandatory elements for each review section is displayed as expected. ")
+	@Test(description = "Verify that all mandatory elements for each review section is displayed as expected. ", groups = {"unit", "integration"})
 	public void viewCourseTest2() {
 		navigateToSubmitReview();
 		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
@@ -86,7 +86,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the subject is reset and all fields are empty on Search click, the search fails and the page tells the user to select a subject")
+	@Test(description = "Verify that if the subject is reset and all fields are empty on Search click, the search fails and the page tells the user to select a subject", groups = {"unit"})
 	public void viewCourseTest3() {
 		navigateToSubmitReview();
 
@@ -102,7 +102,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if only the subject is filled in on Search click, the search fails and the page tells the user to select a course number")
+	@Test(description = "Verify that if only the subject is filled in on Search click, the search fails and the page tells the user to select a course number", groups = {"unit"})
 	public void viewCourseTest4() {
 		navigateToSubmitReview();
 
@@ -117,7 +117,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if only the subject and course number fields are filled in on Search click, go to the course page and include all reviews for all terms and instructors for that course")
+	@Test(description = "Verify that if only the subject and course number fields are filled in on Search click, go to the course page and include all reviews for all terms and instructors for that course", groups = {"unit", "integration"})
 	public void viewCourseTest5() {
 		navigateToSubmitReview();
 
@@ -133,7 +133,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course")
+	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course", groups = {"unit", "integration"})
 	public void viewCourseTest6() {
 		navigateToSubmitReview();
 
@@ -150,7 +150,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course")
+	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course", groups = {"unit", "integration"})
 	public void viewCourseTest7() {
 		navigateToSubmitReview();
 
@@ -167,7 +167,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if all fields are filled in on Search click, go to the course page and include all reviews for that specific instance of the course")
+	@Test(description = "Verify that if all fields are filled in on Search click, go to the course page and include all reviews for that specific instance of the course", groups = {"unit", "integration"})
 	public void viewCourseTest8() {
 		navigateToSubmitReview();
 
@@ -185,7 +185,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the term field is reset, the other fields don't change")
+	@Test(description = "Verify that if the term field is reset, the other fields don't change", groups = {"unit"})
 	public void viewCourseTest9() {
 		navigateToSubmitReview();
 
@@ -200,7 +200,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled")
+	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled", groups = {"unit"})
 	public void viewCourseTest10() {
 		navigateToSubmitReview();
 
@@ -217,7 +217,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled")
+	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled", groups = {"unit"})
 	public void viewCourseTest11() {
 		navigateToSubmitReview();
 
@@ -235,7 +235,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the user doesn't change any value in the course search form, the Search button is disabled")
+	@Test(description = "Verify that if the user doesn't change any value in the course search form, the Search button is disabled", groups = {"unit"})
 	public void viewCourseTest12() {
 		navigateToSubmitReview();
 
@@ -245,7 +245,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the user changes values in the search form but changes them back to the original values, the Search button is disabled again")
+	@Test(description = "Verify that if the user changes values in the search form but changes them back to the original values, the Search button is disabled again", groups = {"unit"})
 	public void viewCourseTest13() {
 		navigateToSubmitReview();
 
@@ -265,7 +265,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that if the user submits a review with no rating, the submission fails and they're told to provide a rating")
+	@Test(description = "Verify that if the user submits a review with no rating, the submission fails and they're told to provide a rating", groups = {"integration"})
 	public void viewCourseTest14() {
 		navigateToSubmitReview();
 
@@ -283,7 +283,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that header on reviews page correctly displays the dept, course, term and professor name as selected in the search modal.")
+	@Test(description = "Verify that header on reviews page correctly displays the dept, course, term and professor name as selected in the search modal.", groups = { "integration"})
 	public void viewCourseTest15() {
 		login();
 		
@@ -301,7 +301,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		//Assert.assertEquals(getText(Locator.XPATH, ViewCoursePage.courseNumberLabel, "Course Name header"), courseHeader);
 	}
 	
-	@Test(description = "Verify that all anonymous reviews show \"Anonymous Student\" as the student's name")
+	@Test(description = "Verify that all anonymous reviews show \"Anonymous Student\" as the student's name", groups = {"unit", "integration"})
 	public void testReviewAnonymityOnCP1() {
 		ReviewDAO dao = new ReviewDAOImpl();
 		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
@@ -321,7 +321,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		Assert.assertTrue(anonymousAsExpected, "All anonymous reviews show \"Anonymous Student\" as the student's name.");
 	}
 
-	@Test(description = "Verify that when the user submits a review anonymously, their new review on the course page shows \"Anonymous Student\" for their name")
+	@Test(description = "Verify that when the user submits a review anonymously, their new review on the course page shows \"Anonymous Student\" for their name", groups = {"unit", "integration"})
 	public void testReviewAnonymityOnCP2() {
 		navigateToCS160CP();
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "'Create Review' button", true)) {
@@ -353,7 +353,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that the text in the 'Name' field of the Reiview form is their name, not their ONID")
+	@Test(description = "Verify that the text in the 'Name' field of the Reiview form is their name, not their ONID", groups = {"unit", "integration"})
 	public void testCookieInReviewForm() {
 		navigateToCS160CP();
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.courseRaterHeader, "'Create Review' button", true)) {
@@ -370,7 +370,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that for all reviews where the user did provide a grade, the 'Grade Received' field is displayed")
+	@Test(description = "Verify that for all reviews where the user did provide a grade, the 'Grade Received' field is displayed", groups = {"unit", "integration"})
 	public void testGradeReceivedDisplay3() {
 		ReviewDAO dao = new ReviewDAOImpl();
 		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
@@ -390,7 +390,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		Assert.assertTrue(gradeDisplayedAsExpected, "All 'Grade Received' fields are displayed for reviews with a grade.");
 	}
 
-	@Test(description = "Verify that for all reviews where the user did not provide a grade, the 'Grade Received' field is hidden")
+	@Test(description = "Verify that for all reviews where the user did not provide a grade, the 'Grade Received' field is hidden", groups = {"unit", "integration"})
 	public void testGradeReceivedDisplay4() {
 		ReviewDAO dao = new ReviewDAOImpl();
 		ArrayList<ReviewPojo> reviewList = dao.fetchCourseReviews(1);
@@ -410,7 +410,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		Assert.assertTrue(gradeHiddenAsExpected, "All 'Grade Received' fields are hidden for reviews without a grade.");
 	}
 
-	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and term, but leaves the instructor blank")
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and term, but leaves the instructor blank", groups = {"unit"})
 	public void testSearchButtonStillEnabled1() {
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -426,7 +426,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 		}
 	}
 
-	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and instructor, but leaves the instructor blank")
+	@Test(description = "Verify that the button stays enabled when the user resets the search form and chooses the same subject, course number, and instructor, but leaves the instructor blank", groups = {"unit"})
 	public void testSearchButtonStillEnabled2() {
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
