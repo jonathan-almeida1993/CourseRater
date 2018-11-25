@@ -34,4 +34,5 @@ public interface SqlConstants {
 	String GET_COURSE_REVIEWS = "SELECT R.review_id, R.course_id , R.onid, U.first_name, U.last_name, R.rating, R.review, R.grade_received, R.created_date, R.anonymous "+
 			"FROM review_master_tbl R, user_master_tbl U WHERE (R.course_id = ?) AND (R.onid = U.onid) ORDER BY R.created_date DESC";
 
+	String DELETE_REVIEW = "DELETE FROM review_master_tbl WHERE review_id = ?";
 }

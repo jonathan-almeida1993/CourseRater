@@ -150,5 +150,29 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		return reviewList;
 	}
+	
+	public String deleteReview(int reviewId){
+
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		
+		try {
+		
+			conn = getConnection();
+			preparedStatement = conn.prepareStatement(SqlConstants.DELETE_REVIEW);
+			preparedStatement.setInt(1, reviewId);
+			int result = preparedStatement.executeUpdate();
+			System.out.println("Delete Review = "+result);
+			status = CommonConstants.STATUS_JDBC_OK;
+		}catch(Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		}finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, conn);
+		}
+		return status;
+	}
 
 }

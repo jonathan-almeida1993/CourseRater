@@ -285,15 +285,15 @@ public class DashboardPageTests extends SeleniumUtils{
 
 		for(int i = 1; i<=numOfViewLinks; i++) {
 			String baseXpath = "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]";
-			
+
 			String courseName = getText(Locator.XPATH, "("+baseXpath+"//td[3])["+i+"]", "Course Name");
 			String termTaken = courseName.substring(courseName.indexOf("(")).replace("(", "").replace(")", "");
 			courseName = courseName.substring(0, courseName.indexOf(" ("));
-			
-			
+
+
 			String instructorName = getText(Locator.XPATH, "("+baseXpath+"//td[4])["+i+"]", "Instructor Name");
 			int rating = getElements(Locator.XPATH, "("+baseXpath+"/td[2])["+i+"]/img").size();
-			
+
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View'])["+i+"]", "View link", true));
 
 			click(Locator.XPATH, "(//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View'])["+i+"]", "View link", true);
@@ -303,14 +303,14 @@ public class DashboardPageTests extends SeleniumUtils{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			String baseXpath2 = "//div[@id='yourReviewModal']//div[@class='modal-content']";
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, baseXpath2+"//h5[contains(.,'Your Review for "+courseName+"')]", "Modal header", true));
 			Assert.assertEquals(getText(Locator.XPATH, baseXpath2+"//select[@id='instructorDropdownYV' and @disabled]/option", "Instructor Name in dropdown"), instructorName);
 			Assert.assertEquals(getText(Locator.XPATH, baseXpath2+"//select[@id='termDropdownYV' and @disabled]/option", "Term Taken in dropdown"), termTaken);
 			//div[@id='yourReviewModal']//div[@class='modal-content']//span[@id='ratingCheckboxYV' and @disabled='disabled']//a/img[contains(@style,"opacity")]
 			Assert.assertEquals(getElements(Locator.XPATH, baseXpath2+"//span[@id='ratingCheckboxYV' and @disabled='disabled']//a/img[contains(@style,'opacity')]").size(), rating);
-			
+
 			if(i%2 == 0)
 				click(Locator.XPATH, DashboardPage.viewReviewCloseBtn, "'Close button'", true);
 			else
@@ -331,9 +331,9 @@ public class DashboardPageTests extends SeleniumUtils{
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true));
 
 		click(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true);
-		
+
 		int numOfViewLinks = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View']").size();
-		
+
 		Assert.assertTrue(numOfViewLinks>=3, "'See All Reviews' button has displayed all the reviews for the user.");
 	}
 
@@ -492,17 +492,48 @@ public class DashboardPageTests extends SeleniumUtils{
 			i++;
 		}
 	}
-	
-	/*@Test(description="Verify that user is navigated to the dashboard page when the user clicks on Course Rater header")
-	public void test7(){
-		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
 
-		Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.osuLogo), arg1);
+	@Test(description = "Verify that if the user deletes the review, the review disappears from the page.")
+	public void testDeleteReview1() {
+		login();
+		ReviewDAO dao = new ReviewDAOImpl();
+		ArrayList<ReviewPojo> reviewList = dao.fetchMyReviews("almeidaj");
+		while (getElement(Locator.XPATH, DashboardPage.seeMoreReviewsBtn).getText().equals("See 3 More Reviews")) {
+			System.out.println("more reviews");
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i < reviewList.size(); i++) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "//a[@data-id='" + i + "' and @class='deleteReviewBtn']", "'View' button", true), "The 'View' button for the latest review is available");
+			click(Locator.XPATH, "//a[@data-id='" + i + "' and @class='deleteReviewBtn']", "'View' button", true);
+			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.yesConfirmDeleteReviewBtn, "'Confirm delete review' button", true), "The 'Yes' button is clickable");
+			Assert.assertTrue(isElementClickable(Locator.XPATH, DashboardPage.noConfirmDeleteReviewBtn, "'Confirm delete review' button", true), "The 'Yes' button is clickable");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Assert.assertTrue(getElement(Locator.XPATH, "//tr[@id='row" + i + "YV']").getCssValue("display").equals("none"), "The deleted review is now hidden from the page");
+		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	@Test(description="Verify that user is navigated to the OSU page when the user clicks on Oregon State University header")
-	public void test8(){
-		launchPage(ConfigurationProperties.getProperty("DashboardURL"));
-	}*/
 
 }

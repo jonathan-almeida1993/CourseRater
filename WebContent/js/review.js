@@ -755,6 +755,7 @@ $(document).ready(function(){
 	$('#instructorDropdownRV, #termDropdownRV').change(function(){
 		//console.log(reviews);
 		//console.log(courseDetailsJSONList);
+		
 		/*First, find the course ID for the selected combination of 
 		 * instructor and term drop downs*/
 		$('#submitReviewBtn').removeAttr('disabled');
@@ -772,6 +773,11 @@ $(document).ready(function(){
 		
 		/*Second, check if there exists a review by the logged in user for the above course ID.*/
 		var cookieInfo = document.cookie.split(';');
+		if(!cookieInfo[0].trim().startsWith('onid')){
+			var temp = cookieInfo[1];
+			cookieInfo[1] = cookieInfo[0];
+			cookieInfo[0] = temp;
+		}
 		cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
 		cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
 		var cookieFirstName = cookieInfo[1].split('-')[0];
@@ -1091,37 +1097,6 @@ function colorClickedStarRadioGroup(numChecked) {
 	}
 }
 
-function updateAverageRating(reviews) {
-	var averageRating = 0;
-	var ratingSum = 0;
-	//console.log(reviews.length);
-	for (i = 0; i < reviews.length; i++) {
-		ratingSum += parseInt(reviews[i].rating);
-	}
-	//console.log(ratingSum);
-	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,4));
-	//console.log(averageRating);
-	var numStars = averageRating;
-	var avgStarSpanHTML = "";
-	while (numStars > 0) {
-		if (numStars >= 1) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-		}
-		else if (numStars >= 0.625 && numStars < 1) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_three-quarter.png\">";
-		}
-		else if (numStars >= 0.375 && numStars < 0.625) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_half.png\">";
-		}
-		else if (numStars < 0.375) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_quarter.png\">";
-		}
-		numStars--;
-	}
-	$('#averageRatingStars').html(avgStarSpanHTML);
-	$('#averageRatingValue').html(averageRating + "/5");
-}
-
 /* Course Search Form Validation */
 function validateSearchForm() {
 	//var form = document.forms["searchCourseForm"];
@@ -1152,23 +1127,17 @@ function updateAverageRating(reviews) {
 		ratingSum += parseInt(reviews[i].rating);
 	}
 	//console.log(ratingSum);
-	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,4));
+	averageRating = parseFloat((ratingSum/reviews.length).toString().substring(0,3));
 	//console.log(averageRating);
 	var numStars = averageRating;
 	var avgStarSpanHTML = "";
 	
 	while (numStars > 0) {
-		if (numStars >= 1) {
+		if (numStars >= 0.75) {
 			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
 		}
-		else if (numStars >= 0.625 && numStars < 1) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_three-quarter.png\">";
-		}
-		else if (numStars >= 0.375 && numStars < 0.625) {
+		else if (numStars >= 0.25 && numStars < 0.75) {
 			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_half.png\">";
-		}
-		else if (numStars < 0.375) {
-			avgStarSpanHTML += "<img class=\"rating-star\" src=\"images/star-8x_quarter.png\">";
 		}
 		numStars--;
 	}

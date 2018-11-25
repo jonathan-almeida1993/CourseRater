@@ -30,6 +30,7 @@ public class DashboardPage {
 	public static final String ratingHeaderLabel = "//table[@id='recentReviewTable']//th[.='Rating']";
 	public static final String actionHeaderLabel = "//table[@id='recentReviewTable']//th[.='Action']";
 	public static final String seeAllReviewsBtn = "//h3[text()='Your Recent Reviews']/ancestor::div[@class='modal-content']//button[@id='seeMoreReviewsBtn' and .='See All Reviews']";
+	public static final String recentReviewTableBody = "//table[@id='recentReviewTable']//tbody";
 	
 	public static final String viewReviewCloseBtn = "//button[@id='confirmCloseYourReviewBtn']";
 	public static final String viewReviewCrossCloseBtn = "//button[@id='closeYourReviewFormX']";
@@ -37,5 +38,7 @@ public class DashboardPage {
 	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
 	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
 	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
+	public static final String noConfirmDeleteReviewBtn = "//button[@id='noConfirmDeleteReviewBtn']";
+	public static final String yesConfirmDeleteReviewBtn = "//button[@id='yesConfirmDeleteReviewBtn']";
 	
 }
