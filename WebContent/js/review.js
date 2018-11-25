@@ -591,21 +591,30 @@ $(document).ready(function(){
 
 	//grab all reviews based on the course Ids, and put them into a list called reviesList
 	var reviews = [];	// array that will hold all the reviews for the class
+	
+	console.log("course IDs: " + courseIds);
 
 	$.each(courseIds, function(index, id) {
 		var jsonData = '{"courseId":"' + id + '"}';
+		console.log("jsonData: " + jsonData);
 		var reviewList = sendDataSync(jsonData, "getCourseReviews", "ReviewController");
-//		console.log("reviews: " + reviewList);
+		console.log("retrieved reviews: " + reviewList);
 
 		//parse the string for each review and put them into correct field of a review object
 		var jsonReviews = jQuery.parseJSON(reviewList);
 
 		//add the review object into the review list and display them
 		$.each(jsonReviews, function(index, value) {
+			
+			/* take out lines 611-612 when backend is implemented. 
+			 * make sure the thumbs attributes are called 'thumbsUp' and 'thumbsDown' */
 			value.thumbsUp = 0;
 			value.thumbsDown = 0;
+			
 			reviews.push(value);
 		});
+		
+		console.log("reviews list: " + reviews);
 	});
 	
 	reviews.sort(function(a,b) {
@@ -613,8 +622,35 @@ $(document).ready(function(){
 	});
 
 	updateAverageRating(reviews);
+	
+	var cookieInfo = document.cookie.split(';');
+	if(!cookieInfo[0].trim().startsWith('onid')){
+		var temp = cookieInfo[1];
+		cookieInfo[1] = cookieInfo[0];
+		cookieInfo[0] = temp;
+	}
+	cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
+	cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
+	
+	/* modify this sendDataSync to match Jonathan's back-end for the thumbs table */
+	//var thumbsList = sendDataSync("{'onid':'"+cookieInfo[0]+"'}", "getUserThumbs", "ReviewController");
+	//var usefulThumbs = jQuery.parseJSON(thumbsList);
+	
+	/* lines 636 to 645 are for pre-backend implementation purposes only */
+	var myThumb1 = new Object();
+	myThumb1.onid = "habibelo";
+	myThumb1.reviewId = 98;
+	myThumb1.thumb = 1;
+	var myThumb2 = new Object();
+	myThumb2.onid = "habibelo";
+	myThumb2.reviewId = 102;
+	myThumb2.thumb = 0;
+	var usefulThumbs = [];
+	usefulThumbs.push(myThumb1, myThumb2);
 
-	displayReviews(reviews, jsonTermInstr);
+	console.log("usefulThumbs list: " + usefulThumbs);
+
+	displayReviews(reviews, jsonTermInstr, usefulThumbs);
 	
 	$('#reviewSortSelect').val("Date");
 	$('#reviewSortSelect').change(function() {
@@ -652,6 +688,7 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
 		}
+		// sendDataSync function goes here
 	});
 	
 	$('.reviewThumbsDownBtn').click(function() {
@@ -664,12 +701,13 @@ $(document).ready(function(){
 			$(this).children('img').css('opacity', '1');
 			$(this).children('span').html(reviews[reviewIndex].thumbsDown);
 		}
-		if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected')) {
+		if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').hasClass('thumbs-selected')) {
 			reviews[reviewIndex].thumbsUp--;
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
 		}
+		// sendDataSync function goes here
 	});
 
 	$('#ratingStarChk1').hover(function() {
@@ -767,14 +805,6 @@ $(document).ready(function(){
 		});
 		
 		/*Second, check if there exists a review by the logged in user for the above course ID.*/
-		var cookieInfo = document.cookie.split(';');
-		if(!cookieInfo[0].trim().startsWith('onid')){
-			var temp = cookieInfo[1];
-			cookieInfo[1] = cookieInfo[0];
-			cookieInfo[0] = temp;
-		}
-		cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
-		cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
 		var cookieFirstName = cookieInfo[1].split('-')[0];
 		var cookieLastName = cookieInfo[1].split('-')[1];
 		var reviewExists = false;
@@ -1023,7 +1053,8 @@ $('#yesCloseReviewFormBtn').click(function() {
 
 });
 
-function displayReviews(reviews, jsonTermInstr) {
+function displayReviews(reviews, jsonTermInstr, usefulThumbs) {
+	$('#reviews').empty();
 	var starHTML = "";
 	numStars = 0;
 	for (i = 0; i < reviews.length; i++) {
@@ -1104,6 +1135,24 @@ function displayReviews(reviews, jsonTermInstr) {
 		    "</div>" +
 			"<div class=\"dropdown-divider\"></div>"
 		);
+		console.log("thumb: " + usefulThumbs[0].thumb);
+		for (j = 0; j < usefulThumbs.length; j++) {
+			if (reviews[i].reviewId == usefulThumbs[j].reviewId) {
+				if (usefulThumbs[j].thumb == 1) {
+					console.log("liked review index: " + i);
+					console.log("liked review ID: " + reviews[i].reviewId);
+					$('a[data-id="' + i + 'reviewThumbsUpBtn').addClass('thumbs-selected');
+					$('a[data-id="' + i + 'reviewThumbsUpBtn').children('img').css('opacity', '1');
+				}
+				else {
+					console.log("liked review index: " + i);
+					console.log("liked review ID: " + reviews[i].reviewId);
+					$('a[data-id="' + i + 'reviewThumbsDownBtn').addClass('thumbs-selected');
+					$('a[data-id="' + i + 'reviewThumbsDownBtn').children('img').css('opacity', '1');
+				}
+				break;
+			}
+		}
 	}
 }
 
