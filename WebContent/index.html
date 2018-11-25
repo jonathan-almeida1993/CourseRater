@@ -128,15 +128,17 @@
       <div class="modal-body">
         <form name="searchCourseForm" id="searchCourseForm">
           <div class="row">
-            <div class="form-group col-md-8">
+            <div class="form-group col-lg-12">
               <label for="Subject">*Subject</label>
               <select class="custom-select" name="subject" id="subjectDropDown">
-                  <option value="">Select Department</option>
+                  <option value="">Select Subject</option>
 
                   <!-- Make sure subject appears in the format below, with its abbreviation in parenthesis. -->
               </select>
             </div>
-            <div class="form-group col-md-4">
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-12">
               <label for="Course Number">*Course Number</label>
               <select class="custom-select" id="courseDropDown" disabled="disabled">
                   <option value="">Select Course Number</option>
@@ -146,14 +148,16 @@
             </div>
           </div>
           <div class="row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-lg-12">
               <label for="Term">Term</label>
 
               <select class="custom-select" id="termDropDown" disabled="disabled">
                   <option value="" selected>All Terms</option>
               </select>
             </div>
-            <div class="form-group col-md-6">
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-12">
               <label for="Professor/Instructor">Professor/Instructor</label>
               <select class="custom-select" id="instructorDropDown"  disabled="disabled">
                   <option value="" selected>All Professors/Instructors</option>
@@ -164,8 +168,8 @@
             <small class="float-right">*Required Field&nbsp;</small><br>
           </div>
           <div class="alert alert-danger" role="alert" id="fillFormAlert"></div>
-          <div class="modal-footer">
-            <button class="btn btn-primary" type="button" id="searchCourseBtn" value="">Search</button>
+          <div class="modal-footer col-md-12">
+            <button class="btn btn-primary col-md-12" type="button" id="searchCourseBtn" value="">Search</button>
           </div>
         </form>
       </div>
