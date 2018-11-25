@@ -681,6 +681,7 @@ $(document).ready(function(){
 			$(this).addClass('thumbs-selected');
 			$(this).children('img').css('opacity', '1');
 			$(this).children('span').html(reviews[reviewIndex].thumbsUp);
+			// sendDataSync function goes here
 		}
 		if ($('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').hasClass('thumbs-selected')) {
 			reviews[reviewIndex].thumbsDown--;
@@ -688,7 +689,6 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
 		}
-		// sendDataSync function goes here
 	});
 	
 	$('.reviewThumbsDownBtn').click(function() {
@@ -700,6 +700,7 @@ $(document).ready(function(){
 			$(this).addClass('thumbs-selected');
 			$(this).children('img').css('opacity', '1');
 			$(this).children('span').html(reviews[reviewIndex].thumbsDown);
+			// sendDataSync function goes here
 		}
 		if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').hasClass('thumbs-selected')) {
 			reviews[reviewIndex].thumbsUp--;
@@ -707,7 +708,6 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
 		}
-		// sendDataSync function goes here
 	});
 
 	$('#ratingStarChk1').hover(function() {
