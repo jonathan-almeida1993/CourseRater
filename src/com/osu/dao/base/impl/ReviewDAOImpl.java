@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -48,7 +49,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 		try {
 			connect = getConnection();
-			Date dt = new Date(obj.getDatePosted());
+			Timestamp dt = new Timestamp(obj.getDatePosted());
 			preparedStatement = connect.prepareStatement(SqlConstants.INSERT_REVIEW);
 			preparedStatement.setInt(1, obj.getCourseId());
 			preparedStatement.setString(2, obj.getOnid());
@@ -56,7 +57,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 			preparedStatement.setString(4, obj.getReview());
 			preparedStatement.setString(5, obj.getGradeReceived());
 			preparedStatement.setBoolean(6, obj.isAnonymous());
-			preparedStatement.setDate(7, dt);
+			preparedStatement.setTimestamp(7, dt);
 
 			int executeUpdate = preparedStatement.executeUpdate();
 

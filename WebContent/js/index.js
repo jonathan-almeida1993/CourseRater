@@ -374,6 +374,22 @@ $(document).ready(function() {
 		$('#reviewTextYV').val((reviews[i].review == "*This student did not write a review in their submission.*" ? "[No review text]" : reviews[i].review));
 	});
 	
+	$('#yourReviewModal').on('hide.bs.modal', function() {
+		$("#modalTitleYV").html("");
+		$("#yourNameYV").val("");
+		$('#yourNameYV').text("");
+		//console.log(reviews[i].anonymous);
+		$('#anonymousCheckYV').prop("checked", 0);
+		$('#emptyTermYV').text("");
+		$('#emptyInstructorYV').text("");
+		//console.log("grade value: " + reviews[i].gradeReceived);
+		//console.log("grade shown: " + (reviews[i].gradeReceived == "N" ? "" : reviews[i].gradeReceived));
+		$('#gradeDropdownYV').val("");
+		colorClickedStarRadioGroup(0);
+		$('#reviewTextYV').val("");
+	});
+
+	
 	$('#deleteReviewModal').on('shown.bs.modal', function() {
 		var i = $('#chosenReviewId').val();
 	});
@@ -463,7 +479,7 @@ function colorClickedStarRadioGroup(numChecked) {
 		}
 		for (i = numChecked + 1; i <= 5; i++) {
 			var starID = "#ratingStarChkYV" + i.toString();
-			$(starID).css("opacityYV", "0.2");
+			$(starID).css("opacity", "0.2");
 		}
 	}
 	else {
