@@ -13,4 +13,6 @@ public interface ReviewDAO extends GenericDAO {
 	public ArrayList<ReviewPojo> fetchCourseReviews(int courseId);
 	
 	public ArrayList<ReviewPojo> fetchMyReviews(String onid);
+	
+	public String insertVote(ReviewPojo obj);
 }

@@ -72,6 +72,13 @@ public class ReviewController extends HttpServlet {
 			CoursePojo coursePojo = gson.fromJson(jsonData, CoursePojo.class);
 			ArrayList<ReviewPojo> courseReviews = dao.fetchCourseReviews(coursePojo.getCourseId());
 			response.getWriter().write(gson.toJson(courseReviews));
+		}else if(null != message && CommonConstants.OP_ADD_VOTE.equalsIgnoreCase(message)) {
+			
+			Gson gson = new Gson();
+			dao = new ReviewDAOImpl();
+			ReviewPojo reviewPojo = gson.fromJson(jsonData, ReviewPojo.class);
+			String status = dao.insertVote(reviewPojo);
+			response.getWriter().write(status);
 		}
 		System.out.println("ReviewController:doPost Exiting...");
 	}

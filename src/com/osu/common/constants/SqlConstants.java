@@ -31,7 +31,9 @@ public interface SqlConstants {
 	String GET_MY_REVIEWS = "SELECT R.review_id, R.course_id , R.onid, R.rating, R.review, R.grade_received, R.created_date, R.anonymous, C.* "+
 			"FROM review_master_tbl R, course_master_tbl C WHERE onid= ? AND R.course_id = C.course_id ORDER BY R.created_date DESC";
 
-	String GET_COURSE_REVIEWS = "SELECT R.review_id, R.course_id , R.onid, U.first_name, U.last_name, R.rating, R.review, R.grade_received, R.created_date, R.anonymous "+
+	String GET_COURSE_REVIEWS = "SELECT R.review_id, R.course_id , R.onid, U.first_name, U.last_name, R.rating, R.review, R.grade_received, R.upvotes, R.downvotes, R.created_date, R.anonymous "+
 			"FROM review_master_tbl R, user_master_tbl U WHERE (R.course_id = ?) AND (R.onid = U.onid) ORDER BY R.created_date DESC";
+	
+	String INSERT_VOTE = "UPDATE review_master_tbl SET upvotes = ?, downvotes = ? WHERE review_id = ?";
 
 }

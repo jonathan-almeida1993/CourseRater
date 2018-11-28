@@ -608,8 +608,8 @@ $(document).ready(function(){
 			
 			/* take out lines 611-612 when backend is implemented. 
 			 * make sure the thumbs attributes are called 'thumbsUp' and 'thumbsDown' */
-			value.thumbsUp = 0;
-			value.thumbsDown = 0;
+/*			value.thumbsUp = 0;
+			value.thumbsDown = 0;*/
 			
 			reviews.push(value);
 		});
@@ -689,6 +689,8 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
 		}
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+				,'addVote','ReviewController');
 	});
 	
 	$('.reviewThumbsDownBtn').click(function() {
@@ -708,6 +710,8 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
 		}
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+				,'addVote','ReviewController');
 	});
 
 	$('#ratingStarChk1').hover(function() {
