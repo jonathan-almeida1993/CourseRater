@@ -25,6 +25,7 @@ import com.osu.dao.base.interfaces.ReviewDAO;
 import com.osu.database.connection.DBConnectionFactory;
 import com.osu.database.pojo.CoursePojo;
 import com.osu.database.pojo.ReviewPojo;
+import com.osu.database.pojo.UserPojo;
 
 
 public class ReviewDAOImpl implements ReviewDAO {
@@ -141,6 +142,8 @@ public class ReviewDAOImpl implements ReviewDAO {
 				singleReview.setGradeReceived(resultSet.getString("grade_received"));
 				singleReview.setDatePosted(resultSet.getDate("created_date").getTime());
 				singleReview.setAnonymous(resultSet.getBoolean("anonymous"));
+				singleReview.setThumbsUp(resultSet.getInt("upvotes"));
+				singleReview.setThumbsDown(resultSet.getInt("downvotes"));
 				reviewList.add(singleReview);
 			}
 		}catch(Exception e) {
@@ -176,4 +179,152 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return status;
 	}
 
+	public String insertVote(ReviewPojo obj) {
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.INSERT_VOTE);
+			preparedStatement.setInt(1, obj.getThumbsUp());
+			preparedStatement.setInt(2, obj.getThumbsDown());
+			preparedStatement.setInt(3, obj.getReviewId());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
+	}
+	
+	public String insertUserVoteMapping(ReviewPojo obj) {
+
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.INSERT_VOTE_USER_MAPPING);
+			preparedStatement.setString(1, obj.getOnid());
+			preparedStatement.setInt(2, obj.getReviewId());
+			preparedStatement.setInt(3, obj.getThumb());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
+	}
+	
+	public String updateUserVoteMapping(ReviewPojo obj) {
+
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.UPDATE_VOTE_USER_MAPPING);
+			preparedStatement.setInt(1, obj.getThumb());
+			preparedStatement.setString(2, obj.getOnid());
+			preparedStatement.setInt(3, obj.getReviewId());
+
+			int executeUpdate = preparedStatement.executeUpdate();
+
+			if (executeUpdate > 0) {
+				status = CommonConstants.STATUS_JDBC_OK;
+			}
+
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return status;
+	}
+	
+	public ArrayList<ReviewPojo> selectUserVoteMapping(ReviewPojo obj) {
+
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<ReviewPojo> userVoteMappingList = new ArrayList<ReviewPojo>();
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.SELECT_VOTE_USER_MAPPING);
+			preparedStatement.setString(1, obj.getOnid());
+			preparedStatement.setInt(2, obj.getReviewId());
+
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				ReviewPojo singleVoteInfo = new ReviewPojo();
+				singleVoteInfo.setReviewId(resultSet.getInt("review_id"));
+				singleVoteInfo.setOnid(resultSet.getString("onid"));
+				userVoteMappingList.add(singleVoteInfo);
+			}
+			status = CommonConstants.STATUS_JDBC_OK;
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return userVoteMappingList;
+	}
+
+	public ArrayList<ReviewPojo> fetchMyVotes(UserPojo obj) {
+
+		String status = CommonConstants.STATUS_JDBC_ERROR;
+		Connection connect = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<ReviewPojo> voteList = new ArrayList<ReviewPojo>();
+		
+		try {
+			connect = getConnection();
+			preparedStatement = connect.prepareStatement(SqlConstants.FETCH_MY_VOTES);
+			preparedStatement.setString(1, obj.getOnid());
+
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				ReviewPojo singleVoteInfo = new ReviewPojo();
+				singleVoteInfo.setReviewId(resultSet.getInt("review_id"));
+				singleVoteInfo.setThumb(resultSet.getInt("vote"));
+				singleVoteInfo.setOnid(obj.getOnid());
+				voteList.add(singleVoteInfo);
+			}
+			status = CommonConstants.STATUS_JDBC_OK;
+		} catch (Exception e) {
+			status = CommonConstants.STATUS_JDBC_ERROR;
+			e.printStackTrace();
+		} finally {
+			DBConnectionFactory.close(resultSet, preparedStatement, connect);
+		}
+		return voteList;
+	}
 }

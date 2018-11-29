@@ -591,19 +591,30 @@ $(document).ready(function(){
 
 	//grab all reviews based on the course Ids, and put them into a list called reviesList
 	var reviews = [];	// array that will hold all the reviews for the class
+	
+	console.log("course IDs: " + courseIds);
 
 	$.each(courseIds, function(index, id) {
 		var jsonData = '{"courseId":"' + id + '"}';
+		console.log("jsonData: " + jsonData);
 		var reviewList = sendDataSync(jsonData, "getCourseReviews", "ReviewController");
-//		console.log("reviews: " + reviewList);
+		console.log("retrieved reviews: " + reviewList);
 
 		//parse the string for each review and put them into correct field of a review object
 		var jsonReviews = jQuery.parseJSON(reviewList);
 
 		//add the review object into the review list and display them
 		$.each(jsonReviews, function(index, value) {
+			
+			/* take out lines 611-612 when backend is implemented. 
+			 * make sure the thumbs attributes are called 'thumbsUp' and 'thumbsDown' */
+/*			value.thumbsUp = 0;
+			value.thumbsDown = 0;*/
+			
 			reviews.push(value);
 		});
+		
+		console.log("reviews list: " + reviews);
 	});
 	
 	reviews.sort(function(a,b) {
@@ -611,71 +622,141 @@ $(document).ready(function(){
 	});
 
 	updateAverageRating(reviews);
-
-	var reviewDiv = "";
-	var starHTML = "";
-	numStars = 0;
-	for (i = 0; i < reviews.length; i++) {
-		numStars = reviews[i].rating;
-		starHTML = "";
-		for (j = 0; j < numStars; j++) {
-			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
-		}
-		if (reviews[i].anonymous) {
-			reviews[i].onid = "Anonymous Student";
-		}
-		if (reviews[i].review == "") {
-			reviews[i].review = "*This student did not write a review in their submission.*";
-		}
-		for (j = 0; j < jsonTermInstr.length; j++) {
-			if (reviews[i].courseId == jsonTermInstr[j].courseId) {
-				reviews[i].term = jsonTermInstr[j].termOffered;
-				break;
-			}
-		}
-		//console.log("date ms: " + reviews[i].datePosted);
-
-		$('#reviews').append(
-			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
-			"<div class=\"col-md-3\">" +
-			"<label>" +
-			"<strong>Posted By: </strong>" +
-			"<span id=\"review" + (i+1) + "Name\">" +
-			(reviews[i].anonymous ? "Anonymous Student" : reviews[i].firstName + " " + reviews[i].lastName) +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Rating: </strong>" +
-			"<span id=\"review" + (i+1) + "Rating\">" +
-			starHTML +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Term: </strong>" +
-			"<span id=\"review" + (i+1) + "Term\">" +
-			reviews[i].term +
-			"</span>" +
-			"</label><br>" +
-			"<label>" +
-			"<strong>Date Posted: </strong>" +
-			"<span id=\"review" + (i+1) + "Date\">" +
-			new Date(reviews[i].datePosted).toLocaleDateString() +
-			"</span>" +
-			"</label><br>" +
-			(reviews[i].gradeReceived == "N" ? "" : ("<label>" +
-			"<strong>Grade Received: </strong>" +
-			"<span id=\"review" + (i+1) + "Grade\">" +
-			reviews[i].gradeReceived +
-			"</span>" +
-			"</label>")) +
-			"</div>" +
-			"<div class=\"col-md-7\" id=\"review" + (i+1) + "Text\">" +
-			reviews[i].review +
-			"</div>" +
-			"</div>" +
-			"<span + class=\"modal-header\"></span>"
-		);
+	
+	var cookieInfo = document.cookie.split(';');
+	if(!cookieInfo[0].trim().startsWith('onid')){
+		var temp = cookieInfo[1];
+		cookieInfo[1] = cookieInfo[0];
+		cookieInfo[0] = temp;
 	}
+	cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
+	cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
+	
+	/* modify this sendDataSync to match Jonathan's back-end for the thumbs table */
+	var thumbsList = sendDataSync("{'onid':'"+cookieInfo[0]+"'}", "getUserThumbs", "ReviewController");
+	//console.log(thumbsList);
+	var usefulThumbs = jQuery.parseJSON(thumbsList);
+	
+	/* lines 636 to 645 are for pre-backend implementation purposes only */
+/*	var myThumb1 = new Object();
+	myThumb1.onid = "habibelo";
+	myThumb1.reviewId = 98;
+	myThumb1.thumb = 1;
+	var myThumb2 = new Object();
+	myThumb2.onid = "habibelo";
+	myThumb2.reviewId = 102;
+	myThumb2.thumb = 0;
+	var usefulThumbs = [];
+	usefulThumbs.push(myThumb1, myThumb2);*/
+
+	console.log("usefulThumbs list: " + thumbsList);
+
+	displayReviews(reviews, jsonTermInstr, usefulThumbs);
+	
+	$('#reviewSortSelect').val("Date");
+	$('#reviewSortSelect').change(function() {
+		if ($(this).val() == "Date") {
+			console.log("sort reviews by date");
+			reviews.sort(function(a,b) {
+				return b.datePosted - a.datePosted;
+			});
+			console.log("reviews now sorted by date");
+		}
+		else if ($(this).val() == "Usefulness") {
+			console.log("sort reviews by usefulness");
+			reviews.sort(function(a,b) {
+				if ((b.thumbsUp - b.thumbsDown == 0) && (a.thumbsUp - a.thumbsDown == 0)) return b.thumbsUp - a.thumbsUp;
+				else return (b.thumbsUp - b.thumbsDown) - (a.thumbsUp - a.thumbsDown);
+			});
+			console.log("reviews now sorted by usefulness");
+			
+		}
+		displayReviews(reviews, jsonTermInstr, usefulThumbs);
+		console.log("resorted reviews now displayed");
+		$('.reviewThumbsUpBtn').click(function() {
+			var reviewIndex = $(this).data('id')[0];
+			console.log("liked review index: " + reviewIndex);
+			console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+			if (!$(this).hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsUp++;
+				$(this).addClass('thumbs-selected');
+				$(this).children('img').css('opacity', '1');
+				$(this).children('span').html(reviews[reviewIndex].thumbsUp);
+				// sendDataSync function goes here
+			}
+			if ($('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsDown--;
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
+			}
+			sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+1+'}'
+					,'addVote','ReviewController');
+		});
+		
+		$('.reviewThumbsDownBtn').click(function() {
+			var reviewIndex = $(this).data('id')[0];
+			console.log("liked review index: " + reviewIndex);
+			console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+			if (!$(this).hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsDown++;
+				$(this).addClass('thumbs-selected');
+				$(this).children('img').css('opacity', '1');
+				$(this).children('span').html(reviews[reviewIndex].thumbsDown);
+				// sendDataSync function goes here
+			}
+			if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsUp--;
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
+			}
+			sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+0+'}'
+					,'addVote','ReviewController');
+		});
+	});
+	
+	$('.reviewThumbsUpBtn').click(function() {
+		var reviewIndex = $(this).data('id')[0];
+		console.log("liked review index: " + reviewIndex);
+		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+		if (!$(this).hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsUp++;
+			$(this).addClass('thumbs-selected');
+			$(this).children('img').css('opacity', '1');
+			$(this).children('span').html(reviews[reviewIndex].thumbsUp);
+			// sendDataSync function goes here
+		}
+		if ($('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsDown--;
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
+			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
+		}
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+1+'}'
+				,'addVote','ReviewController');
+	});
+	
+	$('.reviewThumbsDownBtn').click(function() {
+		var reviewIndex = $(this).data('id')[0];
+		console.log("liked review index: " + reviewIndex);
+		console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+		if (!$(this).hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsDown++;
+			$(this).addClass('thumbs-selected');
+			$(this).children('img').css('opacity', '1');
+			$(this).children('span').html(reviews[reviewIndex].thumbsDown);
+			// sendDataSync function goes here
+		}
+		if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').hasClass('thumbs-selected')) {
+			reviews[reviewIndex].thumbsUp--;
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
+			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
+		}
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+0+'}'
+				,'addVote','ReviewController');
+	});
 
 	$('#ratingStarChk1').hover(function() {
 		$('#ratingStarValue').text("1/5");
@@ -772,14 +853,6 @@ $(document).ready(function(){
 		});
 		
 		/*Second, check if there exists a review by the logged in user for the above course ID.*/
-		var cookieInfo = document.cookie.split(';');
-		if(!cookieInfo[0].trim().startsWith('onid')){
-			var temp = cookieInfo[1];
-			cookieInfo[1] = cookieInfo[0];
-			cookieInfo[0] = temp;
-		}
-		cookieInfo[0] = cookieInfo[0].split('=')[1];//contains onid
-		cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
 		var cookieFirstName = cookieInfo[1].split('-')[0];
 		var cookieLastName = cookieInfo[1].split('-')[1];
 		var reviewExists = false;
@@ -1027,6 +1100,110 @@ $('#yesCloseReviewFormBtn').click(function() {
 });
 
 });
+
+function displayReviews(reviews, jsonTermInstr, usefulThumbs) {
+	$('#reviews').empty();
+	var starHTML = "";
+	numStars = 0;
+	for (i = 0; i < reviews.length; i++) {
+		numStars = reviews[i].rating;
+		starHTML = "";
+		for (j = 0; j < numStars; j++) {
+			starHTML += "<img class=\"rating-star\" src=\"images/star-8x_full.png\">";
+		}
+		if (reviews[i].anonymous) {
+			reviews[i].onid = "Anonymous Student";
+		}
+		if (reviews[i].review == "") {
+			reviews[i].review = "*This student did not write a review in their submission.*";
+		}
+		for (j = 0; j < jsonTermInstr.length; j++) {
+			if (reviews[i].courseId == jsonTermInstr[j].courseId) {
+				reviews[i].term = jsonTermInstr[j].termOffered;
+				break;
+			}
+		}
+		//console.log("date ms: " + reviews[i].datePosted);
+
+		$('#reviews').append(
+			"<div class=\"modal-body row\" id=\"review" + (i+1) + "\">" +
+			"<div class=\"col-md-3\">" +
+			"<label>" +
+			"<strong>Posted By: </strong>" +
+			"<span id=\"review" + (i+1) + "Name\">" +
+			(reviews[i].anonymous ? "Anonymous Student" : reviews[i].firstName + " " + reviews[i].lastName) +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Rating: </strong>" +
+			"<span id=\"review" + (i+1) + "Rating\">" +
+			starHTML +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Term: </strong>" +
+			"<span id=\"review" + (i+1) + "Term\">" +
+			reviews[i].term +
+			"</span>" +
+			"</label><br>" +
+			"<label>" +
+			"<strong>Date Posted: </strong>" +
+			"<span id=\"review" + (i+1) + "Date\">" +
+			new Date(reviews[i].datePosted).toLocaleDateString() +
+			"</span>" +
+			"</label><br>" +
+			(reviews[i].gradeReceived == "N" ? "" : ("<label>" +
+			"<strong>Grade Received: </strong>" +
+			"<span id=\"review" + (i+1) + "Grade\">" +
+			reviews[i].gradeReceived +
+			"</span>" +
+			"</label>")) +
+			"</div>" +
+			"<div class=\"col-md-7\" id=\"review" + (i+1) + "Text\">" +
+			reviews[i].review +
+			"</div>" +
+			"</div>" +
+//			Usefulness thumbs up/down is here
+			"<div class=\"modal-body-row\">" +
+		    "<label class=\"col-md-2\">Was this review useful?</label>" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsUpBtn\" data-id=\"" + i + "reviewThumbsUpBtn\">" +
+		    "<span class=\"num-thumbs-up\">" + 
+		    reviews[i].thumbsUp +
+		    "</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-up-8x.png\">&nbsp Yes" +
+		    "</a>" +
+		    //"<span class=\"offset-md-1\">0</span>" +
+		    "<a class=\"col-md-1 offset-md-1 reviewThumbsDownBtn\" data-id=\"" + i + "reviewThumbsDownBtn\">" +
+		    "<span class=\"num-thumbs-down\">" + 
+		    reviews[i].thumbsDown + 
+		    "</span>" + "\t" +
+		    "<img class=\"thumbs-image\" src=\"images/thumb-down-8x.png\">&nbsp No" +
+		    "</a>" +
+		    "</div>" +
+			"<div class=\"dropdown-divider\"></div>"
+		);
+		console.log(i);
+		//console.log("thumb: " + usefulThumbs[0].thumb);
+		for (j = 0; j < usefulThumbs.length; j++) {
+			if (reviews[i].reviewId == usefulThumbs[j].reviewId) {
+				if (usefulThumbs[j].thumb == 1) {
+					console.log("upvoted review index: " + i);
+					console.log("upvoted review ID: " + reviews[i].reviewId);
+					$('a[data-id="' + i + 'reviewThumbsUpBtn').addClass('thumbs-selected');
+					$('a[data-id="' + i + 'reviewThumbsUpBtn').children('img').css('opacity', '1');
+				}
+				else {
+					console.log("downvoted review index: " + i);
+					console.log("downvoted review ID: " + reviews[i].reviewId);
+					$('a[data-id="' + i + 'reviewThumbsDownBtn').addClass('thumbs-selected');
+					$('a[data-id="' + i + 'reviewThumbsDownBtn').children('img').css('opacity', '1');
+				}
+				break;
+			}
+		}
+	}
+}
 
 /* Submit Review Form Validation */
 function validateSubmitReviewForm() {

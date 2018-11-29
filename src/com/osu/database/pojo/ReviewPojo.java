@@ -16,8 +16,17 @@ public class ReviewPojo extends BasePojo {
 	private int courseNo;
 	private String termOffered;
 	private String instructor;
+	private int thumbsUp;
+	private int thumbsDown;
+	private int thumb;
 	
-
+	
+	public int getThumb() {
+		return thumb;
+	}
+	public void setThumb(int thumb) {
+		this.thumb = thumb;
+	}
 	public int getReviewId() {
 		return reviewId;
 	}
@@ -102,6 +111,17 @@ public class ReviewPojo extends BasePojo {
 	public void setAnonymous(boolean anonymous) {
 		this.anonymous = anonymous;
 	}
-	
+	public int getThumbsUp() {
+		return thumbsUp;
+	}
+	public void setThumbsUp(int thumbsUp) {
+		this.thumbsUp = thumbsUp;
+	}
+	public int getThumbsDown() {
+		return thumbsDown;
+	}
+	public void setThumbsDown(int thumbsDown) {
+		this.thumbsDown = thumbsDown;
+	}
 
 }

@@ -18,6 +18,7 @@ import com.osu.dao.base.interfaces.CourseDAO;
 import com.osu.dao.base.interfaces.ReviewDAO;
 import com.osu.database.pojo.CoursePojo;
 import com.osu.database.pojo.ReviewPojo;
+import com.osu.database.pojo.UserPojo;
 
 
 public class ReviewController extends HttpServlet {
@@ -80,6 +81,41 @@ public class ReviewController extends HttpServlet {
 			ReviewPojo reviewObj = gson.fromJson(jsonData, ReviewPojo.class);
 			String status = dao.deleteReview(reviewObj.getReviewId());
 			response.getWriter().write(status);
+		}else if(null != message && CommonConstants.OP_ADD_VOTE.equalsIgnoreCase(message)) {
+			
+			Gson gson = new Gson();
+			dao = new ReviewDAOImpl();
+			ReviewPojo reviewPojo = gson.fromJson(jsonData, ReviewPojo.class);
+			System.out.println(reviewPojo.getOnid());
+			System.out.println(reviewPojo.getReviewId());
+			System.out.println(reviewPojo.getThumbsUp());
+			System.out.println(reviewPojo.getThumbsDown());
+			System.out.println(reviewPojo.getThumb());
+			String status = dao.insertVote(reviewPojo);
+			
+			if(status.equals(CommonConstants.STATUS_JDBC_OK)) {
+				System.out.println("Insertion of vote count was successful");
+				ArrayList<ReviewPojo> userVoteMapping = dao.selectUserVoteMapping(reviewPojo);
+				if(userVoteMapping.size()==0) {
+					System.out.println("User Vote Mapping does not exist");
+					status = dao.insertUserVoteMapping(reviewPojo);
+					if(status.equals(CommonConstants.STATUS_JDBC_OK)) 
+						System.out.println("User Vote Mapping inserted successfully");
+				}else {
+					System.out.println("User Vote Mapping exists");
+					status = dao.updateUserVoteMapping(reviewPojo);
+					if(status.equals(CommonConstants.STATUS_JDBC_OK)) 
+						System.out.println("User Vote Mapping updated successfully");
+				}
+			}
+			response.getWriter().write(status);
+		}else if(null != message && CommonConstants.OP_GET_USER_THUMBS.equalsIgnoreCase(message)) {
+			
+			Gson gson = new Gson();
+			dao = new ReviewDAOImpl();
+			UserPojo userPojo = gson.fromJson(jsonData, UserPojo.class);
+			ArrayList<ReviewPojo> myVotes = dao.fetchMyVotes(userPojo);
+			response.getWriter().write(gson.toJson(myVotes));
 		}
 		System.out.println("ReviewController:doPost Exiting...");
 	}
