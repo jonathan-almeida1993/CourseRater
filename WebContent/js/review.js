@@ -665,11 +665,12 @@ $(document).ready(function(){
 		else if ($(this).val() == "Usefulness") {
 			console.log("sort reviews by usefulness");
 			reviews.sort(function(a,b) {
-				return (b.thumbsUp - b.thumbsDown) - (a.thumbsUp - a.thumbsDown);
+				if ((b.thumbsUp - b.thumbsDown == 0) && (a.thumbsUp - a.thumbsDown == 0)) return b.thumbsUp - a.thumbsUp;
+				else return (b.thumbsUp - b.thumbsDown) - (a.thumbsUp - a.thumbsDown);
 			});
 			console.log("reviews now sorted by usefulness");
 		}
-		displayReviews(reviews, jsonTermInstr);
+		displayReviews(reviews, jsonTermInstr, usefulThumbs);
 		console.log("resorted reviews now displayed");
 	});
 	
@@ -1140,18 +1141,19 @@ function displayReviews(reviews, jsonTermInstr, usefulThumbs) {
 		    "</div>" +
 			"<div class=\"dropdown-divider\"></div>"
 		);
-		console.log("thumb: " + usefulThumbs[0].thumb);
+		console.log(i);
+		//console.log("thumb: " + usefulThumbs[0].thumb);
 		for (j = 0; j < usefulThumbs.length; j++) {
 			if (reviews[i].reviewId == usefulThumbs[j].reviewId) {
 				if (usefulThumbs[j].thumb == 1) {
-					console.log("liked review index: " + i);
-					console.log("liked review ID: " + reviews[i].reviewId);
+					console.log("upvoted review index: " + i);
+					console.log("upvoted review ID: " + reviews[i].reviewId);
 					$('a[data-id="' + i + 'reviewThumbsUpBtn').addClass('thumbs-selected');
 					$('a[data-id="' + i + 'reviewThumbsUpBtn').children('img').css('opacity', '1');
 				}
 				else {
-					console.log("liked review index: " + i);
-					console.log("liked review ID: " + reviews[i].reviewId);
+					console.log("downvoted review index: " + i);
+					console.log("downvoted review ID: " + reviews[i].reviewId);
 					$('a[data-id="' + i + 'reviewThumbsDownBtn').addClass('thumbs-selected');
 					$('a[data-id="' + i + 'reviewThumbsDownBtn').children('img').css('opacity', '1');
 				}
