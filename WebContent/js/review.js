@@ -669,9 +669,51 @@ $(document).ready(function(){
 				else return (b.thumbsUp - b.thumbsDown) - (a.thumbsUp - a.thumbsDown);
 			});
 			console.log("reviews now sorted by usefulness");
+			
 		}
 		displayReviews(reviews, jsonTermInstr, usefulThumbs);
 		console.log("resorted reviews now displayed");
+		$('.reviewThumbsUpBtn').click(function() {
+			var reviewIndex = $(this).data('id')[0];
+			console.log("liked review index: " + reviewIndex);
+			console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+			if (!$(this).hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsUp++;
+				$(this).addClass('thumbs-selected');
+				$(this).children('img').css('opacity', '1');
+				$(this).children('span').html(reviews[reviewIndex].thumbsUp);
+				// sendDataSync function goes here
+			}
+			if ($('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsDown--;
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').removeClass('thumbs-selected');
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
+				$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
+			}
+			sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+1+'}'
+					,'addVote','ReviewController');
+		});
+		
+		$('.reviewThumbsDownBtn').click(function() {
+			var reviewIndex = $(this).data('id')[0];
+			console.log("liked review index: " + reviewIndex);
+			console.log("liked review ID: " + reviews[reviewIndex].reviewId);
+			if (!$(this).hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsDown++;
+				$(this).addClass('thumbs-selected');
+				$(this).children('img').css('opacity', '1');
+				$(this).children('span').html(reviews[reviewIndex].thumbsDown);
+				// sendDataSync function goes here
+			}
+			if ($('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').hasClass('thumbs-selected')) {
+				reviews[reviewIndex].thumbsUp--;
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').removeClass('thumbs-selected');
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
+				$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
+			}
+			sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+0+'}'
+					,'addVote','ReviewController');
+		});
 	});
 	
 	$('.reviewThumbsUpBtn').click(function() {
