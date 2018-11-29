@@ -633,11 +633,12 @@ $(document).ready(function(){
 	cookieInfo[1] = cookieInfo[1].split('=')[1];//contains user name
 	
 	/* modify this sendDataSync to match Jonathan's back-end for the thumbs table */
-	//var thumbsList = sendDataSync("{'onid':'"+cookieInfo[0]+"'}", "getUserThumbs", "ReviewController");
-	//var usefulThumbs = jQuery.parseJSON(thumbsList);
+	var thumbsList = sendDataSync("{'onid':'"+cookieInfo[0]+"'}", "getUserThumbs", "ReviewController");
+	//console.log(thumbsList);
+	var usefulThumbs = jQuery.parseJSON(thumbsList);
 	
 	/* lines 636 to 645 are for pre-backend implementation purposes only */
-	var myThumb1 = new Object();
+/*	var myThumb1 = new Object();
 	myThumb1.onid = "habibelo";
 	myThumb1.reviewId = 98;
 	myThumb1.thumb = 1;
@@ -646,9 +647,9 @@ $(document).ready(function(){
 	myThumb2.reviewId = 102;
 	myThumb2.thumb = 0;
 	var usefulThumbs = [];
-	usefulThumbs.push(myThumb1, myThumb2);
+	usefulThumbs.push(myThumb1, myThumb2);*/
 
-	console.log("usefulThumbs list: " + usefulThumbs);
+	console.log("usefulThumbs list: " + thumbsList);
 
 	displayReviews(reviews, jsonTermInstr, usefulThumbs);
 	
@@ -689,7 +690,7 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
 		}
-		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
 				,'addVote','ReviewController');
 	});
 	
@@ -710,7 +711,7 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
 		}
-		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
 				,'addVote','ReviewController');
 	});
 

@@ -18,8 +18,15 @@ public class ReviewPojo extends BasePojo {
 	private String instructor;
 	private int thumbsUp;
 	private int thumbsDown;
+	private int thumb;
 	
 	
+	public int getThumb() {
+		return thumb;
+	}
+	public void setThumb(int thumb) {
+		this.thumb = thumb;
+	}
 	public int getReviewId() {
 		return reviewId;
 	}

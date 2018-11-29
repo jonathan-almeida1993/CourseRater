@@ -36,4 +36,12 @@ public interface SqlConstants {
 	
 	String INSERT_VOTE = "UPDATE review_master_tbl SET upvotes = ?, downvotes = ? WHERE review_id = ?";
 
+	String FETCH_MY_VOTES = "SELECT review_id, vote FROM user_review_vote_mapping WHERE onid=?";
+
+	String INSERT_VOTE_USER_MAPPING = "INSERT INTO user_review_vote_mapping (onid, review_id, vote) VALUES (?,?,?)";
+
+	String UPDATE_VOTE_USER_MAPPING = "UPDATE user_review_vote_mapping SET vote = ? WHERE onid = ? AND review_id = ?";
+	
+	String SELECT_VOTE_USER_MAPPING = "SELECT map_id, onid, review_id, vote FROM user_review_vote_mapping WHERE onid = ? AND review_id = ?";
+
 }
