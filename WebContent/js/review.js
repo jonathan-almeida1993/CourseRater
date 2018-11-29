@@ -690,7 +690,7 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsDownBtn"]').children('span').html(reviews[reviewIndex].thumbsDown);
 		}
-		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+1+'}'
 				,'addVote','ReviewController');
 	});
 	
@@ -711,7 +711,7 @@ $(document).ready(function(){
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('img').css('opacity', '0.3');
 			$('a[data-id="'+reviewIndex+'reviewThumbsUpBtn"]').children('span').html(reviews[reviewIndex].thumbsUp);
 		}
-		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+'}'
+		sendDataAsync('{"reviewId":'+reviews[reviewIndex].reviewId+',"onid":"'+cookieInfo[0]+'","thumbsUp":'+reviews[reviewIndex].thumbsUp+',"thumbsDown":'+reviews[reviewIndex].thumbsDown+',"thumb":'+0+'}'
 				,'addVote','ReviewController');
 	});
 
