@@ -10,8 +10,11 @@ import com.osu.dao.base.interfaces.ReviewDAO;
 import com.osu.database.pojo.ReviewPojo;
 import com.osu.tests.objects.DashboardPage;
 import com.osu.tests.objects.LoginPage;
+import com.osu.tests.objects.SubmitAReviewPage;
 import com.osu.tests.objects.ViewCoursePage;
+import com.osu.tests.support.ConfigurationProperties;
 import com.osu.tests.support.SeleniumUtils;
+import com.osu.tests.support.SeleniumUtils.Locator;
 
 public class DashboardPageTests extends SeleniumUtils{
 
@@ -281,10 +284,10 @@ public class DashboardPageTests extends SeleniumUtils{
 	public void dashboardPageTest18() {
 		login();
 
-		int numOfViewLinks = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View']").size();
+		int numOfViewLinks = getElements(Locator.XPATH, DashboardPage.reviewBaseXpath+"//a[.='View']").size();
 
 		for(int i = 1; i<=numOfViewLinks; i++) {
-			String baseXpath = "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]";
+			String baseXpath = DashboardPage.reviewBaseXpath;
 
 			String courseName = getText(Locator.XPATH, "("+baseXpath+"//td[3])["+i+"]", "Course Name");
 			String termTaken = courseName.substring(courseName.indexOf("(")).replace("(", "").replace(")", "");
@@ -324,7 +327,7 @@ public class DashboardPageTests extends SeleniumUtils{
 	public void dashboardPageTest19() {
 		login();
 
-		int numOfReviews = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]").size();
+		int numOfReviews = getElements(Locator.XPATH, DashboardPage.reviewBaseXpath).size();
 
 		Assert.assertEquals(numOfReviews, 3, "Three recent reviews are not displayed by default as expected.");
 
@@ -332,7 +335,7 @@ public class DashboardPageTests extends SeleniumUtils{
 
 		click(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true);
 
-		int numOfViewLinks = getElements(Locator.XPATH, "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]//a[.='View']").size();
+		int numOfViewLinks = getElements(Locator.XPATH, DashboardPage.reviewBaseXpath+"//a[.='View']").size();
 
 		Assert.assertTrue(numOfViewLinks>=3, "'See All Reviews' button has displayed all the reviews for the user.");
 	}
@@ -536,4 +539,123 @@ public class DashboardPageTests extends SeleniumUtils{
 		}
 	}
 
+	@Test(description = "Verify that delete link is displayed for all the reviews and modal popup asking confirmation from the user is displayed while deleting the review.", groups = {"unit", "integration"})
+	public void dashboardPageTest20() {
+		login();
+
+		while(isElementAvailable(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", false))
+			click(Locator.XPATH, DashboardPage.seeMoreReviewsBtn, "'See More Reviews' button", true);
+		click(Locator.XPATH, DashboardPage.seeAllReviewsBtn, "'See All Reviews' button", true);
+		
+		int numOfReviews = getElements(Locator.XPATH, DashboardPage.reviewBaseXpath).size();
+
+		for(int i=0; i<numOfReviews; i++) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "("+DashboardPage.reviewBaseXpath+"//a[.='Delete'])["+(i+1)+"]", "Delete link", true), "Delete review link for review "+(i+1)+" is not displayed as expected.");
+			
+			click(Locator.XPATH, "("+DashboardPage.reviewBaseXpath+"//a[.='Delete'])["+(i+1)+"]", "Delete link", true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.deleteReviewConfirmationModal, "Delete Review Modal", true));
+			click(Locator.XPATH, DashboardPage.noConfirmDeleteReviewBtn, "'No' delete confirmation modal", true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Test(description = "Verify that a user is able to submit a review for a course, view it on the Your reviews page for the same course and then delete it from the 'Your recent reviews' section.")
+	public void dashboardPageTest21() {
+		ConfigurationProperties.setPropertiesFile("\\test.properties");
+		String subjectCode = "PH";
+		String subject = "Physics ("+subjectCode+")";
+		String courseCode = "211";
+		String term = "Winter 2019";
+		String instructor = "David Bannon";
+
+		SubmitAReviewTests.navigateToSubmitReview(subject, courseCode, term, instructor);
+		
+		//Submitting a review
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true), "'Submit a Review' button is not displayed as expected.");
+
+		if(isElementAvailable(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true)) {
+			click(Locator.XPATH, SubmitAReviewPage.createReviewBtn, "'Create Review' button", true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.nameLabel, "'Name' label", true), "'Name' label isn't displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "'Name' textbox", true), "'Name' textbox isn't displayed as expected.");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.nameTxtBox, "value", "Name textbox"), ConfigurationProperties.getProperty("name"));
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenLabelRV, "'Term taken' label", true), "'Term taken' label isn't displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "'Term taken' dropdown", true), "'Term taken' dropdown isn't displayed as expected.");
+			Assert.assertEquals(getAttributeValue(Locator.XPATH, SubmitAReviewPage.termTakenDropdownRV, "value", "Term taken textbox"), term);
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedLabel, "'Grade received' label", true), "'Grade Received' label isn't displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.gradeReceivedDropdown, "'Grade Received' dropdown", true), "'Grade Received' dropdown isn't displayed as expected.");
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.ratingLabel, "'Rating' label", true), "'Rating' label isn't displayed as expected.");
+			//Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.ratingDropdown, "'Rating' dropdown", true), "'Rating' dropdown isn't displayed as expected.");
+
+			Assert.assertEquals(getElements(Locator.XPATH, SubmitAReviewPage.stars).size(), 5, "Number of stars displayed for giving rating aren't 5.");
+			click(Locator.XPATH, SubmitAReviewPage.thirdRatingStar, "Rating: 3 stars", true);
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.instructorDropdown, "Instructor dropdown", true), "Instructor dropdown is not displayed as expected.");
+			//Code to check whether the selected instructor name is same as that selected while searching for the course. 
+			//Assert.assertTrue(condition);
+			
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.yourReviewLabel, "'Your Review' label", true), "'Your Review' label isn't displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.yourReviewTxtBox, "'Your Review' textbox", true), "'Your Review' textbox isn't displayed as expected.");
+
+			//TODO - Add check to verify if the close button is displayed on the Submit review modal.  
+
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitAnonymouslyChkbox, "'Submit Anonymously' checkbox", true), "'Submit Review Anonymously' checkbox hasn't been displayed as expected.");
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "'Submit review' button", true), "'Submit Review' button isn't displayed as expected.");
+			click(Locator.XPATH, SubmitAReviewPage.submitReviewBtn, "'Submit Review' button", true);
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.closeBtn, "'Close' button", true), "'Close' button isn't displayed as expected.");
+			
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, SubmitAReviewPage.newReviewSection, "New review section", true));
+			
+			click(Locator.XPATH, DashboardPage.homeBtnLink, "'Home button'", true);
+			
+			click(Locator.XPATH, "("+DashboardPage.reviewBaseXpath+"td[.='"+subjectCode+" "+courseCode+" ("+term+")']/following-sibling::td//a[.='Delete']", "First Review Delete button", true);
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, DashboardPage.deleteReviewConfirmationModal, "Delete Review Modal", true));
+			click(Locator.XPATH, DashboardPage.yesConfirmDeleteReviewBtn, "'Yes' delete confirmation modal", true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			
+			Assert.assertFalse(isElementAvailable(Locator.XPATH, "("+DashboardPage.reviewBaseXpath+"td[.='"+subjectCode+" "+courseCode+" ("+term+")']/following-sibling::td//a[.='Delete']", "Delete for deleted review", false));
+		}
+
+	}
+
+	@Test(description = "Verify that name of the logged-in user is displayed on the dashboard page after the user logs in.")
+	public void dashboardPageTest22() {
+		login();
+		String nameOfUser = ConfigurationProperties.getProperty("name");
+		
+		Assert.assertTrue(isElementAvailable(Locator.XPATH, "//*[contains(.,'Welcome, ')]//b[@id='firstLastName' and .='"+nameOfUser+"']", "Name of logged-in user", true), "Name of logged-in user is not displayed as expected.");
+	}
+	
 }
