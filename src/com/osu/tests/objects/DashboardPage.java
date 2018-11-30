@@ -31,14 +31,18 @@ public class DashboardPage {
 	public static final String actionHeaderLabel = "//table[@id='recentReviewTable']//th[.='Action']";
 	public static final String seeAllReviewsBtn = "//h3[text()='Your Recent Reviews']/ancestor::div[@class='modal-content']//button[@id='seeMoreReviewsBtn' and .='See All Reviews']";
 	public static final String recentReviewTableBody = "//table[@id='recentReviewTable']//tbody";
+	public static final String reviewBaseXpath = "//table[@id='recentReviewTable']//tbody//tr[not(contains(@class, 'hidden-review'))]";
 	
 	public static final String viewReviewCloseBtn = "//button[@id='confirmCloseYourReviewBtn']";
 	public static final String viewReviewCrossCloseBtn = "//button[@id='closeYourReviewFormX']";
 
 	public static final String yourReviewModalName = "//input[@id='yourNameYV']";
 	public static final String yourReviewAnonymousCheck = "//input[@id='anonymousCheckYV']";
-	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn']";
+	public static final String seeMoreReviewsBtn = "//button[@id='seeMoreReviewsBtn' and .='See 3 More Reviews']";
+	public static final String hiddenSeeMoreReviewsBtn = "//button[.='See 3 More Reviews' and @style='display: none;']";
 	public static final String noConfirmDeleteReviewBtn = "//button[@id='noConfirmDeleteReviewBtn']";
 	public static final String yesConfirmDeleteReviewBtn = "//button[@id='yesConfirmDeleteReviewBtn']";
+	public static final String deleteReviewConfirmationModal = "//div[@id='deleteReview' and @role='dialog']";
+	
 	
 }
