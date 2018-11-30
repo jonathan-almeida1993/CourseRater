@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.google.protobuf.GeneratedMessageLite;
 import com.osu.dao.base.impl.ReviewDAOImpl;
 import com.osu.dao.base.interfaces.ReviewDAO;
 import com.osu.database.pojo.ReviewPojo;
@@ -15,7 +16,7 @@ import com.osu.tests.support.SeleniumUtils;
 
 public class ViewCoursePageTests extends SeleniumUtils{
 	
-	public HashMap<String, String> navigateToSubmitReview(){
+	public HashMap<String, String> navigateToViewCourseReviewsPage(){
 		login();
 
 		select(Locator.XPATH, DashboardPage.subjectDropdown, "'Subject' dropdown").selectByValue("Computer Science (CS)");
@@ -57,7 +58,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 	
 	@Test(description = "Verify that all mandatory elements for View course reviews page is displayed as expected.", groups = {"unit"})
 	public void viewCourseTest1() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
 		
 		Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.subjectHeader, "Subject header", true), "Subject header is not displayed as expected.");
@@ -68,12 +69,11 @@ public class ViewCoursePageTests extends SeleniumUtils{
 	
 	@Test(description = "Verify that all mandatory elements for each review section is displayed as expected. ", groups = {"unit", "integration"})
 	public void viewCourseTest2() {
-		navigateToSubmitReview();
-		//launchPage(ConfigurationProperties.getProperty("viewCourseURL"));
+		navigateToViewCourseReviewsPage();
 		
-		String baseXpath = "//div[@class='modal-header']//following-sibling::div[@class='modal-body row']";
+		String baseXpath = "//div[@id='reviews']//div[contains(@id, 'review') and @class='modal-body row']";
 		
-		int numOfReviews = getElements(Locator.XPATH, "//div[@class='modal-header']//following-sibling::div[@class='modal-body row']").size();
+		int numOfReviews = getElements(Locator.XPATH, baseXpath).size();
 		
 		for(int i=0; i<numOfReviews; i++) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, baseXpath+"//strong[.='Posted By:']", "Posted by", true), "'Posted By' label is not displayed as expected for review#"+(i+1));
@@ -88,7 +88,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the subject is reset and all fields are empty on Search click, the search fails and the page tells the user to select a subject", groups = {"unit"})
 	public void viewCourseTest3() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "Course Search form", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -104,7 +104,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if only the subject is filled in on Search click, the search fails and the page tells the user to select a course number", groups = {"unit"})
 	public void viewCourseTest4() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "Course Search form", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -119,7 +119,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if only the subject and course number fields are filled in on Search click, go to the course page and include all reviews for all terms and instructors for that course", groups = {"unit", "integration"})
 	public void viewCourseTest5() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "Course Search form", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -135,7 +135,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if all fields except instructor are filled in on Search click, go to the course page and include all reviews for all instructors for that term for that course", groups = {"unit", "integration"})
 	public void viewCourseTest6() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -152,7 +152,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if all fields except term are filled in on Search click, go to the course page and include all reviews for all terms for that instructor for that course", groups = {"unit", "integration"})
 	public void viewCourseTest7() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -169,7 +169,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if all fields are filled in on Search click, go to the course page and include all reviews for that specific instance of the course", groups = {"unit", "integration"})
 	public void viewCourseTest8() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -187,7 +187,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the term field is reset, the other fields don't change", groups = {"unit"})
 	public void viewCourseTest9() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -202,7 +202,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the course number field is reset, the term and professor fields are reset and disabled", groups = {"unit"})
 	public void viewCourseTest10() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -219,7 +219,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the subject field is reset, all 3 other fields are reset and disabled", groups = {"unit"})
 	public void viewCourseTest11() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -237,7 +237,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the user doesn't change any value in the course search form, the Search button is disabled", groups = {"unit"})
 	public void viewCourseTest12() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -247,7 +247,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the user changes values in the search form but changes them back to the original values, the Search button is disabled again", groups = {"unit"})
 	public void viewCourseTest13() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			Assert.assertTrue(isElementAvailable(Locator.XPATH, ViewCoursePage.searchBtn, "Search button", true), "The Search button is visible on the page");
@@ -267,7 +267,7 @@ public class ViewCoursePageTests extends SeleniumUtils{
 
 	@Test(description = "Verify that if the user submits a review with no rating, the submission fails and they're told to provide a rating", groups = {"integration"})
 	public void viewCourseTest14() {
-		navigateToSubmitReview();
+		navigateToViewCourseReviewsPage();
 
 		if(isElementAvailable(Locator.XPATH, ViewCoursePage.searchCourseForm, "'Search for a Course' header", true)) {
 			click(Locator.XPATH, ViewCoursePage.createReviewBtn, "Create review button", true);
@@ -440,5 +440,63 @@ public class ViewCoursePageTests extends SeleniumUtils{
 			select(Locator.XPATH, ViewCoursePage.professorEnabledDropdown, "'Professor' dropdown").selectByValue("Spring 2018");
 			Assert.assertTrue(getElement(Locator.XPATH, ViewCoursePage.searchBtn).isEnabled(), "The Search button is enabled after setting the professor to its previous value");
 		}
+	}
+
+	@Test(description = "Verify that thumbs-up/thumbs-down are displayed for each of the reviews of the selected course.")
+	public void viewCourseTest16() {
+		navigateToViewCourseReviewsPage();
+		
+		String reviewBaseXpath = "//div[@id='reviews']//div[contains(@id, 'review') and @class='modal-body row']";
+		int numOfReviews = getElements(Locator.XPATH , reviewBaseXpath).size();
+		
+		String usefulnessReviewSectionBaseXpath = "//div[@id='reviews']//div[@class='modal-body-row']";
+		
+		for(int i=0; i<numOfReviews; i++) {
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsUpBtn')])["+(i+1)+"]", "Thumbs Up button for review "+(i+1), true), "Thumbs Up for review "+(i+1)+" is not displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsUpBtn')]/span[@class='num-thumbs-up'])["+(i+1)+"]", "Thumbs Up count for review "+(i+1), true), "Thumbs Up for review "+(i+1)+" is not displayed as expected.");
+			
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsDownBtn')])["+(i+1)+"]", "Thumbs Down button for review "+(i+1), true), "Thumbs Down for review "+(i+1)+" is not displayed as expected.");
+			Assert.assertTrue(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsDownBtn')]/span[@class='num-thumbs-down'])["+(i+1)+"]", "Thumbs Down count for review "+(i+1), true), "Thumbs Down for review "+(i+1)+" is not displayed as expected.");
+		}
+	}
+	
+	@Test(description = "Verify that user's thumb up/down for a given course are saved and retrieved as expected.")
+	public void viewCourseTest17() {
+		navigateToViewCourseReviewsPage();
+		
+		String usefulnessReviewSectionBaseXpath = "//div[@id='reviews']//div[@class='modal-body-row']";
+		int thumbsUpCount = Integer.valueOf(getText(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsUpBtn')]/span)[1]", "Num of thumbs up"));
+		int thumbsDownCount = Integer.valueOf(getText(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsDownBtn')]/span)[1]", "Num of thumbs down"));
+		
+		String selected = null;
+		if(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'thumbs-selected') and contains(@class, 'reviewThumbsUpBtn')])[1]", "Thumbs Up selected", false))
+			selected = "Up";
+		else if(isElementAvailable(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'thumbs-selected') and contains(@class, 'reviewThumbsDownBtn')])[1]", "Thumbs Down selected", false))
+			selected= "Down";
+		
+		if(selected.contentEquals("Yes")) {
+			click(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'thumbs-selected') and contains(@class, 'reviewThumbsDownBtn')]/img)[1]", "Thumbs Down", true);
+			thumbsDownCount++;
+			selected = "No";
+		} else if(selected.contentEquals("No")) {
+			click(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'thumbs-selected') and contains(@class, 'reviewThumbsUpBtn')]/img)[1]", "Thumbs Up", true);
+			thumbsUpCount++;
+			selected = "Yes";
+		}
+		
+		click(Locator.XPATH, DashboardPage.homeBtnLink, "Home button", true);
+		navigateToViewCourseReviewsPage();
+		
+		int newThumbsUpCount = Integer.valueOf(getText(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsUpBtn')]/span)[1]", "Num of thumbs up"));
+		int newThumbsDownCount = Integer.valueOf(getText(Locator.XPATH, "("+usefulnessReviewSectionBaseXpath+"//a[contains(@class, 'reviewThumbsDownBtn')]/span)[1]", "Num of thumbs down"));
+		
+		if(selected.contentEquals("Yes")) {
+			Assert.assertEquals(newThumbsUpCount, thumbsUpCount+1);
+			Assert.assertEquals(newThumbsDownCount, thumbsDownCount-1);
+		} else if(selected.contentEquals("No")) {
+			Assert.assertEquals(newThumbsUpCount, thumbsUpCount-1);
+			Assert.assertEquals(newThumbsDownCount, thumbsDownCount+1);
+		}
+		
 	}
 }
