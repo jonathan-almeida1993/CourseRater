@@ -14,7 +14,6 @@ import com.osu.tests.objects.SubmitAReviewPage;
 import com.osu.tests.objects.ViewCoursePage;
 import com.osu.tests.support.ConfigurationProperties;
 import com.osu.tests.support.SeleniumUtils;
-import com.osu.tests.support.SeleniumUtils.Locator;
 
 public class DashboardPageTests extends SeleniumUtils{
 
